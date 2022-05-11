@@ -20,9 +20,6 @@ public class Controller {
     public Controller() {
         this.userInterface = new UserInterface();
         this.requestHandler = new client.controller.RequestHandler("127.0.0.1", 6890);
-        cart = new Cart();
-        inbox = new Inbox();
-
         mainMenuHandler(userInterface.showMainMenu());
     }
 
@@ -58,18 +55,14 @@ public class Controller {
     }
 
     private void loggedInMenuHandler() {
+        cart = new Cart();
+        inbox = new Inbox();
         int input;
         do {
             input = userInterface.showLoggedInMenu();
-            ResponseMessage response = null;
             switch (input) {
                 case 1:
-                    Product newProduct = null;
-                    response = requestHandler.getAllProducts();
-                    do {
-                        newProduct = (Product) userInterface.letUserChooseFromList(response.getProducts());
-                    } while (newProduct == null);
-                    cart.addToCart(newProduct);
+                    addProductToCart();
                     break;
                 case 2:
                     if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
@@ -78,73 +71,30 @@ public class Controller {
                     }
                     break;
                 case 3:
-                    response = requestHandler.getAllOrdersResponse(user);
-                    userInterface.showResult("------------YOUR ORDERS------------", response.getOrders());
+                    getAllOrders();
                     break;
                 case 4:
-                    ArrayList<Product> productsInCart = this.cart.getAllProductsInCart();
-                    response = requestHandler.createOrdersFromCart(productsInCart, this.user);
-                    if (response.getSuccess()) {
-                        userInterface.printMessage("Order is created");
-                    } else {
-                       userInterface.printMessage("Order could not be created");
-                    }
-                    cart.resetCart();
+                    createOrder();
                     break;
                 case 6:
-                    response = requestHandler.getAllProducts();
-                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
-                    else {
-                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                    }
+                    getAllProducts();
                     break;
                 case 7:
-                    response = requestHandler.getSearchByProductResponse(userInterface.getProductType());
-                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
-                    else {
-                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                    }
+                   searchByProductType();
                     break;
                 case 8:
-                    int[] range = userInterface.getPriceRange();
-                    if (range == null) break;
-                    response = requestHandler.getSearchByPriceResponse(range);
-                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
-                    else {
-                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                    }
+                    searchByPriceRange();
                     break;
                 case 9:
-                    Condition condition = userInterface.getCondition();
-                    response = requestHandler.getSearchByCondition(condition);
-                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
-                    else {
-                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                    }
+                   searchByCondition();
                     break;
                 case 10:
-                    //1. Update Inbox with messages from Server
-                    response = requestHandler.getOrdersToConfirm();
-                    inbox.updateOrdersToConfirm(response.getOrders());
-                    //2. Display them to user and let user pick
-                    ArrayList<Order> orders = inbox.getOrdersToConfirm();
-                    Order order = (Order) userInterface.letUserChooseFromList(orders);
-                    boolean responseToOffer = userInterface.getBoolean("Accept or decline? (True/False)");
-                    //3. Send the result to Server
-                    HashMap<Order, Boolean> result = new HashMap<>();
-                    result.put(order, responseToOffer);
-                    response = requestHandler.confirmOrder(result);
-                    System.out.println(response);
+                  handleInbox();
                     break;
-                case 12:
-                    this.user = null;
-                    this.cart = null;
-                    mainMenuHandler(userInterface.showMainMenu());
-                    break;
-                default:
-                    userInterface.printMessage("No valid input, try again");
             }
-        } while (input != 9);
+        } while (input != 12);
+        userInterface.printMessage("Okay, bye!");
+        logoutUser();
     }
 
     private boolean loginUser() {
@@ -159,5 +109,94 @@ public class Controller {
         }
         this.user = loginResponse.getUser();
         return true;
+    }
+
+    private void logoutUser() {
+        this.user = null;
+        this.cart = null;
+        this.inbox = null;
+        mainMenuHandler(userInterface.showMainMenu());
+    }
+
+    private void addProductToCart() {
+        Product newProduct = null;
+        ArrayList<Product> products = getAllProducts();
+        if (products != null) {
+            do {
+                newProduct = (Product) userInterface.letUserChooseFromList(products);
+            } while (newProduct == null);
+            cart.addToCart(newProduct);
+        }
+    }
+
+    private ArrayList<Product> getAllProducts(){
+        ResponseMessage response = requestHandler.getAllProducts();
+        if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+        else {
+            return response.getProducts();
+        }
+        return null;
+    }
+
+    private void getAllOrders() {
+        ResponseMessage response = requestHandler.getAllOrdersResponse(user);
+        userInterface.showResult("------------YOUR ORDERS------------", response.getOrders());
+    }
+
+    private void createOrder() {
+        ResponseMessage response = requestHandler.createOrdersFromCart(this.cart.getAllProductsInCart(), this.user);
+        if (response.getSuccess()) {
+            userInterface.printMessage("Order is created");
+        } else {
+            userInterface.printMessage("Order could not be created");
+        }
+        cart.resetCart();
+    }
+
+    private void searchByCondition() {
+        Condition condition = userInterface.getCondition();
+        ResponseMessage response = requestHandler.getSearchByCondition(condition);
+        if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+        else {
+            userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
+        }
+    }
+
+    private void searchByPriceRange() {
+        int[] range = userInterface.getPriceRange();
+        ResponseMessage response = requestHandler.getSearchByPriceResponse(range);
+        if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+        else {
+            userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
+        }
+    }
+
+    private void searchByProductType() {
+        ResponseMessage response = requestHandler.getSearchByProductResponse(userInterface.getProductType());
+        if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+        else {
+            userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
+        }
+    }
+
+    private void handleInbox() {
+        updateInbox();
+        HashMap<Order, Boolean> result = confirmOrder();
+        ResponseMessage response = requestHandler.confirmOrder(result);
+        userInterface.printMessage("Confirmed offer: " +response.getSuccess());
+    }
+
+    private void updateInbox() {
+        ResponseMessage response = requestHandler.getOrdersToConfirm();
+        inbox.updateOrdersToConfirm(response.getOrders());
+    }
+
+    private HashMap<Order, Boolean> confirmOrder(){
+        ArrayList<Order> orders = inbox.getOrdersToConfirm();
+        Order order = (Order) userInterface.letUserChooseFromList(orders);
+        boolean responseToOffer = userInterface.getBoolean("Accept or decline? (True/False)");
+        HashMap<Order, Boolean> result = new HashMap<>();
+        result.put(order, responseToOffer);
+        return result;
     }
 }
