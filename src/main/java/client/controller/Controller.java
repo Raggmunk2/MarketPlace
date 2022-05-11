@@ -5,6 +5,7 @@ import client.model.Inbox;
 import client.view.UserInterface;
 import shared.*;
 
+import javax.ws.rs.core.Response;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -144,17 +145,19 @@ public class Controller {
                 }
                 break;
                 case 10:
-                    Order order = new Order(user, Timestamp.valueOf(LocalDateTime.now()), 8);
-                    ArrayList<Order> newOrders = new ArrayList<Order>();
-                    newOrders.add(order);
-                    inbox.updateOrdersToConfirm(newOrders);
+                    //1. Update Inbox with messages from Server
+                    response = requestHandler.getOrdersToAccept();
+                    inbox.updateOrdersToConfirm(response.getOrders());
+                    //2. Display them to user and let user pick
                     ArrayList<Order> orders = inbox.getOrdersToConfirm();
-                    Order order2  = (Order)userInterface.letUserChooseFromList(orders);
+                    Order order  = (Order)userInterface.letUserChooseFromList(orders);
                     boolean responseToOffer = userInterface.getBoolean("Accept or decline? (True/False)");
-                    System.out.println(order2);
-                    System.out.println(responseToOffer);
+                    //3. Send the result to Server
+                    HashMap<Order, Boolean> result = new HashMap<Order, Boolean>();
+                    result.put(order, responseToOffer);
+                    response = requestHandler.confirmOrder(result);
+                    System.out.println(response);
                     break;
-
             case 12:
                 this.user = null;
                 this.cart = null;

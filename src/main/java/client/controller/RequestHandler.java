@@ -5,6 +5,7 @@ import shared.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestHandler {
 
@@ -56,6 +57,16 @@ public class RequestHandler {
 
     public ResponseMessage getAllProducts() {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
+    public ResponseMessage getOrdersToAccept() {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NEW_MESSAGES);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
+    public ResponseMessage confirmOrder(HashMap<Order, Boolean> result) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDER_RESPONSE, result);
         return serverConnection.sendRequest(requestMessage);
     }
 }
