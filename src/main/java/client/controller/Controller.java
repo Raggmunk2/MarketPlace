@@ -5,10 +5,7 @@ import client.model.Inbox;
 import client.view.UserInterface;
 import shared.*;
 
-import javax.ws.rs.core.Response;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -60,20 +57,6 @@ public class Controller {
         }
     }
 
-    private boolean loginUser() {
-        String username = userInterface.getUsername();
-        String password = userInterface.getPassword();
-        ResponseMessage loginResponse = requestHandler.getLoginResponse(username, password);
-        if (loginResponse != null) {
-            if (loginResponse.getTypeOfMessage() == TypeOfMessage.ERROR) {
-                userInterface.printErrorMessage("Something went wrong. Try again.");
-                return false;
-            }
-        }
-        this.user = loginResponse.getUser();
-        return true;
-    }
-
     private void loggedInMenuHandler() {
         int input;
         do {
@@ -84,12 +67,12 @@ public class Controller {
                     Product newProduct = null;
                     response = requestHandler.getAllProducts();
                     do {
-                        newProduct = (Product)userInterface.letUserChooseFromList(response.getProducts());
+                        newProduct = (Product) userInterface.letUserChooseFromList(response.getProducts());
                     } while (newProduct == null);
                     cart.addToCart(newProduct);
                     break;
                 case 2:
-                    if (cart.size() == 0) userInterface.printErrorMessage("Your cart is empty at the moment");
+                    if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
                     else {
                         userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
                     }
@@ -102,70 +85,79 @@ public class Controller {
                     ArrayList<Product> productsInCart = this.cart.getAllProductsInCart();
                     response = requestHandler.createOrdersFromCart(productsInCart, this.user);
                     if (response.getSuccess()) {
-                        System.out.println("worked!");
+                        userInterface.printMessage("Order is created");
                     } else {
-                        System.out.println("nope... did not work");
+                       userInterface.printMessage("Order could not be created");
                     }
-            cart.resetCart();
-            break;
-
-            //TODO handle how to create order
-            //The seller should accept or decline the order
-            //boolean is returned if seller accepted
-            //product should change status
-            case 6:
-                response = requestHandler.getAllProducts();
-                if (response.getProducts().size() == 0) userInterface.printErrorMessage("No result");
-                else {
-                    userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                }
-                break;
-            case 7:
-                response = requestHandler.getSearchByProductResponse(userInterface.getProductType());
-                if (response.getProducts().size() == 0) userInterface.printErrorMessage("No result");
-                else {
-                    userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                }
-                break;
-            case 8:
-                int[] range = userInterface.getPriceRange();
-                if (range == null) break;
-                response = requestHandler.getSearchByPriceResponse(range);
-                if (response.getProducts().size() == 0) userInterface.printErrorMessage("No result");
-                else {
-                    userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                }
-                break;
-            case 9:
-                Condition condition = userInterface.getCondition();
-                response = requestHandler.getSearchByCondition(condition);
-                if (response.getProducts().size() == 0) userInterface.printErrorMessage("No result");
-                else {
-                    userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
-                }
-                break;
+                    cart.resetCart();
+                    break;
+                case 6:
+                    response = requestHandler.getAllProducts();
+                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+                    else {
+                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
+                    }
+                    break;
+                case 7:
+                    response = requestHandler.getSearchByProductResponse(userInterface.getProductType());
+                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+                    else {
+                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
+                    }
+                    break;
+                case 8:
+                    int[] range = userInterface.getPriceRange();
+                    if (range == null) break;
+                    response = requestHandler.getSearchByPriceResponse(range);
+                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+                    else {
+                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
+                    }
+                    break;
+                case 9:
+                    Condition condition = userInterface.getCondition();
+                    response = requestHandler.getSearchByCondition(condition);
+                    if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+                    else {
+                        userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
+                    }
+                    break;
                 case 10:
                     //1. Update Inbox with messages from Server
-                    response = requestHandler.getOrdersToAccept();
+                    response = requestHandler.getOrdersToConfirm();
                     inbox.updateOrdersToConfirm(response.getOrders());
                     //2. Display them to user and let user pick
                     ArrayList<Order> orders = inbox.getOrdersToConfirm();
-                    Order order  = (Order)userInterface.letUserChooseFromList(orders);
+                    Order order = (Order) userInterface.letUserChooseFromList(orders);
                     boolean responseToOffer = userInterface.getBoolean("Accept or decline? (True/False)");
                     //3. Send the result to Server
-                    HashMap<Order, Boolean> result = new HashMap<Order, Boolean>();
+                    HashMap<Order, Boolean> result = new HashMap<>();
                     result.put(order, responseToOffer);
                     response = requestHandler.confirmOrder(result);
                     System.out.println(response);
                     break;
-            case 12:
-                this.user = null;
-                this.cart = null;
-                mainMenuHandler(userInterface.showMainMenu());
-                break;
-            default:
-                userInterface.printErrorMessage("No valid input, try again");
+                case 12:
+                    this.user = null;
+                    this.cart = null;
+                    mainMenuHandler(userInterface.showMainMenu());
+                    break;
+                default:
+                    userInterface.printMessage("No valid input, try again");
+            }
+        } while (input != 9);
+    }
+
+    private boolean loginUser() {
+        String username = userInterface.getUsername();
+        String password = userInterface.getPassword();
+        ResponseMessage loginResponse = requestHandler.getLoginResponse(username, password);
+        if (loginResponse != null) {
+            if (loginResponse.getTypeOfMessage() == TypeOfMessage.ERROR) {
+                userInterface.printMessage("Something went wrong. Try again.");
+                return false;
+            }
         }
-    } while(input !=9);
-}
+        this.user = loginResponse.getUser();
+        return true;
+    }
 }

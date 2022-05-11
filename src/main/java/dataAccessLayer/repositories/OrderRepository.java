@@ -18,11 +18,11 @@ public class OrderRepository {
             e.printStackTrace();
         }
     }
-    public ArrayList<Order> getOrderHistory(User user)  {
+    public ArrayList<Order> getOrderHistory(User thisBuyer)  {
         ArrayList<Order> orderList = new ArrayList<>();
         try {
             String selectOrderHistory = "Select * from [dbo].[Order] join [dbo].[Product] on" +
-                    "[dbo].[Order].productId = [dbo].[Product].productId where buyer = '" + user.getUserName() + "'";
+                    "[dbo].[Order].productId = [dbo].[Product].productId where buyer = '" + thisBuyer.getUserName() + "'";
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(selectOrderHistory);
 
@@ -76,5 +76,33 @@ public class OrderRepository {
             return false;
         }
         return true;
+    }
+
+    public ArrayList<Order> getOrdersToConfirm(User thisSeller)  {
+        ArrayList<Order> orderList = new ArrayList<>();
+        try {
+            String selectOrderHistory = ""; //TODO Write
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(selectOrderHistory);
+
+            while (results.next()) {
+                String buyerString = results.getString(2);
+                User buyer = userRepository.getUser(buyerString);
+
+                String productName = results.getString(6);
+                String sellerString = results.getString(7);
+                User seller = userRepository.getUser(sellerString);
+                TypeOfProduct typeOfProduct = EnumHandler.getType(results.getString(4));
+                double price = results.getDouble(9);
+                Condition condition = EnumHandler.getCondition(results.getString(12));
+
+                Order order = new Order(buyer, productName, seller, typeOfProduct, price, condition);
+                orderList.add(order);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderList;
     }
 }

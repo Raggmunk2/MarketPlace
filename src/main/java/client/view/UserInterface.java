@@ -136,7 +136,7 @@ public class UserInterface {
         return EnumHandler.getCondition(scanner.nextInt());
     }
 
-    public void printErrorMessage(String message) {
+    public void printMessage(String message) {
         System.out.println(message);
     }
 

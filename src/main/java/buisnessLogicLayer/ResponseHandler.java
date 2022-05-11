@@ -56,7 +56,9 @@ public class ResponseHandler {
                     success = orderRepository.addProductToOrder(request.getOrder());
                     return new ResponseMessage(TypeOfMessage.CREATE_ORDER, success);
                 case NEW_MESSAGES:
-
+                    orderRepository = new OrderRepository(new UserRepository());
+                    ArrayList<Order> newOrders = orderRepository.getOrdersToConfirm(request.getUser());
+                    return new ResponseMessage(TypeOfMessage.ORDERS, newOrders);
                 case ORDER_RESPONSE:
                     productRepository = new ProductRepository();
                     if(request.getAcceptOrDecline()){
