@@ -1,6 +1,5 @@
 package buisnessLogicLayer;
 import shared.Product;
-import shared.TypeOfProduct;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,8 @@ public class Inbox {
         }
         return success;
     }
-    public void addMessageToCheckTypes(TypeOfProduct typeOfProduct){
+
+   /* public void addMessageToCheckTypes(TypeOfProduct typeOfProduct){
         availableTypes.add(typeOfProduct);
     }
     public boolean deleteMessage(){
@@ -40,5 +40,5 @@ public class Inbox {
             return false;
         }
 
-    }
+    }*/
 }

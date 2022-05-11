@@ -6,7 +6,10 @@ import client.view.UserInterface;
 import shared.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller {
 
@@ -80,7 +83,7 @@ public class Controller {
                     Product newProduct = null;
                     response = requestHandler.getAllProducts();
                     do {
-                        newProduct = userInterface.letUserChooseProduct(response.getProducts());
+                        newProduct = (Product)userInterface.letUserChooseFromList(response.getProducts());
                     } while (newProduct == null);
                     cart.addToCart(newProduct);
                     break;
@@ -141,8 +144,16 @@ public class Controller {
                 }
                 break;
                 case 10:
-                    inbox.getOrdersToConfirm();
-
+                    Order order = new Order(user, Timestamp.valueOf(LocalDateTime.now()), 8);
+                    ArrayList<Order> newOrders = new ArrayList<Order>();
+                    newOrders.add(order);
+                    inbox.updateOrdersToConfirm(newOrders);
+                    ArrayList<Order> orders = inbox.getOrdersToConfirm();
+                    Order order2  = (Order)userInterface.letUserChooseFromList(orders);
+                    boolean responseToOffer = userInterface.getBoolean("Accept or decline? (True/False)");
+                    System.out.println(order2);
+                    System.out.println(responseToOffer);
+                    break;
 
             case 12:
                 this.user = null;
