@@ -1,8 +1,12 @@
-package buisnessLogicLayer;
+package shared;
+
+import shared.Condition;
+import shared.TypeOfProduct;
 
 import java.util.ArrayList;
 
 public class EnumHandler {
+
     /**
      * @Author : Linn Borgström
      * To get the correct dondition
@@ -15,13 +19,35 @@ public class EnumHandler {
             case "New" :
                 productCondition = Condition.New;
                 break;
-            case "Very good" :
+            case "Very Good" :
                 productCondition = Condition.VeryGood;
                 break;
-            case "Not working properly" :
+            case "Not Working Properly" :
                 productCondition = Condition.NotWorkingProperly;
                 break;
             case "Good" :
+                productCondition = Condition.Good;
+                break;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + condition);
+        }
+        return productCondition;
+    }
+
+    public static Condition getCondition(int condition) {
+        Condition productCondition;
+        switch (condition){
+            case 1 :
+                productCondition = Condition.New;
+                break;
+            case 2 :
+                productCondition = Condition.VeryGood;
+                break;
+            case 3 :
+                productCondition = Condition.NotWorkingProperly;
+                break;
+            case 4 :
                 productCondition = Condition.Good;
                 break;
 
@@ -37,7 +63,7 @@ public class EnumHandler {
      * @param type the type in a string
      * @return the type in an enum
      */
-    public static buisnessLogicLayer.TypeOfProduct getType(String type) {
+    public static TypeOfProduct getType(String type) {
         TypeOfProduct typeOfProduct;
         switch (type){
             case "Hobby" :
@@ -93,6 +119,66 @@ public class EnumHandler {
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
+        }
+        return typeOfProduct;
+    }
+
+    public static TypeOfProduct getType(int input) {
+        TypeOfProduct typeOfProduct;
+        switch (input){
+            case 1 :
+                typeOfProduct = TypeOfProduct.Hobby;
+                break;
+            case 2 :
+                typeOfProduct = TypeOfProduct.Furniture;
+                break;
+            case 3 :
+                typeOfProduct = TypeOfProduct.Cameras;
+                break;
+            case 4 :
+                typeOfProduct = TypeOfProduct.Clothing;
+                break;
+            case 5 :
+                typeOfProduct = TypeOfProduct.Computers;
+                break;
+            case 6 :
+                typeOfProduct = TypeOfProduct.EntertainmentEquipment;
+                break;
+            case 7 :
+                typeOfProduct = TypeOfProduct.HouseholdMachines;
+                break;
+            case 8 :
+                typeOfProduct = TypeOfProduct.Jewelry;
+                break;
+            case 9 :
+                typeOfProduct = TypeOfProduct.MobilePhones;
+                break;
+            case 10 :
+                typeOfProduct = TypeOfProduct.PerfumesAndCosmetics;
+                break;
+            case 11 :
+                typeOfProduct = TypeOfProduct.Other;
+                break;
+            case 12 :
+                typeOfProduct = TypeOfProduct.Plants;
+                break;
+            case 13 :
+                typeOfProduct = TypeOfProduct.Shoes;
+                break;
+            case 14 :
+                typeOfProduct = TypeOfProduct.Vehicle;
+                break;
+            case 15 :
+                typeOfProduct = TypeOfProduct.Tools;
+                break;
+            case 16 :
+                typeOfProduct = TypeOfProduct.SportsEquipment;
+                break;
+            case 17 :
+                typeOfProduct = TypeOfProduct.KitchenUtensils;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + input);
         }
         return typeOfProduct;
     }

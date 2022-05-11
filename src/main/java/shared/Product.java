@@ -1,5 +1,8 @@
-package buisnessLogicLayer;
-public class Product {
+package shared;
+
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String name;
     private String seller; //TODO ska vara User?
     private TypeOfProduct typeOfProductName;
@@ -9,28 +12,6 @@ public class Product {
     private Condition condition;
     private Status status;
     private int id;
-
-    public Product(String name, String seller, TypeOfProduct typeOfProductName, double price, int yearOfMaking, Colour colour, Condition condition, Status status) {
-        this.name = name;
-        this.seller = seller;
-        this.typeOfProductName = typeOfProductName;
-        this.price = price;
-        this.yearOfMaking = yearOfMaking;
-        this.colour = colour;
-        this.condition = condition;
-        this.status = status;
-    }
-
-    public Product(String name, String seller, TypeOfProduct productTypeName, double price, int yearOfMaking,Colour colour, String productConditionName, Status status) {
-        this.name = name;
-        this.seller = seller;
-        this.typeOfProductName = typeOfProductName;
-        this.price = price;
-        this.yearOfMaking = yearOfMaking;
-        this.colour = colour;
-        this.condition = condition;
-        this.status = status;
-    }
 
     public Product(int productId, String productName, String seller, TypeOfProduct productTypeName, double price, int yearOfMaking, Colour colour, Condition productConditionName, Status status) {
         this.name = productName;

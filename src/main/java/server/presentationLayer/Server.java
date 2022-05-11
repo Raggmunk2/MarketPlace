@@ -1,8 +1,8 @@
-package presentationLayer;
+package server.presentationLayer;
 
-import buisnessLogicLayer.RequestHandler;
+import buisnessLogicLayer.ResponseHandler;
 import shared.RequestMessage;
-import shared.ReturnMessage;
+import shared.ResponseMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,10 +18,10 @@ public class Server implements Runnable {
     private ServerSocket serverSocket = null;
     private ExecutorService executor;
     private boolean isServerRunning;
-    private RequestHandler requestHandler;
+    private ResponseHandler responseHandler;
 
-    public Server(int port, RequestHandler requestHandler) {
-        this.requestHandler = requestHandler;
+    public Server(int port, ResponseHandler responseHandler) {
+        this.responseHandler = responseHandler;
         executor = Executors.newFixedThreadPool(10);
         try {
             serverSocket = new ServerSocket(port);
@@ -68,7 +68,7 @@ public class Server implements Runnable {
         public void run() {
             try {
                 RequestMessage request = (RequestMessage) ois.readObject();
-                ReturnMessage response = requestHandler.handleRequest(request);
+                ResponseMessage response = responseHandler.handleRequest(request);
                 oos.writeObject(response);
                 oos.flush();
             } catch (IOException | ClassNotFoundException e) {

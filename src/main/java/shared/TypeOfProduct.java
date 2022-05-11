@@ -1,4 +1,4 @@
-package buisnessLogicLayer;
+package shared;
 
 import java.util.ArrayList;
 
@@ -24,8 +24,6 @@ public enum TypeOfProduct {
 
     private String type;
 
-
-
     TypeOfProduct(String s) {
         this.type = s;
     }
@@ -37,21 +35,15 @@ public enum TypeOfProduct {
     }
 
     public static ArrayList<String> getAllTypesWithId(){
-        ArrayList<String> allTypes = new ArrayList<>();
+        ArrayList<String> typeList = new ArrayList<>();
         int id = 1;
-        for (TypeOfProduct top:TypeOfProduct.values()) {
-            if(!top.equals(allTypes)){
-                allTypes.add(id+". "+top.type + "\n");
+        for (TypeOfProduct type:TypeOfProduct.values()) {
+            if(!type.equals(typeList)){
+                typeList.add(id+". "+type.type);
                 id++;
             }
 
         }
-        return allTypes;
-    }
-
-    public static void main(String[] args) {
-        //System.out.println(Arrays.stream(TypeOfProduct.values()).spliterator());
-
-        System.out.println(TypeOfProduct.getAllTypesWithId());
+        return typeList;
     }
 }

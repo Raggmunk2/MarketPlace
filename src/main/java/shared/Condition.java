@@ -1,4 +1,4 @@
-package buisnessLogicLayer;
+package shared;
 
 import java.util.ArrayList;
 

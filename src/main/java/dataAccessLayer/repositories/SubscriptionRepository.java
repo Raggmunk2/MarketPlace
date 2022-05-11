@@ -1,9 +1,11 @@
-package dataAccessLayer;
+package dataAccessLayer.repositories;
+
+import dataAccessLayer.ConnectionToDB;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProductSubscriptionRepository {
+public class SubscriptionRepository {
 
     private Connection connection;
     private Statement statement;
@@ -11,7 +13,7 @@ public class ProductSubscriptionRepository {
     /**
      * @Author : Frida Jacobsson
      */
-    public ProductSubscriptionRepository() throws SQLException {
+    public SubscriptionRepository() throws SQLException {
         connection = new ConnectionToDB().getConnection();
         statement = connection.createStatement();
     }

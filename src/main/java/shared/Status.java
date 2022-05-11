@@ -1,4 +1,4 @@
-package buisnessLogicLayer;
+package shared;
 public enum Status {
     Sold,
     Available,

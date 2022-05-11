@@ -1,6 +1,6 @@
-package presentationLayer;
+package server.presentationLayer;
 
-import buisnessLogicLayer.RequestHandler;
+import buisnessLogicLayer.ResponseHandler;
 import dataAccessLayer.ConnectionToDB;
 
 import java.sql.Connection;
@@ -10,7 +10,7 @@ public class  StartServer {
     public static void main(String[] args) {
         Connection connection = new ConnectionToDB().getConnection();
         System.out.println(connection);
-        RequestHandler requestHandler = new RequestHandler();
+        ResponseHandler requestHandler = new ResponseHandler();
         Server server = new Server(6890, requestHandler);
     }
 }

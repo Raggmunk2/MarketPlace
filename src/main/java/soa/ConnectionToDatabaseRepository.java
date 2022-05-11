@@ -1,28 +1,29 @@
 package soa;
 
-import dataAccessLayer.AccessControlRepository;
-import dataAccessLayer.OrderHistoryRepository;
-import dataAccessLayer.ProductRepository;
+import dataAccessLayer.repositories.OrderRepository;
+import dataAccessLayer.repositories.ProductRepository;
+import dataAccessLayer.repositories.UserRepository;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 
 public class ConnectionToDatabaseRepository {
     private ProductRepository productRepository;
-    private OrderHistoryRepository orderHistoryRepository;
+    private OrderRepository orderRepository;
 
     public ConnectionToDatabaseRepository() throws SQLException {
         productRepository = new ProductRepository();
-        AccessControlRepository acr = new AccessControlRepository();
-        orderHistoryRepository = new OrderHistoryRepository(acr.getUser());
-
+        UserRepository acr = new UserRepository();
+        orderRepository = new OrderRepository(acr.getUser());
     }
 
     public ArrayList getAllProducts() throws SQLException {
-        return productRepository.getAllProductsFromDB();
+        return productRepository.getAllProducts();
     }
 
     public ArrayList getOrderHistory() {
-        return orderHistoryRepository.getStringOrderHistory();
+       return orderRepository.getStringOrderHistory();
+        return null
     }
 }
