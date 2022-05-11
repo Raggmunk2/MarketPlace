@@ -99,5 +99,8 @@ public class AccessControlRepository {
         java.sql.Date lastLogin = new java.sql.Date(millis);
         user = new User(newUserName, newUserPassword, newUserFirstname, newUserLastName, newUserdateOfBirth, newUserEmail, lastLogin, true);
     }
+    public User getUser(){
+        return user;
+    }
 
 }
