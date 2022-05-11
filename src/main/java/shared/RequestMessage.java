@@ -29,9 +29,9 @@ public class RequestMessage implements Serializable{
         else if(object instanceof TypeOfProduct){
             this.typeOfProduct = (TypeOfProduct)object;
         }
-       else if(object instanceof int[] priceRange){
+       /*else if(object instanceof int[] priceRange){ //TODO vet ej varför denna ger error
             this.priceRange = (int[]) object;
-        }
+        }*/
         if(object instanceof Condition){
             this.condition = (Condition)object;
         }
