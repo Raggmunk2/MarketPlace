@@ -16,7 +16,7 @@ public class ConnectionToDatabaseRepository {
     public ConnectionToDatabaseRepository() throws SQLException {
         productRepository = new ProductRepository();
         UserRepository acr = new UserRepository();
-       // orderRepository = new OrderRepository(acr.getUser("hej"));
+       orderRepository = new OrderRepository();
     }
 
     public ArrayList getAllProducts() throws SQLException {
@@ -24,7 +24,6 @@ public class ConnectionToDatabaseRepository {
     }
 
     public ArrayList getOrderHistory() {
-       //return orderRepository.getStringOrderHistory();
-        return null;
+       return orderRepository.getStringOrderHistory();
     }
 }
