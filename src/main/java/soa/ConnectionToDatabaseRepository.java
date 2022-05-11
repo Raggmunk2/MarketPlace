@@ -3,6 +3,7 @@ package soa;
 import dataAccessLayer.repositories.OrderRepository;
 import dataAccessLayer.repositories.ProductRepository;
 import dataAccessLayer.repositories.UserRepository;
+import shared.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class ConnectionToDatabaseRepository {
     public ConnectionToDatabaseRepository() throws SQLException {
         productRepository = new ProductRepository();
         UserRepository acr = new UserRepository();
-        orderRepository = new OrderRepository(acr.getUser());
+       // orderRepository = new OrderRepository(acr.getUser("hej"));
     }
 
     public ArrayList getAllProducts() throws SQLException {
@@ -23,7 +24,7 @@ public class ConnectionToDatabaseRepository {
     }
 
     public ArrayList getOrderHistory() {
-       return orderRepository.getStringOrderHistory();
-        return null
+       //return orderRepository.getStringOrderHistory();
+        return null;
     }
 }
