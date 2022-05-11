@@ -18,19 +18,30 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * @Author: Annie Tran, Linn Borgström
+ * Class to get a users order history
+ */
+
 @Path("/marketPlace")
 public class OrderService {
     private ConnectionToDatabaseRepository connection;
+
 
     public OrderService() throws SQLException {
         connection = new ConnectionToDatabaseRepository();
     }
 
+    /**
+     * Gets the order history and throught a connection to the DB
+     * @return Json object in a String format
+     * @throws SQLException
+     */
     @GET
     @Path("/orderHistory")
     @Produces({MediaType.APPLICATION_JSON})
 
-    public String getOrderHistory() throws SQLException {
+    public String getOrderHistory() {
         ArrayList products = connection.getOrderHistory();
 
         GsonBuilder builder = new GsonBuilder();
@@ -41,6 +52,7 @@ public class OrderService {
 
     }
 
+    
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServerFactory.create("http://localhost:9998/");
         server.start();
