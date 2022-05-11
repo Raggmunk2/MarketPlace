@@ -5,58 +5,27 @@ import client.model.Inbox;
 import client.view.UserInterface;
 import shared.*;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller {
+public class LoggedInController {
 
-    private UserInterface userInterface;
     private User user;
+    private UserInterface userInterface;
     private client.controller.RequestHandler requestHandler;
     private Cart cart;
     private client.model.Inbox inbox;
 
-    public Controller() {
-        this.userInterface = new UserInterface();
-        this.requestHandler = new client.controller.RequestHandler("127.0.0.1", 6890);
-        mainMenuHandler(userInterface.showMainMenu());
-    }
-
-    private void mainMenuHandler(int input) {
-        switch (input) {
-            case 1:
-                boolean loginSuccess;
-                do {
-                    loginSuccess = loginUser();
-                } while (!loginSuccess);
-                loggedInMenuHandler();
-                break;
-            case 2:
-                String firstName = userInterface.getFirstName();
-                String lastName = userInterface.getLastName();
-                Date DoB = userInterface.getDateOfBirth();
-                String email = userInterface.getEmail();
-                String newUsername = userInterface.getUsername();
-                String newPassword = userInterface.getPassword();
-                this.user = new User(newUsername, newPassword, firstName, lastName, DoB, email);
-                ResponseMessage registerResponse = requestHandler.getRegisterResponse(user);
-                Boolean success = registerResponse.getSuccess();
-                if (success) {
-                    System.out.println("Welcome " + user.getUserName() + " what would you like to do now?");
-                    loggedInMenuHandler();
-                } else {
-                    System.out.println("Sorry we could not add the user, please try again.");
-                    mainMenuHandler(userInterface.showMainMenu());
-                }
-            case 3:
-                System.exit(0);
-        }
+    public LoggedInController(User user, UserInterface userInterface, RequestHandler requestHandler) {
+        this.user = user;
+        this.userInterface = userInterface;
+        this.requestHandler = requestHandler;
+        cart = new Cart();
+        inbox = new Inbox();
+        loggedInMenuHandler();
     }
 
     private void loggedInMenuHandler() {
-        cart = new Cart();
-        inbox = new Inbox();
         int input;
         do {
             input = userInterface.showLoggedInMenu();
@@ -80,16 +49,16 @@ public class Controller {
                     getAllProducts();
                     break;
                 case 7:
-                   searchByProductType();
+                    searchByProductType();
                     break;
                 case 8:
                     searchByPriceRange();
                     break;
                 case 9:
-                   searchByCondition();
+                    searchByCondition();
                     break;
                 case 10:
-                  handleInbox();
+                    handleInbox();
                     break;
             }
         } while (input != 12);
@@ -97,25 +66,12 @@ public class Controller {
         logoutUser();
     }
 
-    private boolean loginUser() {
-        String username = userInterface.getUsername();
-        String password = userInterface.getPassword();
-        ResponseMessage loginResponse = requestHandler.getLoginResponse(username, password);
-        if (loginResponse != null) {
-            if (loginResponse.getTypeOfMessage() == TypeOfMessage.ERROR) {
-                userInterface.printMessage("Something went wrong. Try again.");
-                return false;
-            }
-        }
-        this.user = loginResponse.getUser();
-        return true;
-    }
 
     private void logoutUser() {
         this.user = null;
         this.cart = null;
         this.inbox = null;
-        mainMenuHandler(userInterface.showMainMenu());
+        System.exit(1);
     }
 
     private void addProductToCart() {
