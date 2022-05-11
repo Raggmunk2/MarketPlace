@@ -1,6 +1,5 @@
 package buisnessLogicLayer;
 import shared.Product;
-import shared.TypeOfProduct;
 
 import java.util.ArrayList;
 
@@ -9,14 +8,14 @@ import java.util.ArrayList;
  * Class that holds the messages for notification
  */
 public class Inbox {
+
     private ArrayList<Product> productToConfirm = new ArrayList<>();
-    private ArrayList<TypeOfProduct> availableTypes = new ArrayList<>();
+    //private ArrayList<TypeOfProduct> availableTypes = new ArrayList<>();
 
     public void addToInboxProductsToConfirm(ArrayList<Product> products) {
         for (Product p:products ) {
             productToConfirm.add(p);
         }
-
     }
 
     public boolean removeProductToConfirm(Product product){
@@ -29,7 +28,8 @@ public class Inbox {
         }
         return success;
     }
-    public void addMessageToCheckTypes(TypeOfProduct typeOfProduct){
+
+   /* public void addMessageToCheckTypes(TypeOfProduct typeOfProduct){
         availableTypes.add(typeOfProduct);
     }
     public boolean deleteMessage(){
@@ -40,5 +40,5 @@ public class Inbox {
             return false;
         }
 
-    }
+    }*/
 }

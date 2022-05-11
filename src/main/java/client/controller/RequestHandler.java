@@ -5,13 +5,14 @@ import shared.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestHandler {
 
-    private ServerConnection serverConnection;
+    private client.controller.ServerConnection serverConnection;
 
     public RequestHandler(String host, int port){
-        this.serverConnection = new ServerConnection(host, port);
+        this.serverConnection = new client.controller.ServerConnection(host, port);
     }
 
     protected ResponseMessage getLoginResponse(String username, String password) {
@@ -56,6 +57,16 @@ public class RequestHandler {
 
     public ResponseMessage getAllProducts() {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
+    public ResponseMessage getOrdersToConfirm() {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NEW_MESSAGES);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
+    public ResponseMessage confirmOrder(HashMap<Order, Boolean> result) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDER_RESPONSE, result);
         return serverConnection.sendRequest(requestMessage);
     }
 }

@@ -1,4 +1,5 @@
 package shared;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -22,11 +23,12 @@ public class Order implements Serializable {
         this.CreatedAt = createdAt;
         this.productId = productId;
     }
+
     public Order(User buyer, String productName, User seller, TypeOfProduct typeOfProduct, double price, Condition condition) {
         //TODO write code for
     }
 
-    public int getOrderId(){
+    public int getOrderId() {
         return orderId;
     }
 
@@ -40,5 +42,15 @@ public class Order implements Serializable {
 
     public int getProductId() {
         return productId;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "orderId=" + orderId +
+                        ", buyer=" + buyer.getUserName() +
+                        ", CreatedAt=" + CreatedAt +
+                        ", productId=" + productId +
+                        '}';
     }
 }

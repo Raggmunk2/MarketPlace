@@ -1,9 +1,6 @@
 package client.view;
 
-import shared.Condition;
-import shared.EnumHandler;
-import shared.Product;
-import shared.TypeOfProduct;
+import shared.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,24 +24,26 @@ public class UserInterface {
 
     // ------------------------------- User login -------------------------------
 
-    public String getUsername(){
+    public String getUsername() {
         System.out.println("Enter your username: ");
         String username = scanner.nextLine() + scanner.nextLine();
         return username;
     }
-    public String getPassword(){
+
+    public String getPassword() {
         System.out.println("Enter your password: ");
         String password = scanner.nextLine();
         return password;
     }
 
     // ------------------------------- Register  -------------------------------
-    public String getFirstName(){
+    public String getFirstName() {
         System.out.println("First name:");
         String newUserFirstname = scanner.nextLine() + scanner.nextLine();
         return newUserFirstname;
     }
-    public String getLastName(){
+
+    public String getLastName() {
         System.out.println("Last name:");
         String newUserLastName = scanner.nextLine();
         return newUserLastName;
@@ -71,7 +70,7 @@ public class UserInterface {
 
     /*-------------------------When logged in------------------------*/
 
-    public int showLoggedInMenu(){
+    public int showLoggedInMenu() {
         System.out.println("*-------------------- Welcome what do you want to do now? --------------------*");
         System.out.println("1: Add product to cart");
         System.out.println("2: View Cart");
@@ -111,9 +110,10 @@ public class UserInterface {
     public TypeOfProduct getProductType() {
         System.out.println("*------------ Types ------------*");
         System.out.println("Please write number of the type you like to search for");
-        for(String type : TypeOfProduct.getAllTypesWithId()){
+        for (String type : TypeOfProduct.getAllTypesWithId()) {
             System.out.println(type);
-        };
+        }
+        ;
         return EnumHandler.getType(scanner.nextInt());
     }
 
@@ -129,36 +129,48 @@ public class UserInterface {
     public Condition getCondition() {
         System.out.println("*------------ Condition ------------*");
         System.out.println("Please write the number of the condition you like to search for");
-        for(String condition : Condition.getAllConditionsWithId()){
+        for (String condition : Condition.getAllConditionsWithId()) {
             System.out.println(condition);
-        };
+        }
+        ;
         return EnumHandler.getCondition(scanner.nextInt());
     }
 
-    public void printErrorMessage(String message) {
+    public void printMessage(String message) {
         System.out.println(message);
     }
 
     public void showResult(String text, ArrayList<?> list) {
         System.out.println(text);
-        for (Object p : list)
-        {
+        for (Object p : list) {
             System.out.println(p);
         }
     }
 
-    public Product letUserChooseProduct(ArrayList<Product> products) {
-        System.out.println("-------- TYPE PRODUCT ID TO ADD IT TO CART");
-        for(Product p: products){
-            System.out.println(p);
+    public Object letUserChooseFromList(ArrayList<?> list) {
+        System.out.println("-------- TYPE ID TO CHOOSE ITEM--------------");
+        for (Object object : list) {
+            System.out.println(object.toString());
         }
         int selectedId = scanner.nextInt();
-        for(Product p : products){
-            if(p.getId() == selectedId){
-                return p;
+        int itemId = 0;
+        for (Object object : list) {
+            if (object instanceof Product) {
+                itemId = ((Product) object).getId();
+            } else if (object instanceof Order) {
+                itemId = ((Order) object).getOrderId();
             }
+            if (selectedId == itemId) {
+                return object;
+            }
+
         }
         System.out.println("Invalid product id");
         return null;
+    }
+
+    public boolean getBoolean(String text){
+        System.out.println(text);
+        return scanner.nextBoolean();
     }
 }

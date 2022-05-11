@@ -1,7 +1,7 @@
 package shared;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestMessage implements Serializable{
     private int[] priceRange;
@@ -12,6 +12,7 @@ public class RequestMessage implements Serializable{
     private User user;
     private Condition condition;
     private Order order;
+    private boolean acceptOrDecline;
 
     //LOGGA IN KONSTRUKTOR
     public RequestMessage(TypeOfMessage typeOfMessage, String userName, String password){
@@ -28,14 +29,17 @@ public class RequestMessage implements Serializable{
         else if(object instanceof TypeOfProduct){
             this.typeOfProduct = (TypeOfProduct)object;
         }
-       // else if(object instanceof int[] priceRange){
+       else if(object instanceof int[] priceRange){
             this.priceRange = (int[]) object;
-        //}
+        }
         if(object instanceof Condition){
             this.condition = (Condition)object;
         }
         else if(object instanceof Order){
           this.order = (Order)object;
+        }
+        else if(object instanceof HashMap) {
+            this.acceptOrDecline = ((HashMap<Order, Boolean>) object).get(0);
         }
     }
 
@@ -62,5 +66,9 @@ public class RequestMessage implements Serializable{
     }
     public Order getOrder() {
         return order;
+    }
+
+    public boolean getAcceptOrDecline(){
+        return acceptOrDecline;
     }
 }
