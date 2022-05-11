@@ -20,6 +20,7 @@ public class SubscriptionRepository {
 
     public boolean addNewSubscription(int typeOfProduct, String username) {
         try {
+
             CallableStatement callableStatement = connection.prepareCall("{CALL MarketPlace.dbo.sp_AddSubscription(?,?)}");
             callableStatement.setInt(1, typeOfProduct);
             callableStatement.setString(2, username);
