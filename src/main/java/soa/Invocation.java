@@ -11,7 +11,7 @@ public class Invocation {
 
     public static void main(String[] args) {
         try{
-            URL url = new URL ("http://localhost:9998/marketPlace");
+            URL url = new URL ("http://localhost:9998/marketPlace/orderHistory/");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
@@ -24,6 +24,7 @@ public class Invocation {
             BufferedReader br = new BufferedReader(in);
             String output = "";
             while ((output = br.readLine()) != null){
+                System.out.println("----------- Order history -----------");
                 System.out.println(output);
             }
             connection.disconnect();
