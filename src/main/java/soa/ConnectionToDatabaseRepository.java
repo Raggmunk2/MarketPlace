@@ -3,6 +3,8 @@ package soa;
 import dataAccessLayer.AccessControlRepository;
 import dataAccessLayer.OrderHistoryRepository;
 import dataAccessLayer.ProductRepository;
+import shared.User;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,8 +15,7 @@ public class ConnectionToDatabaseRepository {
 
     public ConnectionToDatabaseRepository() throws SQLException {
         productRepository = new ProductRepository();
-        AccessControlRepository acr = new AccessControlRepository();
-        orderHistoryRepository = new OrderHistoryRepository(acr.getUser());
+        orderHistoryRepository = new OrderHistoryRepository(new User("Linn","hejhej", "Linn", "Borgström", null,"hej@hej.com")); //TODO change user to get the in logged user
 
     }
 
