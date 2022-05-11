@@ -65,4 +65,16 @@ public class OrderRepository {
             }
         return true;
     }
+
+    public boolean removeOrder(Order order) {
+        try {
+            Statement statement = connection.createStatement();
+            String query = "DELETE FROM [Order] WHERE orderId = " + order.getOrderId() +"';";
+            statement.executeUpdate(query);
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException);
+            return false;
+        }
+        return true;
+    }
 }

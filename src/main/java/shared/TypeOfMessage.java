@@ -11,5 +11,6 @@ public enum TypeOfMessage {
     ORDERS,
     CREATE_ORDER,
     PRODUCTS,
-    NEW_MESSAGES, ORDER_RESPONSE;
+    NEW_MESSAGES,
+    ORDER_RESPONSE;
 }

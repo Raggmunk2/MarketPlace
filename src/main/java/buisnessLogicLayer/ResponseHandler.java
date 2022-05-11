@@ -55,6 +55,19 @@ public class ResponseHandler {
                     orderRepository = new OrderRepository(new UserRepository());
                     success = orderRepository.addProductToOrder(request.getOrder());
                     return new ResponseMessage(TypeOfMessage.CREATE_ORDER, success);
+                case NEW_MESSAGES:
+
+                case ORDER_RESPONSE:
+                    productRepository = new ProductRepository();
+                    if(request.getAcceptOrDecline()){
+                        productRepository.changeProductStatus(request.getOrder().getProductId(), Status.Sold);
+                    }
+                    else{
+                        productRepository.changeProductStatus(request.getOrder().getProductId(), Status.Available);
+                    }
+                    orderRepository = new OrderRepository(new UserRepository());
+                    boolean removeOrderOK = orderRepository.removeOrder(request.getOrder());
+                   return new ResponseMessage(TypeOfMessage.ORDER_RESPONSE, removeOrderOK);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);

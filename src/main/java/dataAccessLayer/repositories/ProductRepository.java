@@ -219,4 +219,16 @@ public class ProductRepository {
         return unavailableProducts;
     }
 
+    public boolean changeProductStatus(int productId, Status newStatus) {
+        try {
+            String query = "UPDATE [Product] SET Status = '"+newStatus.toString() +"' WHERE productId = " + productId +";";
+            statement.executeUpdate(query);
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException);
+            return false;
+        }
+        return true;
+
+        //TODO Write code
+    }
 }
