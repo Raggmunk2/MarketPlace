@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class RequestHandler {
 
-    private ServerConnection serverConnection;
+    private client.controller.ServerConnection serverConnection;
 
     public RequestHandler(String host, int port){
-        this.serverConnection = new ServerConnection(host, port);
+        this.serverConnection = new client.controller.ServerConnection(host, port);
     }
 
     protected ResponseMessage getLoginResponse(String username, String password) {

@@ -1,7 +1,6 @@
 package client.model;
 
 import shared.Order;
-import shared.Product;
 
 import java.util.ArrayList;
 
@@ -10,10 +9,24 @@ import java.util.ArrayList;
  * Class that holds the messages for notification
  */
 public class Inbox {
-    private ArrayList<Product> productsToConfirm = new ArrayList<>();
-    private ArrayList<Order> acceptedOrders = new ArrayList<Order>();
+    private ArrayList<Order> ordersToConfirm;
+    //private ArrayList<Order> acceptedOrders = new ArrayList<Order>();
 
-    public void addToInboxProductsToConfirm(ArrayList<Product> products) {
+    public Inbox(){
+        ordersToConfirm = new ArrayList<>();
+    }
+
+    public void updateOrdersToConfirm(ArrayList<Order> waitingOrders){
+        for(Order waitingOrder: waitingOrders){
+            ordersToConfirm.add(waitingOrder);
+        }
+    }
+
+    public ArrayList<Order> getOrdersToConfirm() {
+        return ordersToConfirm;
+    }
+
+  /*  public void addToInboxProductsToConfirm(ArrayList<Product> products) {
         for (Product p:products ) {
             productsToConfirm.add(p);
         }
@@ -28,5 +41,6 @@ public class Inbox {
             }
         }
         return success;
-    }
+    }*/
+
 }

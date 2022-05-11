@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.model.Cart;
+import client.model.Inbox;
 import client.view.UserInterface;
 import shared.*;
 
@@ -13,11 +14,14 @@ public class Controller {
     private User user;
     private client.controller.RequestHandler requestHandler;
     private Cart cart;
+    private client.model.Inbox inbox;
 
     public Controller() {
         this.userInterface = new UserInterface();
         this.requestHandler = new client.controller.RequestHandler("127.0.0.1", 6890);
         cart = new Cart();
+        inbox = new Inbox();
+
         mainMenuHandler(userInterface.showMainMenu());
     }
 
@@ -136,6 +140,10 @@ public class Controller {
                     userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
                 }
                 break;
+                case 10:
+                    inbox.getOrdersToConfirm();
+
+
             case 12:
                 this.user = null;
                 this.cart = null;
