@@ -1,4 +1,6 @@
 package buisnessLogicLayer;
+import shared.TypeOfProduct;
+
 import java.util.HashMap;
 import java.util.Map;
 

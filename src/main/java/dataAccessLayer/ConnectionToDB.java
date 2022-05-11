@@ -33,11 +33,8 @@ public class ConnectionToDB {
             try {
                 connection = createConnection();
             }
-            catch (UnknownHostException e) {
+            catch (UnknownHostException | SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
-            }
-            catch (SQLException | ClassNotFoundException sqlException) {
-                sqlException.printStackTrace();
             }
         }
         return connection;

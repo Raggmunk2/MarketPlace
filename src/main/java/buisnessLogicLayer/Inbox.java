@@ -1,4 +1,7 @@
 package buisnessLogicLayer;
+import shared.Product;
+import shared.TypeOfProduct;
+
 import java.util.ArrayList;
 
 /**

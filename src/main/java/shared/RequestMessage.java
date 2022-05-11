@@ -1,45 +1,66 @@
 package shared;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.ArrayList;
 
 public class RequestMessage implements Serializable{
-    private String typeOfMessage;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private int[] priceRange;
+    private TypeOfMessage typeOfMessage;
+    private TypeOfProduct typeOfProduct;
     private String userName;
     private String password;
-    private Date DoB;
-    private Object object;
+    private User user;
+    private Condition condition;
+    private Order order;
 
-    /*public Message(String typeOfMessage, Object object){
-        this.typeOfMessage = typeOfMessage;
-        this.object = object;
-    }*/
-    public RequestMessage(String typeOfMessage, String userName, String password){
+    //LOGGA IN KONSTRUKTOR
+    public RequestMessage(TypeOfMessage typeOfMessage, String userName, String password){
         this.typeOfMessage = typeOfMessage;
         this.userName = userName;
         this.password = password;
     }
 
-    public RequestMessage(String typeOfMessage, String firstName, String lastName, Date doB, String email, String userName, String password) {
+    public RequestMessage (TypeOfMessage typeOfMessage, Object object){
         this.typeOfMessage = typeOfMessage;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.userName = userName;
-        this.password = password;
-        DoB = doB;
+        if(object instanceof User){
+            this.user = (User)object;
+        }
+        else if(object instanceof TypeOfProduct){
+            this.typeOfProduct = (TypeOfProduct)object;
+        }
+       // else if(object instanceof int[] priceRange){
+            this.priceRange = (int[]) object;
+        //}
+        if(object instanceof Condition){
+            this.condition = (Condition)object;
+        }
+        else if(object instanceof Order){
+          this.order = (Order)object;
+        }
     }
 
+    public RequestMessage(TypeOfMessage typeOfMessage) {
+        this.typeOfMessage = typeOfMessage;
+    }
 
-    public String getTypeOfMessage(){return typeOfMessage;}
-    public String getFirstName(){return firstName;}
-    public String getLastName(){return lastName;}
-    public String getEmail(){return email;}
+    public TypeOfMessage getTypeOfMessage(){
+        return typeOfMessage;
+    }
     public String getUserName(){return userName;}
     public String getPassword(){return password;}
-    public Date getDoB(){return DoB;}
-    public Object getObject(){return object;}
+    public TypeOfProduct getTypeOfProduct() {
+        return typeOfProduct;
+    }
+    public User getUser() {
+        return user;
+    }
+    public int[] getPriceRange() {
+        return priceRange;
+    }
+    public Condition getCondition() {
+        return condition;
+    }
+    public Order getOrder() {
+        return order;
+    }
 }

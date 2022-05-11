@@ -1,14 +1,14 @@
 package client.controller;
 
 import shared.RequestMessage;
-import shared.ReturnMessage;
+import shared.ResponseMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ServerConnection {
+public class ServerConnection extends Thread{
 
     private String host;
     private int port;
@@ -21,18 +21,19 @@ public class ServerConnection {
         this.port = port;
     }
 
-    public ReturnMessage sendRequest(RequestMessage request) {
-        ReturnMessage response = null;
+    public ResponseMessage sendRequest(RequestMessage request) {
+        ResponseMessage response = null;
         try {
             socket = new Socket(host, port);
-            System.out.println("Connected to server on port: " + port);
+
+            //Skickar request till servern
             output = new ObjectOutputStream(socket.getOutputStream());
             output.writeObject(request);
             output.flush();
+
+            //Får response från server (Detta är det som metoden returnar)
             input = new ObjectInputStream(socket.getInputStream());
-            System.out.println(request + " was sent");
-            response = (ReturnMessage) input.readObject();
-            System.out.println(response + "came back from server!");
+            response = (ResponseMessage) input.readObject();
 
         } catch (IOException e) {
             e.printStackTrace();
