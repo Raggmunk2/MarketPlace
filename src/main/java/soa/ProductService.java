@@ -23,11 +23,11 @@ public class ProductService {
     @Produces({MediaType.APPLICATION_JSON})
 
     public String getAllProducts() throws SQLException {
-       /* ArrayList products = connection.getAllProducts();
+       ArrayList products = connection.getAllProducts();
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-*/
+
         String jsonObject = gson.toJson(products);
         return jsonObject;
 
