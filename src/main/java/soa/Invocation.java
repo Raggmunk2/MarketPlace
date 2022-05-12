@@ -45,7 +45,13 @@ public class Invocation {
         }
 
     }
-    public static String parse(String responseBody){
+
+    /**
+     * @Author: Linn Borgström
+     * A method to parse the text to a JsonObject
+     * @param responseBody the text to parse
+     */
+    public static void parse(String responseBody){
         JSONArray orderArray = new JSONArray(responseBody);
         for (int i = 0;i < orderArray.length(); i++) {
             JSONObject order = orderArray.getJSONObject(i);
@@ -57,8 +63,7 @@ public class Invocation {
             String condition = order.getString("condition");
             System.out.println("Buyer: " + buyerName + " productName: " + productName+ " typeOfProduct: " +typeOfProduct+ " price: " + price+ " condition: " +condition + " seller: " + sellerName);
         }
-        return null;
     }
-    
+
 
 }
