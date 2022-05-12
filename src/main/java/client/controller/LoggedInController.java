@@ -28,6 +28,7 @@ public class LoggedInController {
     private void loggedInMenuHandler() {
         int input;
         do {
+
             input = userInterface.showLoggedInMenu();
             switch (input) {
                 case 1:

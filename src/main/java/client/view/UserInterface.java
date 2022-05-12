@@ -72,17 +72,17 @@ public class UserInterface {
 
     public int showLoggedInMenu() {
         System.out.println("*-------------------- Welcome what do you want to do now? --------------------*");
-        System.out.println("1: Add product to cart");
-        System.out.println("2: View Cart");
-        System.out.println("3: Order history.");
-        System.out.println("4: Create a new order.");
-        System.out.println("5: Sell a product.");
+        System.out.println("1: Add product to cart");           //denna slås ihop med 6-9
+        System.out.println("2: View Cart");                     //ja men ej submitt, endast i RAM-minnet
+        System.out.println("3: Order history.");                //Finns i SOA
+        System.out.println("4: Create a new order.");           //ska tas bort(kommer hända genom kundkorgen)
+        System.out.println("5: Sell a product.");               //Inte implementerat
         System.out.println("6: See all products.");
         System.out.println("7: Search for products by type.");
         System.out.println("8: Search for products by price");
         System.out.println("9: Search products by condition");
-        System.out.println("10: Inbox");
-        System.out.println("11: Subscribe to a type");
+        System.out.println("10: Inbox");                        //Inte implementerat
+        System.out.println("11: Subscribe to a type");          //Inte implementerat
         System.out.println("12: Log out.");
         System.out.println("*------------------------------ Please insert choose a number -----------------------------*");
         return scanner.nextInt();
