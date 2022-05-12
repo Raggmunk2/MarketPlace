@@ -29,7 +29,7 @@ public class RequestMessage implements Serializable{
         else if(object instanceof TypeOfProduct){
             this.typeOfProduct = (TypeOfProduct)object;
         }
-       else if(object instanceof int[]){ //TODO vet ej varför denna ger error
+       else if(object instanceof int[]){
             this.priceRange = (int[]) object;
         }
         if(object instanceof Condition){
