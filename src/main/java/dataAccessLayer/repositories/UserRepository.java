@@ -30,7 +30,7 @@ public class UserRepository {
                 String lastname = results.getString("lastname");
                 Date dateOfBirth = results.getDate("dateOfBirth");
                 String email = results.getString("email");
-                user = new User("No user exists", dataBasePassword, firstname, lastname, dateOfBirth, email);
+                user = new User(dataBaseUsername, dataBasePassword, firstname, lastname, dateOfBirth, email);
             }
             } catch (SQLException e) {
             e.printStackTrace();

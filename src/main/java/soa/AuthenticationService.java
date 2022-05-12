@@ -27,6 +27,5 @@ public class AuthenticationService {
         Gson gson = builder.create();
         String jsonObject = gson.toJson(products);
         return jsonObject;
-
     }
 }
