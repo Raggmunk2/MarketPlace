@@ -21,21 +21,23 @@ public class OrderRepository {
     public ArrayList<Order> getOrderHistory(User thisBuyer)  {
         ArrayList<Order> orderList = new ArrayList<>();
         try {
-            String selectOrderHistory = "Select * from [dbo].[Order] join [dbo].[Product] on" +
-                    "[dbo].[Order].productId = [dbo].[Product].productId where buyer = '" + thisBuyer.getUserName() + "'";
+            //String selectOrderHistory = "Select * from [dbo].[Order] join [dbo].[Product] on" +
+              //      "[dbo].[Order].productId = [dbo].[Product].productId where buyer = '" + thisBuyer.getUserName() + "'";
+            String selectOrderHistory = "Select buyer, [name],Seller, typeOfProduct,price," +
+                                "condition from [dbo].[Order] join [dbo].[Product] on[dbo].[Order].productId = [dbo].[Product].productId where buyer ='" +thisBuyer.getUserName() + "';";
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(selectOrderHistory);
 
             while (results.next()) {
-                String buyerString = results.getString(2);
+                String buyerString = results.getString(1);
                 User buyer = userRepository.getUser(buyerString);
 
-                String productName = results.getString(6);
-                String sellerString = results.getString(7);
+                String productName = results.getString(2);
+                String sellerString = results.getString(3);
                 User seller = userRepository.getUser(sellerString);
-                TypeOfProduct typeOfProduct = EnumHandler.getType(results.getString(4));
-                double price = results.getDouble(9);
-                Condition condition = EnumHandler.getCondition(results.getString(12));
+                TypeOfProduct typeOfProduct = EnumHandler.getType(results.getInt(4));
+                double price = results.getDouble(5);
+                Condition condition = EnumHandler.getCondition(results.getInt(6));
 
                 Order order = new Order(buyer, productName, seller, typeOfProduct, price, condition);
                 orderList.add(order);
@@ -94,7 +96,7 @@ public class OrderRepository {
                 User seller = userRepository.getUser(sellerString);
                 TypeOfProduct typeOfProduct = EnumHandler.getType(results.getString(4));
                 double price = results.getDouble(9);
-                Condition condition = EnumHandler.getCondition(results.getString(12));
+                Condition condition = EnumHandler.getCondition(results.getInt(12));
 
                 Order order = new Order(buyer, productName, seller, typeOfProduct, price, condition);
                 orderList.add(order);

@@ -1,39 +1,64 @@
 package soa;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 
 public class Invocation {
 
     public static void main(String[] args) {
         try{
-            URL url = new URL ("http://localhost:9998/marketPlace/orderHistory/");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Accept", "application/json");
-            if(connection.getResponseCode()!=200){
-                System.err.println("Some error happened");
+            URL url = new URL("http://localhost:9998/marketPlace/orderHistory/");
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestProperty("Accept", "application/json");
+
+            if(httpURLConnection.getResponseCode()!= 200){
+
+                System.err.println("Some error happend");
                 System.exit(0);
             }
 
-            InputStreamReader in = new InputStreamReader(connection.getInputStream());
-            BufferedReader br = new BufferedReader(in);
+            BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
             String output = "";
-            while ((output = br.readLine()) != null){
-                System.out.println("----------- Order history -----------");
-                System.out.println(output);
-            }
-            connection.disconnect();
+            while((output = br.readLine()) !=null){
+                sb.append(output);
 
-        } catch (MalformedURLException e) {
+            }
+            br.close();
+            httpURLConnection.disconnect();
+            parse(sb.toString());
+
+
+        } catch (MalformedURLException | ProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+    public static String parse(String responseBody){
+        JSONArray orderArray = new JSONArray(responseBody);
+        for (int i = 0;i < orderArray.length(); i++) {
+            JSONObject order = orderArray.getJSONObject(i);
+            String buyerName = (String) order.getJSONObject("buyer").get("userName");
+            String sellerName = (String) order.getJSONObject("seller").get("userName");
+            String typeOfProduct = order.getString("typeOfProduct");
+            double price = order.getDouble("price");
+            String productName = order.getString("productName");
+            String condition = order.getString("condition");
+            System.out.println("Buyer: " + buyerName + " productName: " + productName+ " typeOfProduct: " +typeOfProduct+ " price: " + price+ " condition: " +condition + " seller: " + sellerName);
+        }
+        return null;
+    }
+    
 
 }

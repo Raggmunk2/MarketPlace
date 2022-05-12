@@ -8,6 +8,11 @@ public class Order implements Serializable {
 
     private int orderId;
     private User buyer;
+    private User seller;
+    private TypeOfProduct typeOfProduct;
+    private double price;
+    private Condition condition;
+    private String productName;
     private Timestamp CreatedAt;
     private int productId;
 
@@ -25,7 +30,12 @@ public class Order implements Serializable {
     }
 
     public Order(User buyer, String productName, User seller, TypeOfProduct typeOfProduct, double price, Condition condition) {
-        //TODO write code for
+        this.buyer=buyer;
+        this.seller = seller;
+        this.productName=productName;
+        this.typeOfProduct=typeOfProduct;
+        this.price=price;
+        this.condition=condition;
     }
 
     public int getOrderId() {
