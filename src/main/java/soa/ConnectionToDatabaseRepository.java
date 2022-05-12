@@ -29,4 +29,10 @@ public class ConnectionToDatabaseRepository {
         User user = new User("Linn", "hejhej", "Linn","Borgström", null,"hej@hej.com");
        return orderRepository.getOrderHistory(ur.getUser("Linn"));//TODO change user to get the in logged user
     }
+
+    public ArrayList getOrderHistoryByName(String username) {
+        System.out.println("from ctDBr: " +username);
+        User user = ur.getUser(username);
+        return orderRepository.getOrderHistory(user);
+    }
 }

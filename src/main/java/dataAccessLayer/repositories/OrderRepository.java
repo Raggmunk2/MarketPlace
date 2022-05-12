@@ -19,6 +19,7 @@ public class OrderRepository {
         }
     }
     public ArrayList<Order> getOrderHistory(User thisBuyer)  {
+        System.out.println("this is the buyer: " + thisBuyer);
         ArrayList<Order> orderList = new ArrayList<>();
         try {
            String selectOrderHistory = "Select buyer, [name],Seller, typeOfProduct,price," +

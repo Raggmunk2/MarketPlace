@@ -16,6 +16,7 @@ public class Invocation {
     public static void main(String[] args) {
         try{
             URL url = new URL("http://localhost:9998/marketPlace/orderHistory/");
+            //URL url = new URL("http://localhost:9998/marketPlace/orderSearch/?username=Eric");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setRequestProperty("Accept", "application/json");

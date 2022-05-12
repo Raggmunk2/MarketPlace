@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpServer;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,7 +52,19 @@ public class OrderService {
         return jsonObject;
 
     }
+    @GET
+    @Path("/orderSearch")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getOrderHistoryBySearch(@QueryParam("username") String username) {
+        ArrayList products = connection.getOrderHistoryByName(username);
 
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        String jsonObject = gson.toJson(products);
+        return jsonObject;
+
+    }
     
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServerFactory.create("http://localhost:9998/");

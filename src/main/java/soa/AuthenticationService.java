@@ -17,7 +17,7 @@ public class AuthenticationService {
         connection = new ConnectionToDatabaseRepository();
     }
 
-    @GET
+    /*@GET
     @Path("/login")
     @Produces({MediaType.APPLICATION_JSON})
 
@@ -27,5 +27,5 @@ public class AuthenticationService {
         Gson gson = builder.create();
         String jsonObject = gson.toJson(products);
         return jsonObject;
-    }
+    }*/
 }
