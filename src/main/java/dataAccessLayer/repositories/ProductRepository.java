@@ -36,14 +36,10 @@ public class ProductRepository {
             String name = rs.getString(2);
             String seller = rs.getString(3);
             int productType = rs.getInt(4);
-            System.out.println("Text: " + EnumHandler.getType(productType));
-            System.out.println("int: " + productType);
             double price = rs.getDouble(5);
             int yearOfMaking = rs.getInt(6);
             String colour = rs.getString(7);
             int productCondition = rs.getInt(8);
-            System.out.println("int: " + productCondition);
-            System.out.println("text: " + EnumHandler.getCondition(productCondition));
             Status status = Status.valueOf(rs.getString(9));
             Product product = new Product(id, name, seller, EnumHandler.getType(productType), price, yearOfMaking, colour, EnumHandler.getCondition(productCondition), status);
             allProducts.add(product);
@@ -63,28 +59,20 @@ public class ProductRepository {
      * @return an array of products
      * @throws SQLException
      */
-    public ArrayList<Product> getProductsByPriceRange(int[] range) {
+    public ArrayList<Product> getProductsByPriceRange(double[] range) {
         ArrayList<Product> products = new ArrayList<>();
         try {
             String query = "select * from Product where  Product.[status] = 'Available' AND Product.price BETWEEN " + range[0] + " AND " + range[1] + ";";
-            /*String query = "select productId, name, seller, productTypeName, price,YearOfMaking, colour, productConditionName, [status] from Product\n" +
-                    "RIGHT JOIN ProductCondition ON Product.condition = ProductCondition.productConditionId\n" +
-                    "LEFT JOIN ProductTypes ON Product.typeOfProduct = ProductTypes.ProductTypeId\n" +
-                    "where  Product.[status] = 'Available' AND Product.price BETWEEN " + range[0] + " AND " + range[1] + ";";*/
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
                 String seller = rs.getString(3);
                 int productType = rs.getInt(4);
-                System.out.println("Text: " + EnumHandler.getType(productType));
-                System.out.println("int: " + productType);
                 double price = rs.getDouble(5);
                 int yearOfMaking = rs.getInt(6);
                 String colour = rs.getString(7);
                 int productCondition = rs.getInt(8);
-                System.out.println("int: " + productCondition);
-                System.out.println("text: " + EnumHandler.getCondition(productCondition));
                 Status status = Status.valueOf(rs.getString(9));
                 Product product = new Product(id, name, seller, EnumHandler.getType(productType), price, yearOfMaking, colour, EnumHandler.getCondition(productCondition), status);
                 products.add(product);
@@ -115,14 +103,10 @@ public class ProductRepository {
             String name = rs.getString(2);
             String seller = rs.getString(3);
             int productType = rs.getInt(4);
-            System.out.println("Text: " + EnumHandler.getType(productType));
-            System.out.println("int: " + productType);
             double price = rs.getDouble(5);
             int yearOfMaking = rs.getInt(6);
             String colour = rs.getString(7);
             int productCondition = rs.getInt(8);
-            System.out.println("int: " + productCondition);
-            System.out.println("text: " + EnumHandler.getCondition(productCondition));
             Status status = Status.valueOf(rs.getString(9));
             Product product = new Product(id, name, seller, EnumHandler.getType(productType), price, yearOfMaking, colour, EnumHandler.getCondition(productCondition), status);
             productByCondition.add(product);
@@ -158,14 +142,10 @@ public class ProductRepository {
             String name = rs.getString(2);
             String seller = rs.getString(3);
             int productType = rs.getInt(4);
-            System.out.println("Text: " + EnumHandler.getType(productType));
-            System.out.println("int: " + productType);
             double price = rs.getDouble(5);
             int yearOfMaking = rs.getInt(6);
             String colour = rs.getString(7);
             int productCondition = rs.getInt(8);
-            System.out.println("int: " + productCondition);
-            System.out.println("text: " + EnumHandler.getCondition(productCondition));
             Status status = Status.valueOf(rs.getString(9));
             Product product = new Product(id, name, seller, EnumHandler.getType(productType), price, yearOfMaking, colour, EnumHandler.getCondition(productCondition), status);
             System.out.println(product.getId() + ", "+ product.getCondition());
@@ -206,27 +186,23 @@ public class ProductRepository {
     public ArrayList getAllUnavailableProducts(String username) throws SQLException {
         ArrayList<Product> unavailableProducts = new ArrayList<>();
 
-        String query = "select productId,[name], seller, productTypeName, price,YearOfMaking, colour, productConditionName, [status] from Product\n" +
+        String query = "select * from Product\n" +
                 "RIGHT JOIN ProductCondition ON Product.condition = ProductCondition.productConditionId\n" +
                 "LEFT JOIN ProductTypes ON Product.typeOfProduct = ProductTypes.ProductTypeId\n" +
                 "where  Product.[status] = 'Unavailable' AND seller = '" + username +"'; " ;
         ResultSet rs = statement.executeQuery(query);
         while(rs.next()){
-            int productId = rs.getInt(1);
-            String productName = rs.getString(2);
+            int id = rs.getInt(1);
+            String name = rs.getString(2);
             String seller = rs.getString(3);
-            TypeOfProduct productTypeName = TypeOfProduct.valueOf(rs.getString(4));
+            int productType = rs.getInt(4);
             double price = rs.getDouble(5);
             int yearOfMaking = rs.getInt(6);
-            String colour = (rs.getString(7));
-            Condition productConditionName = Condition.valueOf(rs.getString(8));
+            String colour = rs.getString(7);
+            int productCondition = rs.getInt(8);
             Status status = Status.valueOf(rs.getString(9));
-            Product product = new Product(productId,productName,seller,productTypeName, price, yearOfMaking,colour, productConditionName, status);
+            Product product = new Product(id, name, seller, EnumHandler.getType(productType), price, yearOfMaking, colour, EnumHandler.getCondition(productCondition), status);
             unavailableProducts.add(product);
-        }
-        for (Product p:unavailableProducts) {
-            System.out.println(p.toString());
-            unavailableProducts.add(p);
         }
         return unavailableProducts;
     }
@@ -244,8 +220,13 @@ public class ProductRepository {
         //TODO Write code
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         ProductRepository pr = new ProductRepository();
-        System.out.println(pr.getProductsByTypeOfProduct(TypeOfProduct.MobilePhones));
+        /*double[] price = new double[2];
+        price[0] = 9.0;
+        price[1] = 1000.0;
+        System.out.println(pr.getProductsByPriceRange(price));*/
+        System.out.println(pr.getAllUnavailableProducts("Britta").toString());
     }
+
 }
