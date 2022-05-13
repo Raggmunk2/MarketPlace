@@ -15,8 +15,8 @@ public class Invocation {
 
     public static void main(String[] args) {
         try{
-            URL url = new URL("http://localhost:9998/marketPlace/orderHistory/");
-            //URL url = new URL("http://localhost:9998/marketPlace/orderSearch/?username=Eric");
+            //URL url = new URL("http://localhost:9998/marketPlace/orderHistory/");
+            URL url = new URL("http://localhost:9998/marketPlace/orderSearch/?username=Eric");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setRequestProperty("Accept", "application/json");
@@ -36,7 +36,8 @@ public class Invocation {
             }
             br.close();
             httpURLConnection.disconnect();
-            parse(sb.toString());
+            String orders = parse(sb.toString());
+            System.out.println(orders);
 
 
         } catch (MalformedURLException | ProtocolException e) {
@@ -52,7 +53,8 @@ public class Invocation {
      * A method to parse the text to a JsonObject
      * @param responseBody the text to parse
      */
-    public static void parse(String responseBody){
+    public static String parse(String responseBody){
+        String orders = null;
         JSONArray orderArray = new JSONArray(responseBody);
         for (int i = 0;i < orderArray.length(); i++) {
             JSONObject order = orderArray.getJSONObject(i);
@@ -62,8 +64,9 @@ public class Invocation {
             double price = order.getDouble("price");
             String productName = order.getString("productName");
             String condition = order.getString("condition");
-            System.out.println("Buyer: " + buyerName + " productName: " + productName+ " typeOfProduct: " +typeOfProduct+ " price: " + price+ " condition: " +condition + " seller: " + sellerName);
+            orders = "Buyer: " + buyerName + " productName: " + productName+ " typeOfProduct: " +typeOfProduct+ " price: " + price+ " condition: " +condition + " seller: " + sellerName;
         }
+        return orders;
     }
 
 

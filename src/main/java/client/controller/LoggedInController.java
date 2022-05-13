@@ -41,7 +41,8 @@ public class LoggedInController {
                     }
                     break;
                 case 3:
-                    getAllOrders();
+                    //getAllOrders();
+                    System.out.println("This is implemented in SOA");
                     break;
                 case 4:
                     createOrder();
