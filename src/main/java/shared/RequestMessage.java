@@ -1,10 +1,12 @@
 package shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RequestMessage implements Serializable{
-    private int[] priceRange;
+    private double[] priceRange;
     private TypeOfMessage typeOfMessage;
     private TypeOfProduct typeOfProduct;
     private String userName;
@@ -13,6 +15,8 @@ public class RequestMessage implements Serializable{
     private Condition condition;
     private Order order;
     private boolean acceptOrDecline;
+    private Product product;
+    private ArrayList<Product> productsInCart;
 
     //LOGGA IN KONSTRUKTOR
     public RequestMessage(TypeOfMessage typeOfMessage, String userName, String password){
@@ -29,8 +33,8 @@ public class RequestMessage implements Serializable{
         else if(object instanceof TypeOfProduct){
             this.typeOfProduct = (TypeOfProduct)object;
         }
-       else if(object instanceof int[]){
-            this.priceRange = (int[]) object;
+       else if(object instanceof double[]){
+            this.priceRange = (double[]) object;
         }
         if(object instanceof Condition){
             this.condition = (Condition)object;
@@ -38,13 +42,26 @@ public class RequestMessage implements Serializable{
         else if(object instanceof Order){
           this.order = (Order)object;
         }
-        else if(object instanceof HashMap) {
-            this.acceptOrDecline = ((HashMap<Order, Boolean>) object).get(0);
-        }
     }
 
     public RequestMessage(TypeOfMessage typeOfMessage) {
         this.typeOfMessage = typeOfMessage;
+    }
+
+    public RequestMessage(TypeOfMessage typeOfMessage, Product product, boolean acceptOrDecline) {
+        this.typeOfMessage = typeOfMessage;
+        this.product = product;
+        this.acceptOrDecline = acceptOrDecline;
+    }
+
+    public RequestMessage(TypeOfMessage createOrder, ArrayList<Product> productsInCart, User user) {
+        this.typeOfMessage = createOrder;
+        this.productsInCart = productsInCart;
+        this.user = user;
+     }
+
+    public Product getProduct() {
+        return product;
     }
 
     public TypeOfMessage getTypeOfMessage(){
@@ -58,7 +75,7 @@ public class RequestMessage implements Serializable{
     public User getUser() {
         return user;
     }
-    public int[] getPriceRange() {
+    public double[] getPriceRange() {
         return priceRange;
     }
     public Condition getCondition() {
@@ -70,5 +87,8 @@ public class RequestMessage implements Serializable{
 
     public boolean getAcceptOrDecline(){
         return acceptOrDecline;
+    }
+    public ArrayList<Product> getProductsInCart() {
+        return productsInCart;
     }
 }

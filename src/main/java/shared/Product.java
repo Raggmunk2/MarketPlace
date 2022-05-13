@@ -8,12 +8,12 @@ public class Product implements Serializable {
     private TypeOfProduct typeOfProductName;
     private double price;
     private int yearOfMaking;
-    private Colour colour;
+    private String colour;
     private Condition condition;
     private Status status;
     private int id;
 
-    public Product(int productId, String productName, String seller, TypeOfProduct productTypeName, double price, int yearOfMaking, Colour colour, Condition productConditionName, Status status) {
+    public Product(int productId, String productName, String seller, TypeOfProduct productTypeName, double price, int yearOfMaking, String colour, Condition productConditionName, Status status) {
         this.name = productName;
         this.seller = seller;
         this.typeOfProductName = productTypeName;
@@ -65,12 +65,8 @@ public class Product implements Serializable {
         this.yearOfMaking = yearOfMaking;
     }
 
-    public Colour getColour() {
+    public String getColour() {
         return colour;
-    }
-
-    public void setColour(Colour colour) {
-        this.colour = colour;
     }
 
     public Condition getCondition() {

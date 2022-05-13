@@ -5,6 +5,8 @@ import dataAccessLayer.repositories.ProductRepository;
 import dataAccessLayer.repositories.UserRepository;
 import shared.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ResponseHandler {
@@ -43,33 +45,35 @@ public class ResponseHandler {
                     productRepository = new ProductRepository();
                     ArrayList<Product> products3 = productRepository.getProductsByCondition(request.getCondition());
                     return new ResponseMessage(TypeOfMessage.SEARCH_BY_CONDITION, products3);
-                case ORDERS:
-                   orderRepository = new OrderRepository(new UserRepository());
-                    ArrayList<Order> orders = orderRepository.getOrderHistory(request.getUser());
-                    return new ResponseMessage(TypeOfMessage.ORDERS, orders);
                 case PRODUCTS:
                     productRepository = new ProductRepository();
                     ArrayList<Product> allProducts = productRepository.getAllProducts();
                     return new ResponseMessage(TypeOfMessage.PRODUCTS, allProducts);
-                case CREATE_ORDER:
-                    orderRepository = new OrderRepository(new UserRepository());
-                    success = orderRepository.addProductToOrder(request.getOrder());
-                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, success);
-                case NEW_MESSAGES:
-                    orderRepository = new OrderRepository(new UserRepository());
-                    ArrayList<Order> newOrders = orderRepository.getOrdersToConfirm(request.getUser());
-                    return new ResponseMessage(TypeOfMessage.ORDERS, newOrders);
-                case ORDER_RESPONSE:
+                case PRODUCTS_TO_CONFIRM:
                     productRepository = new ProductRepository();
+                    ArrayList<Product> productsToConfirm = productRepository.getAllUnavailableProducts(request.getUser());
+                    return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, productsToConfirm);
+                case CONFIRM_PRODUCT:
+                    productRepository = new ProductRepository();
+                    orderRepository = new OrderRepository(new UserRepository());
+                    boolean ok;
                     if(request.getAcceptOrDecline()){
-                        productRepository.changeProductStatus(request.getOrder().getProductId(), Status.Sold);
+                        ok = productRepository.changeProductStatus(request.getProduct().getId(), Status.Sold);
                     }
                     else{
-                        productRepository.changeProductStatus(request.getOrder().getProductId(), Status.Available);
+                        productRepository.changeProductStatus(request.getProduct().getId(), Status.Available);
+                        ok = orderRepository.removeOrderByProductId(request.getProduct().getId());
                     }
+                    return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, ok);
+                case CREATE_ORDER:
                     orderRepository = new OrderRepository(new UserRepository());
-                    boolean removeOrderOK = orderRepository.removeOrder(request.getOrder());
-                   return new ResponseMessage(TypeOfMessage.ORDER_RESPONSE, removeOrderOK);
+                    ArrayList<Product> productsInCart = request.getProductsInCart();
+                    boolean orderCreated = false;
+                    for (Product p : productsInCart){
+                        Order order = new Order(request.getUser(),Timestamp.valueOf(LocalDateTime.now()), p.getId());
+                        orderCreated = orderRepository.addProductToOrder(order);
+                    }
+                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, orderCreated);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
