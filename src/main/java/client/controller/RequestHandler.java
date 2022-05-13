@@ -41,13 +41,8 @@ public class RequestHandler {
     }
 
     public ResponseMessage createOrdersFromCart(ArrayList<Product> productsInCart, User user) {
-        RequestMessage requestMessage = null;
-        for (Product p : productsInCart) {
-            Order newOrder = new Order (user, Timestamp.valueOf(LocalDateTime.now()), p.getId());
-            requestMessage = new RequestMessage(TypeOfMessage.CREATE_ORDER, newOrder);
-            ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
-        }
-        return new ResponseMessage(TypeOfMessage.CREATE_ORDER, true);
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CREATE_ORDER, productsInCart, user);
+        return serverConnection.sendRequest(requestMessage);
     }
 
     public ResponseMessage getAllProducts() {

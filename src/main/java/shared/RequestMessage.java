@@ -1,6 +1,7 @@
 package shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class RequestMessage implements Serializable{
     private Order order;
     private boolean acceptOrDecline;
     private Product product;
+    private ArrayList<Product> productsInCart;
 
     //LOGGA IN KONSTRUKTOR
     public RequestMessage(TypeOfMessage typeOfMessage, String userName, String password){
@@ -52,9 +54,11 @@ public class RequestMessage implements Serializable{
         this.acceptOrDecline = acceptOrDecline;
     }
 
-    public boolean isAcceptOrDecline() {
-        return acceptOrDecline;
-    }
+    public RequestMessage(TypeOfMessage createOrder, ArrayList<Product> productsInCart, User user) {
+        this.typeOfMessage = createOrder;
+        this.productsInCart = productsInCart;
+        this.user = user;
+     }
 
     public Product getProduct() {
         return product;
@@ -83,5 +87,8 @@ public class RequestMessage implements Serializable{
 
     public boolean getAcceptOrDecline(){
         return acceptOrDecline;
+    }
+    public ArrayList<Product> getProductsInCart() {
+        return productsInCart;
     }
 }

@@ -5,6 +5,8 @@ import dataAccessLayer.repositories.ProductRepository;
 import dataAccessLayer.repositories.UserRepository;
 import shared.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ResponseHandler {
@@ -63,6 +65,15 @@ public class ResponseHandler {
                         ok = orderRepository.removeOrderByProductId(request.getProduct().getId());
                     }
                     return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, ok);
+                case CREATE_ORDER:
+                    orderRepository = new OrderRepository(new UserRepository());
+                    ArrayList<Product> productsInCart = request.getProductsInCart();
+                    boolean orderCreated = false;
+                    for (Product p : productsInCart){
+                        Order order = new Order(request.getUser(),Timestamp.valueOf(LocalDateTime.now()), p.getId());
+                        orderCreated = orderRepository.addProductToOrder(order);
+                    }
+                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, orderCreated);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);

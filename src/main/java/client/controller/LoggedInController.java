@@ -38,6 +38,16 @@ public class LoggedInController {
                     if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
                     else {
                         userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
+                        boolean checkoutCart = userInterface.getBoolean("Do you want to checkout your cart?");
+
+                        if(checkoutCart){
+                            ResponseMessage response = requestHandler.createOrdersFromCart(cart.getAllProductsInCart(), user);
+                            if(response.getSuccess()){
+                                System.out.println("Your order has been submitted");
+                            }else{
+                                System.out.println("Something went wrong");
+                            }
+                        }
                     }
                     break;
                 case 4:
