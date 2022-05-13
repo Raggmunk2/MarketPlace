@@ -48,7 +48,7 @@ public class LoggedInController {
                     createOrder();
                     break;
                 case 6:
-                    sendProductsToView();
+                    getAllProducts();
                     break;
                 case 7:
                     searchByProductType();
@@ -92,14 +92,6 @@ public class LoggedInController {
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
             return response.getProducts();
-        }
-        return null;
-    }
-    private ArrayList<Product> sendProductsToView(){
-        ResponseMessage response = requestHandler.getAllProducts();
-        if (response.getProducts().size() == 0) userInterface.printMessage("No result");
-        else {
-            userInterface.printMessage(response.getProducts().toString());
         }
         return null;
     }

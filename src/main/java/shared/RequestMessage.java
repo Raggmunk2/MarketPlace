@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class RequestMessage implements Serializable{
-    private double[] priceRange;
+    private int[] priceRange;
     private TypeOfMessage typeOfMessage;
     private TypeOfProduct typeOfProduct;
     private String userName;
@@ -29,8 +29,8 @@ public class RequestMessage implements Serializable{
         else if(object instanceof TypeOfProduct){
             this.typeOfProduct = (TypeOfProduct)object;
         }
-       else if(object instanceof double[]){
-            this.priceRange = (double[]) object;
+       else if(object instanceof int[]){
+            this.priceRange = (int[]) object;
         }
         if(object instanceof Condition){
             this.condition = (Condition)object;
@@ -58,7 +58,7 @@ public class RequestMessage implements Serializable{
     public User getUser() {
         return user;
     }
-    public double[] getPriceRange() {
+    public int[] getPriceRange() {
         return priceRange;
     }
     public Condition getCondition() {
