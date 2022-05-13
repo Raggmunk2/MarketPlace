@@ -43,10 +43,6 @@ public class ResponseHandler {
                     productRepository = new ProductRepository();
                     ArrayList<Product> products3 = productRepository.getProductsByCondition(request.getCondition());
                     return new ResponseMessage(TypeOfMessage.SEARCH_BY_CONDITION, products3);
-                case ORDERS:
-                   orderRepository = new OrderRepository(new UserRepository());
-                    ArrayList<Order> orders = orderRepository.getOrderHistory(request.getUser());
-                    return new ResponseMessage(TypeOfMessage.ORDERS, orders);
                 case PRODUCTS:
                     productRepository = new ProductRepository();
                     ArrayList<Product> allProducts = productRepository.getAllProducts();

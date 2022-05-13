@@ -43,7 +43,7 @@ public class LoggedInController {
                     createOrder();
                     break;
                 case 6:
-                    getAllProducts();
+                    printAllProducts();
                     break;
                 case 7:
                     searchByProductType();
@@ -86,9 +86,17 @@ public class LoggedInController {
         ResponseMessage response = requestHandler.getAllProducts();
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
-           userInterface.showResult("YOUR RESULT)", response.getProducts());
+           return response.getProducts();
         }
         return null;
+    }
+
+    private void printAllProducts(){
+        ResponseMessage response = requestHandler.getAllProducts();
+        if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+        else {
+           userInterface.showResult("YOUR RESULT)", response.getProducts());
+        }
     }
 
     private void createOrder() {
