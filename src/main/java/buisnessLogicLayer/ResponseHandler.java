@@ -49,7 +49,7 @@ public class ResponseHandler {
                     return new ResponseMessage(TypeOfMessage.PRODUCTS, allProducts);
                 case CONFIRM_PRODUCTS:
                     productRepository = new ProductRepository();
-                    ArrayList<Product> productsToConfirm = productRepository.getAllProducts();
+                    ArrayList<Product> productsToConfirm = productRepository.getProductsToConfirm(request.getUser());
                     return new ResponseMessage(TypeOfMessage.CONFIRM_PRODUCTS, productsToConfirm);
             }
         }
