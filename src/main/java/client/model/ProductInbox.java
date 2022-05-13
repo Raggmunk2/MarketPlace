@@ -1,23 +1,24 @@
 package client.model;
 
-import shared.Order;
+import shared.Product;
 
 import java.util.ArrayList;
 
 public class ProductInbox {
-    private ArrayList<Order> ordersToConfirm;
+
+    private ArrayList<Product> productsToConfirm;
 
     public ProductInbox(){
-        ordersToConfirm = new ArrayList<>();
+        productsToConfirm = new ArrayList<>();
     }
 
-    public void updateOrdersToConfirm(ArrayList<Order> waitingOrders){
-        for(Order waitingOrder: waitingOrders){
-            ordersToConfirm.add(waitingOrder);
+    public void update(ArrayList<Product> products){
+        for(Product p: products){
+            productsToConfirm.add(p);
         }
     }
 
-    public ArrayList<Order> getOrdersToConfirm() {
-        return ordersToConfirm;
+    public ArrayList<Product> getProductsToConfirm() {
+        return productsToConfirm;
     }
 }

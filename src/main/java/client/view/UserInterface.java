@@ -163,7 +163,6 @@ public class UserInterface {
             if (selectedId == itemId) {
                 return object;
             }
-
         }
         System.out.println("Invalid product id");
         return null;

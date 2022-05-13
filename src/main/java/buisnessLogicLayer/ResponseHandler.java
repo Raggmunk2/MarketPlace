@@ -51,25 +51,10 @@ public class ResponseHandler {
                     productRepository = new ProductRepository();
                     ArrayList<Product> allProducts = productRepository.getAllProducts();
                     return new ResponseMessage(TypeOfMessage.PRODUCTS, allProducts);
-                case CREATE_ORDER:
-                    orderRepository = new OrderRepository(new UserRepository());
-                    success = orderRepository.addProductToOrder(request.getOrder());
-                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, success);
-                case NEW_MESSAGES:
-                    orderRepository = new OrderRepository(new UserRepository());
-                    ArrayList<Order> newOrders = orderRepository.getOrdersToConfirm(request.getUser());
-                    return new ResponseMessage(TypeOfMessage.ORDERS, newOrders);
-                case ORDER_RESPONSE:
+                case CONFIRM_PRODUCTS:
                     productRepository = new ProductRepository();
-                    if(request.getAcceptOrDecline()){
-                        productRepository.changeProductStatus(request.getOrder().getProductId(), Status.Sold);
-                    }
-                    else{
-                        productRepository.changeProductStatus(request.getOrder().getProductId(), Status.Available);
-                    }
-                    orderRepository = new OrderRepository(new UserRepository());
-                    boolean removeOrderOK = orderRepository.removeOrder(request.getOrder());
-                   return new ResponseMessage(TypeOfMessage.ORDER_RESPONSE, removeOrderOK);
+                    ArrayList<Product> productsToConfirm = productRepository.getAllProducts();
+                    return new ResponseMessage(TypeOfMessage.CONFIRM_PRODUCTS, productsToConfirm);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);

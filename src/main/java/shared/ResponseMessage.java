@@ -21,8 +21,8 @@ public class ResponseMessage implements Serializable {
             this.user = (User)object;
         }
         else if(object instanceof ArrayList) {
-            if(typeOfMessage == TypeOfMessage.ORDERS){
-               this.orders = (ArrayList<Order>) object;
+            if(typeOfMessage == TypeOfMessage.CONFIRM_PRODUCTS){
+               this.products = (ArrayList<Product>) object;
             }
             else {
                 this.products = (ArrayList<Product>) object;
@@ -45,7 +45,4 @@ public class ResponseMessage implements Serializable {
         return success;
     }
 
-    public ArrayList<Order> getOrders() {
-        return orders;
-    }
 }

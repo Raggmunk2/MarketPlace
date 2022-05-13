@@ -68,7 +68,9 @@ public class Server implements Runnable {
         public void run() {
             try {
                 RequestMessage request = (RequestMessage) ois.readObject();
+                System.out.println(request.getUser());
                 ResponseMessage response = responseHandler.handleRequest(request);
+                System.out.println(response.getProducts());
                 oos.writeObject(response);
                 oos.flush();
             } catch (IOException | ClassNotFoundException e) {

@@ -59,7 +59,7 @@ public class LoggedInController {
                     searchByCondition();
                     break;
                 case 10:
-                    handleInbox();
+                    handleProductInbox();
                     break;
             }
         } while (input != 12);
@@ -97,7 +97,7 @@ public class LoggedInController {
 
     private void getAllOrders() {
         ResponseMessage response = requestHandler.getAllOrdersResponse(user);
-        userInterface.showResult("------------YOUR ORDERS------------", response.getOrders());
+        userInterface.showResult("------------YOUR ORDERS------------", response.getProducts());
     }
 
     private void createOrder() {
@@ -136,12 +136,16 @@ public class LoggedInController {
         }
     }
 
-    private void handleInbox() {
+    private void handleProductInbox() {
         //SKA HÄMTA IN EN LISTA PÅ PRODUKTER SOM NÅGON VILL KÖPA
-        ResponseMessage response = requestHandler.getAllBuyerRequests();
-        productInbox.updateOrdersToConfirm(response.getOrders());
-        HashMap<Order, Boolean> result = confirmOrder();
+        ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
+        productInbox.update(response.getProducts());
+        userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
+
+
+        //SVARA PÅ FÖRFRÅGAM
+       /* HashMap<Order, Boolean> result = confirmOrder();
         ResponseMessage response = requestHandler.confirmOrder(result);
-        userInterface.printMessage("Confirmed offer: " +response.getSuccess());
+        userInterface.printMessage("Confirmed offer: " + response.getSuccess());*/
     }
 }

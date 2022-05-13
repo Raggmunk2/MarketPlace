@@ -60,8 +60,9 @@ public class RequestHandler {
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage getAllBuyerRequests() {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NEW_MESSAGES);
+    public ResponseMessage getAllProductsToConfirm(User user) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CONFIRM_PRODUCTS, user);
+        System.out.println(requestMessage.getUser());
         return serverConnection.sendRequest(requestMessage);
     }
 

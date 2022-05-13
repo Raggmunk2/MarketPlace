@@ -231,4 +231,8 @@ public class ProductRepository {
 
         //TODO Write code
     }
+
+    public ArrayList<Product> getProductsToConfirm(User user) {
+        return null;
+    }
 }
