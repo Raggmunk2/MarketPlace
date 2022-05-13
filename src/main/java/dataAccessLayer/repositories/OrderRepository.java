@@ -118,7 +118,4 @@ public class OrderRepository {
         }
         return true;
     }
-
-    public void createOrder(Product product, User user) {
-    }
 }

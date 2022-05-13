@@ -21,4 +21,8 @@ public class ProductInbox {
     public ArrayList<Product> getProductsToConfirm() {
         return productsToConfirm;
     }
+
+    public void resetProductInbox() {
+        productsToConfirm.clear();
+    }
 }

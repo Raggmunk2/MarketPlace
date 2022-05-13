@@ -6,7 +6,6 @@ import client.view.UserInterface;
 import shared.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LoggedInController {
 
@@ -28,7 +27,6 @@ public class LoggedInController {
     private void loggedInMenuHandler() {
         int input;
         do {
-
             input = userInterface.showLoggedInMenu();
             switch (input) {
                 case 1:
@@ -47,11 +45,9 @@ public class LoggedInController {
                             }else{
                                 System.out.println("Something went wrong");
                             }
+                            cart.resetCart();
                         }
                     }
-                    break;
-                case 4:
-                    createOrder();
                     break;
                 case 6:
                     printAllProducts();
@@ -110,16 +106,6 @@ public class LoggedInController {
         }
     }
 
-    private void createOrder() {
-        ResponseMessage response = requestHandler.createOrdersFromCart(this.cart.getAllProductsInCart(), this.user);
-        if (response.getSuccess()) {
-            userInterface.printMessage("Order is created");
-        } else {
-            userInterface.printMessage("Order could not be created");
-        }
-        cart.resetCart();
-    }
-
     private void searchByCondition() {
         Condition condition = userInterface.getCondition();
         ResponseMessage response = requestHandler.getSearchByCondition(condition);
@@ -157,6 +143,7 @@ public class LoggedInController {
             Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
             ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);
             userInterface.printMessage("Confirmed offer: " + responseMessage.getSuccess());
+            productInbox.resetProductInbox();
         }
     }
 }
