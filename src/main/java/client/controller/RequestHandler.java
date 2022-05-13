@@ -2,6 +2,7 @@ package client.controller;
 
 import shared.*;
 
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,11 +41,6 @@ public class RequestHandler {
         return serverConnection.sendRequest(request);
     }
 
-    public ResponseMessage getAllOrdersResponse(User user) {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDERS, user);
-        return serverConnection.sendRequest(requestMessage);
-    }
-
     public ResponseMessage createOrdersFromCart(ArrayList<Product> productsInCart, User user) {
         RequestMessage requestMessage = null;
         for (Product p : productsInCart) {
@@ -57,17 +53,17 @@ public class RequestHandler {
 
     public ResponseMessage getAllProducts() {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS);
-        return serverConnection.sendRequest(requestMessage);
+        ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
+        return responseMessage;
     }
 
     public ResponseMessage getAllProductsToConfirm(User user) {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CONFIRM_PRODUCTS, user);
-        System.out.println(requestMessage.getUser());
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage confirmOrder(HashMap<Order, Boolean> result) {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDER_RESPONSE, result);
-        return serverConnection.sendRequest(requestMessage);
+    public void confirmOrder(HashMap<Order, Boolean> result) {
+       // RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDER_RESPONSE, result);
+        //return serverConnection.sendRequest(requestMessage);
     }
 }

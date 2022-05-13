@@ -6,7 +6,6 @@ import client.view.UserInterface;
 import shared.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LoggedInController {
 
@@ -39,9 +38,6 @@ public class LoggedInController {
                     else {
                         userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
                     }
-                    break;
-                case 3:
-                    getAllOrders();
                     break;
                 case 4:
                     createOrder();
@@ -90,14 +86,9 @@ public class LoggedInController {
         ResponseMessage response = requestHandler.getAllProducts();
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
-            return response.getProducts();
+           userInterface.showResult("YOUR RESULT)", response.getProducts());
         }
         return null;
-    }
-
-    private void getAllOrders() {
-        ResponseMessage response = requestHandler.getAllOrdersResponse(user);
-        userInterface.showResult("------------YOUR ORDERS------------", response.getProducts());
     }
 
     private void createOrder() {
