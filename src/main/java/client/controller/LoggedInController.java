@@ -137,12 +137,16 @@ public class LoggedInController {
     }
 
     private void handleProductInbox() {
-        //SKA HÄMTA IN EN LISTA PÅ PRODUKTER SOM NÅGON VILL KÖPA
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        productInbox.update(response.getProducts());
-        Product product = (Product)userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
-        Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
-        ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);
-        userInterface.printMessage("Confirmed offer: " + response.getSuccess());
+        if(response.getProducts().size() == 0){
+            userInterface.printMessage("You have no new messages");
+        }
+        else {
+            productInbox.update(response.getProducts());
+            Product product = (Product) userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
+            Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
+            ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);
+            userInterface.printMessage("Confirmed offer: " + responseMessage.getSuccess());
+        }
     }
 }
