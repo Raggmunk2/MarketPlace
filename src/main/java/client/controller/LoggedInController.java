@@ -1,7 +1,7 @@
 package client.controller;
 
 import client.model.Cart;
-import client.model.Inbox;
+import client.model.ProductInbox;
 import client.view.UserInterface;
 import shared.*;
 
@@ -14,14 +14,14 @@ public class LoggedInController {
     private UserInterface userInterface;
     private client.controller.RequestHandler requestHandler;
     private Cart cart;
-    private client.model.Inbox inbox;
+    private ProductInbox productInbox;
 
     public LoggedInController(User user, UserInterface userInterface, RequestHandler requestHandler) {
         this.user = user;
         this.userInterface = userInterface;
         this.requestHandler = requestHandler;
         cart = new Cart();
-        inbox = new Inbox();
+        productInbox = new ProductInbox();
         loggedInMenuHandler();
     }
 
@@ -71,7 +71,7 @@ public class LoggedInController {
     private void logoutUser() {
         this.user = null;
         this.cart = null;
-        this.inbox = null;
+        this.productInbox = null;
         System.exit(1);
     }
 
@@ -137,23 +137,11 @@ public class LoggedInController {
     }
 
     private void handleInbox() {
-        updateInbox();
+        //SKA HÄMTA IN EN LISTA PÅ PRODUKTER SOM NÅGON VILL KÖPA
+        ResponseMessage response = requestHandler.getAllBuyerRequests();
+        productInbox.updateOrdersToConfirm(response.getOrders());
         HashMap<Order, Boolean> result = confirmOrder();
         ResponseMessage response = requestHandler.confirmOrder(result);
         userInterface.printMessage("Confirmed offer: " +response.getSuccess());
-    }
-
-    private void updateInbox() {
-        ResponseMessage response = requestHandler.getOrdersToConfirm();
-        inbox.updateOrdersToConfirm(response.getOrders());
-    }
-
-    private HashMap<Order, Boolean> confirmOrder(){
-        ArrayList<Order> orders = inbox.getOrdersToConfirm();
-        Order order = (Order) userInterface.letUserChooseFromList(orders);
-        boolean responseToOffer = userInterface.getBoolean("Accept or decline? (True/False)");
-        HashMap<Order, Boolean> result = new HashMap<>();
-        result.put(order, responseToOffer);
-        return result;
     }
 }

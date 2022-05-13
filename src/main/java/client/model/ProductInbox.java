@@ -4,10 +4,10 @@ import shared.Order;
 
 import java.util.ArrayList;
 
-public class Inbox {
+public class ProductInbox {
     private ArrayList<Order> ordersToConfirm;
 
-    public Inbox(){
+    public ProductInbox(){
         ordersToConfirm = new ArrayList<>();
     }
 

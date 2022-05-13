@@ -60,7 +60,7 @@ public class RequestHandler {
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage getOrdersToConfirm() {
+    public ResponseMessage getAllBuyerRequests() {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NEW_MESSAGES);
         return serverConnection.sendRequest(requestMessage);
     }
