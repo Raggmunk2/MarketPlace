@@ -2,7 +2,6 @@ package client.controller;
 
 import shared.*;
 
-import java.sql.Array;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -58,12 +57,12 @@ public class RequestHandler {
     }
 
     public ResponseMessage getAllProductsToConfirm(User user) {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CONFIRM_PRODUCTS, user);
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, user);
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public void confirmOrder(HashMap<Order, Boolean> result) {
-       // RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDER_RESPONSE, result);
-        //return serverConnection.sendRequest(requestMessage);
+    public ResponseMessage confirmProduct(Product product, Boolean acceptOrDecline) {
+       RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CONFIRM_PRODUCT, product, acceptOrDecline);
+        return serverConnection.sendRequest(requestMessage);
     }
 }

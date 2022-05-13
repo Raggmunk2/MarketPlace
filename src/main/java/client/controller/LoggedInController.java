@@ -6,6 +6,7 @@ import client.view.UserInterface;
 import shared.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoggedInController {
 
@@ -139,12 +140,9 @@ public class LoggedInController {
         //SKA HÄMTA IN EN LISTA PÅ PRODUKTER SOM NÅGON VILL KÖPA
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
         productInbox.update(response.getProducts());
-        userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
-
-
-        //SVARA PÅ FÖRFRÅGAM
-       /* HashMap<Order, Boolean> result = confirmOrder();
-        ResponseMessage response = requestHandler.confirmOrder(result);
-        userInterface.printMessage("Confirmed offer: " + response.getSuccess());*/
+        Product product = (Product)userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
+        Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
+        ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);
+        userInterface.printMessage("Confirmed offer: " + response.getSuccess());
     }
 }

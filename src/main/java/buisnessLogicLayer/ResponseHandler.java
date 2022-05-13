@@ -47,10 +47,22 @@ public class ResponseHandler {
                     productRepository = new ProductRepository();
                     ArrayList<Product> allProducts = productRepository.getAllProducts();
                     return new ResponseMessage(TypeOfMessage.PRODUCTS, allProducts);
-                case CONFIRM_PRODUCTS:
+                case PRODUCTS_TO_CONFIRM:
                     productRepository = new ProductRepository();
-                    ArrayList<Product> productsToConfirm = productRepository.getProductsToConfirm(request.getUser());
-                    return new ResponseMessage(TypeOfMessage.CONFIRM_PRODUCTS, productsToConfirm);
+                    ArrayList<Product> productsToConfirm = productRepository.getAllUnavailableProducts(request.getUser());
+                    return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, productsToConfirm);
+                case CONFIRM_PRODUCT:
+                    productRepository = new ProductRepository();
+                    orderRepository = new OrderRepository(new UserRepository());
+                    boolean ok;
+                    if(request.getAcceptOrDecline()){
+                        ok = productRepository.changeProductStatus(request.getProduct().getId(), Status.Sold);
+                    }
+                    else{
+                        productRepository.changeProductStatus(request.getProduct().getId(), Status.Available);
+                        ok = orderRepository.removeOrderByProductId(request.getProduct().getId());
+                    }
+                    return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, ok);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
