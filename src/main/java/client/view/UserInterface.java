@@ -173,4 +173,16 @@ public class UserInterface {
         System.out.println(text);
         return scanner.nextBoolean();
     }
+
+    public int showAllTypeOfProducts(ArrayList<String> type){
+        for (String s: type
+             ) {
+            System.out.println(s);
+        }
+
+        System.out.println("Please write a number that you want to subscribe to: ");
+        int selectType = scanner.nextInt();
+        return selectType;
+
+    }
 }

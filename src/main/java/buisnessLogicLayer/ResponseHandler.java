@@ -2,18 +2,21 @@ package buisnessLogicLayer;
 
 import dataAccessLayer.repositories.OrderRepository;
 import dataAccessLayer.repositories.ProductRepository;
+import dataAccessLayer.repositories.SubscriptionRepository;
 import dataAccessLayer.repositories.UserRepository;
 import shared.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ResponseHandler {
 
-    public ResponseMessage handleRequest(RequestMessage request) {
+    public ResponseMessage handleRequest(RequestMessage request) throws SQLException {
         ResponseMessage response = null;
         ProductRepository productRepository = null;
         UserRepository userRepository = null;
         OrderRepository orderRepository = null;
+        SubscriptionRepository subscriptionRepository = null;
         boolean success;
 
         if (request != null) {
@@ -70,6 +73,13 @@ public class ResponseHandler {
                     orderRepository = new OrderRepository(new UserRepository());
                     boolean removeOrderOK = orderRepository.removeOrder(request.getOrder());
                    return new ResponseMessage(TypeOfMessage.ORDER_RESPONSE, removeOrderOK);
+                case SUBSCRIBE_TO_TYPE:
+                    subscriptionRepository = new SubscriptionRepository();
+                    subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
+                    System.out.println("detta är input" +request.getInput() + request.getUserName());
+                    System.out.println("detta har lagts till" + subscriptionRepository.getAllUsersWithSubscription(2).toString());
+                    return new ResponseMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE);
+
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);

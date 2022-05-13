@@ -69,4 +69,9 @@ public class RequestHandler {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDER_RESPONSE, result);
         return serverConnection.sendRequest(requestMessage);
     }
+
+    public ResponseMessage sendTypeOfSubToServer(int input, String userName) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE, input, userName);
+        return  serverConnection.sendRequest(requestMessage);
+    }
 }

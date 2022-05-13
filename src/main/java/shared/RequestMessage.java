@@ -13,6 +13,7 @@ public class RequestMessage implements Serializable{
     private Condition condition;
     private Order order;
     private boolean acceptOrDecline;
+    private  int input;
 
     //LOGGA IN KONSTRUKTOR
     public RequestMessage(TypeOfMessage typeOfMessage, String userName, String password){
@@ -47,6 +48,12 @@ public class RequestMessage implements Serializable{
         this.typeOfMessage = typeOfMessage;
     }
 
+    public RequestMessage(TypeOfMessage typeOfMessage, int input, String userName){
+        this.typeOfMessage = typeOfMessage;
+        this.input = input;
+        this.userName = userName;
+    }
+
     public TypeOfMessage getTypeOfMessage(){
         return typeOfMessage;
     }
@@ -66,6 +73,9 @@ public class RequestMessage implements Serializable{
     }
     public Order getOrder() {
         return order;
+    }
+    public int getInput(){
+        return input;
     }
 
     public boolean getAcceptOrDecline(){

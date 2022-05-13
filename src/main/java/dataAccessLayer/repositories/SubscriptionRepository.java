@@ -62,4 +62,24 @@ public class SubscriptionRepository {
         }
         return users;
     }
+
+    public ArrayList<String> getAllUsersWithSubscription(int typeOfProductId) {
+        ArrayList<String> users = new ArrayList<>();
+        try {
+
+            String query = "SELECT * FROM [UserProductType] WHERE typeOfProductId = " + typeOfProductId + ";";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                String username = resultSet.getString(1);
+                users.add(username);
+            }
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException);
+            return null;
+        }
+        return users;
+    }
+
+
+
 }

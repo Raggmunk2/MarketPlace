@@ -21,6 +21,7 @@ public class OrderRepository {
     public ArrayList<Order> getOrderHistory(User thisBuyer)  {
         ArrayList<Order> orderList = new ArrayList<>();
         try {
+
             String selectOrderHistory = "Select * from [dbo].[Order] join [dbo].[Product] on" +
                     "[dbo].[Order].productId = [dbo].[Product].productId where buyer = '" + thisBuyer.getUserName() + "'";
             Statement statement = connection.createStatement();
