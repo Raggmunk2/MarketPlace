@@ -243,9 +243,5 @@ public class ProductRepository {
 
         //TODO Write code
     }
-
-    public static void main(String[] args) {
-        ProductRepository pr = new ProductRepository();
-        System.out.println(pr.getProductsByTypeOfProduct(TypeOfProduct.MobilePhones));
-    }
+    
 }
