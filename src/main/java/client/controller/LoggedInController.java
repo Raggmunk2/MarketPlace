@@ -117,7 +117,7 @@ public class LoggedInController {
         if(response.getSuccess()){
             userInterface.printMessage("Your product was successfully added for sale!");
         }else{
-            System.out.println("Product could not be created for sale");
+            userInterface.printMessage("Product could not be created for sale");
         }
     }
 
