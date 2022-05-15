@@ -89,7 +89,7 @@ public class UserInterface {
         return scanner.nextInt();
     }
 
-    public String SellAProduct() {
+    public String chooseProductName() {
         System.out.println("*------------ Sell a product ------------*");
         System.out.println("Please write the name or title of the product");
         scanner.nextLine();

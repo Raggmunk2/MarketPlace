@@ -104,7 +104,7 @@ public class LoggedInController {
     }
 
     private void createProductToSell() {
-        String productName = userInterface.SellAProduct();
+        String productName = userInterface.chooseProductName();
         double price = userInterface.getProductPrice();
         Condition condition = userInterface.getCondition();
         TypeOfProduct typeOfProduct = userInterface.getProductType();
