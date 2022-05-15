@@ -183,6 +183,36 @@ public class EnumHandler {
         return typeOfProduct;
     }
 
+
+    public static Colour getColour(int input) {
+        Colour colour;
+        switch (input) {
+            case 1:
+                colour = Colour.Pink;
+                break;
+            case 2:
+                colour = Colour.Blue;
+                break;
+            case 3:
+                colour = Colour.Red;
+                break;
+            case 4:
+                colour = Colour.Yellow;
+                break;
+            case 5:
+                colour = Colour.Green;
+                break;
+            case 6:
+                colour = Colour.Other;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + input);
+        }
+        return colour;
+    }
+
+
+
     /**
      * @Author Linn Borgström
      * @return an arraylist with the types and unique id

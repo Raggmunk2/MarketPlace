@@ -12,6 +12,7 @@ public class RequestMessage implements Serializable{
     private User user;
     private Condition condition;
     private Order order;
+    private Product product;
     private boolean acceptOrDecline;
 
     //LOGGA IN KONSTRUKTOR
@@ -41,6 +42,9 @@ public class RequestMessage implements Serializable{
         else if(object instanceof HashMap) {
             this.acceptOrDecline = ((HashMap<Order, Boolean>) object).get(0);
         }
+        else if (object instanceof Product){
+            this.product = (Product)object;
+        }
     }
 
     public RequestMessage(TypeOfMessage typeOfMessage) {
@@ -66,6 +70,10 @@ public class RequestMessage implements Serializable{
     }
     public Order getOrder() {
         return order;
+    }
+
+    public Product getProduct(){
+        return product;
     }
 
     public boolean getAcceptOrDecline(){

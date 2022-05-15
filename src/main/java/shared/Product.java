@@ -13,7 +13,8 @@ public class Product implements Serializable {
     private Status status;
     private int id;
 
-    public Product(int productId, String productName, String seller, TypeOfProduct productTypeName, double price, int yearOfMaking, Colour colour, Condition productConditionName, Status status) {
+    public Product(int productId, String productName, String seller, TypeOfProduct productTypeName, double price,
+                   int yearOfMaking, Colour colour, Condition productConditionName, Status status) {
         this.name = productName;
         this.seller = seller;
         this.typeOfProductName = productTypeName;

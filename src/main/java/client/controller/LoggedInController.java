@@ -46,6 +46,9 @@ public class LoggedInController {
                 case 4:
                     createOrder();
                     break;
+                case 5:
+                    createProductToSell();
+                    break;
                 case 6:
                     getAllProducts();
                     break;
@@ -99,6 +102,26 @@ public class LoggedInController {
         ResponseMessage response = requestHandler.getAllOrdersResponse(user);
         userInterface.showResult("------------YOUR ORDERS------------", response.getOrders());
     }
+
+    private void createProductToSell() {
+        String productName = userInterface.SellAProduct();
+        double price = userInterface.getProductPrice();
+        Condition condition = userInterface.getCondition();
+        TypeOfProduct typeOfProduct = userInterface.getProductType();
+        Colour colour = userInterface.getColor();
+        int yearOfMaking = userInterface.chooseYearOfMaking();
+        Product product = new Product(00, productName, user.getUserName(), typeOfProduct, price,
+                yearOfMaking, colour, condition, Status.Available);
+
+        ResponseMessage response = requestHandler.createProductToSell(product);
+        if(response.getSuccess()){
+            userInterface.printMessage("Your product was successfully added for sale!");
+        }else{
+            System.out.println("Product could not be created for sale");
+        }
+    }
+
+
 
     private void createOrder() {
         ResponseMessage response = requestHandler.createOrdersFromCart(this.cart.getAllProductsInCart(), this.user);

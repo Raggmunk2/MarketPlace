@@ -59,6 +59,10 @@ public class ResponseHandler {
                     orderRepository = new OrderRepository(new UserRepository());
                     ArrayList<Order> newOrders = orderRepository.getOrdersToConfirm(request.getUser());
                     return new ResponseMessage(TypeOfMessage.ORDERS, newOrders);
+                case CREATE_PRODUCT_FOR_SELLING:
+                    productRepository = new ProductRepository();
+                    success = productRepository.addProductToDatabase(request.getProduct());
+                    return new ResponseMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, success);
                 case ORDER_RESPONSE:
                     productRepository = new ProductRepository();
                     if(request.getAcceptOrDecline()){

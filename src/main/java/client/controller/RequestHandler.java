@@ -55,6 +55,13 @@ public class RequestHandler {
         return new ResponseMessage(TypeOfMessage.CREATE_ORDER, true);
     }
 
+    public ResponseMessage createProductToSell(Product product) {
+        RequestMessage requestMessage = null;
+        requestMessage = new RequestMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, product);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
+
     public ResponseMessage getAllProducts() {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS);
         return serverConnection.sendRequest(requestMessage);
