@@ -58,7 +58,8 @@ public class RequestHandler {
     public ResponseMessage createProductToSell(Product product) {
         RequestMessage requestMessage = null;
         requestMessage = new RequestMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, product);
-        return serverConnection.sendRequest(requestMessage);
+        serverConnection.sendRequest(requestMessage);
+        return new ResponseMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, true);
     }
 
 

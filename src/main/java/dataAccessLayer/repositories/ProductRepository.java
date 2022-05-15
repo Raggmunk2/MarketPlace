@@ -177,7 +177,7 @@ public class ProductRepository {
             callableStatement.setString(1, product.getName());
             callableStatement.setString(2, product.getSeller());
             callableStatement.setInt(3, product.getTypeOfProductName().ordinal());
-            callableStatement.setInt(4, (int) Math.round(product.getPrice())); // TODO göras om till float/double som i DB? /Linn
+            callableStatement.setDouble(4, product.getPrice());
             callableStatement.setInt(5, product.getYearOfMaking());
             callableStatement.setString(6, product.getColour().toString());
             callableStatement.setInt(7, product.getCondition().ordinal());
