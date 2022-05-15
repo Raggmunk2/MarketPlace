@@ -11,9 +11,21 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class Invocation {
+/**
+ * Class to start different number of clients
+ */
 
+public class Invocation extends Thread{
     public static void main(String[] args) {
+        int nbrOfClients = 10;
+        for (int i = 0; i < nbrOfClients; i++) {
+            Invocation invocation = new Invocation();
+            invocation.start();
+        }
+    }
+
+    @Override
+    public void run(){
         try{
             //URL url = new URL("http://localhost:9998/marketPlace/orderHistory/");
             URL url = new URL("http://localhost:9998/marketPlace/orderSearch/?username=Eric");
@@ -53,7 +65,7 @@ public class Invocation {
      * A method to parse the text to a JsonObject
      * @param responseBody the text to parse
      */
-    public static String parse(String responseBody){
+    public synchronized static String parse(String responseBody){
         String orders = null;
         JSONArray orderArray = new JSONArray(responseBody);
         for (int i = 0;i < orderArray.length(); i++) {
