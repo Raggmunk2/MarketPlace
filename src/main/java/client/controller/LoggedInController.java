@@ -68,7 +68,6 @@ public class LoggedInController {
                 case 10:
                     handleProductInbox();
                     break;
-
                 case 11:
                     subscribeToAType();
                     break;
@@ -113,11 +112,13 @@ public class LoggedInController {
         return null;
     }
 
-    private void printAllProducts(){
+    private void printAllProducts() {
         ResponseMessage response = requestHandler.getAllProducts();
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
-           userInterface.showResult("YOUR RESULT)", response.getProducts());
+            userInterface.showResult("YOUR RESULT)", response.getProducts());
+        }
+    }
 
 
     private void createProductToSell() {
@@ -125,7 +126,7 @@ public class LoggedInController {
         double price = userInterface.getProductPrice();
         Condition condition = userInterface.getCondition();
         TypeOfProduct typeOfProduct = userInterface.getProductType();
-        Colour colour = userInterface.getColor();
+        String colour = userInterface.getColor();
         int yearOfMaking = userInterface.chooseYearOfMaking();
         Product product = new Product(00, productName, user.getUserName(), typeOfProduct, price,
                 yearOfMaking, colour, condition, Status.Available);

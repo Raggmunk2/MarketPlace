@@ -103,7 +103,6 @@ public class UserInterface {
         int price = 0;
         do{
             System.out.println("Please write the year of making of the product in this format: YYYY");
-            scanner.nextLine();
             String priceString = scanner.nextLine();
             try{
                 price = Integer.parseInt(priceString);
@@ -135,9 +134,9 @@ public class UserInterface {
     }
 
 
-    public TypeOfProduct getProductType() { //TODO får jag skriva "would like." pga använda på fler ställen?
+    public TypeOfProduct getProductType() {
         System.out.println("*------------ Types ------------*");
-        System.out.println("Please write the number of the type you would like to search for");
+        System.out.println("Please write the number of the type you would like.");
         for (String type : TypeOfProduct.getAllTypesWithId()) {
             System.out.println(type);
         }
@@ -154,20 +153,16 @@ public class UserInterface {
         return range;
     }
 
-    public Colour getColor(){
+    public String getColor(){
         System.out.println("*------------ Colour ------------*");
-        System.out.println("Please write the number of the colour you want");
-        int count = 1;
-        for (Colour colour : Colour.values()) {
-            System.out.println(count + ". " + colour.toString());
-            count++;
-        }
-        return EnumHandler.getColour(scanner.nextInt());
+        System.out.println("Please write the colour you want");
+        scanner.nextLine();
+        return scanner.nextLine();
     }
 
     public Condition getCondition() {
-        System.out.println("*------------ Condition ------------*");//TODO får jag jag skriva "would like." pga använda på fler ställen?
-        System.out.println("Please write the number of the condition you would like to search for");
+        System.out.println("*------------ Condition ------------*");
+        System.out.println("Please write the number of the condition you would like.");
         for (String condition : Condition.getAllConditionsWithId()) {
             System.out.println(condition);
         }

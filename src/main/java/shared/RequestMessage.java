@@ -2,6 +2,7 @@ package shared;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestMessage implements Serializable{
     private double[] priceRange;
@@ -15,7 +16,6 @@ public class RequestMessage implements Serializable{
     private Product product;
     private boolean acceptOrDecline;
     private  int input;
-    private Product product;
     private ArrayList<Product> productsInCart;
 
     public RequestMessage(TypeOfMessage typeOfMessage, String userName, String password){
@@ -95,10 +95,6 @@ public class RequestMessage implements Serializable{
 
     public int getInput(){
         return input;
-    }
-
-    public Product getProduct(){
-        return product;
     }
 
     public boolean getAcceptOrDecline(){
