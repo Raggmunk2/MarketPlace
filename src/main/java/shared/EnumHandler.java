@@ -45,10 +45,10 @@ public class EnumHandler {
                 productCondition = Condition.VeryGood;
                 break;
             case 3 :
-                productCondition = Condition.NotWorkingProperly;
+                productCondition = Condition.Good;
                 break;
             case 4 :
-                productCondition = Condition.Good;
+                productCondition = Condition.NotWorkingProperly;
                 break;
 
             default:
@@ -133,49 +133,49 @@ public class EnumHandler {
                 typeOfProduct = TypeOfProduct.Furniture;
                 break;
             case 3 :
-                typeOfProduct = TypeOfProduct.Cameras;
-                break;
-            case 4 :
-                typeOfProduct = TypeOfProduct.Clothing;
-                break;
-            case 5 :
                 typeOfProduct = TypeOfProduct.Computers;
                 break;
-            case 6 :
+            case 4 :
+                typeOfProduct = TypeOfProduct.MobilePhones;
+                break;
+            case 5 :
                 typeOfProduct = TypeOfProduct.EntertainmentEquipment;
+                break;
+            case 6 :
+                typeOfProduct = TypeOfProduct.Cameras;
                 break;
             case 7 :
                 typeOfProduct = TypeOfProduct.HouseholdMachines;
                 break;
             case 8 :
-                typeOfProduct = TypeOfProduct.Jewelry;
+                typeOfProduct = TypeOfProduct.Clothing;
                 break;
             case 9 :
-                typeOfProduct = TypeOfProduct.MobilePhones;
-                break;
-            case 10 :
-                typeOfProduct = TypeOfProduct.PerfumesAndCosmetics;
-                break;
-            case 11 :
-                typeOfProduct = TypeOfProduct.Other;
-                break;
-            case 12 :
-                typeOfProduct = TypeOfProduct.Plants;
-                break;
-            case 13 :
-                typeOfProduct = TypeOfProduct.Shoes;
-                break;
-            case 14 :
-                typeOfProduct = TypeOfProduct.Vehicle;
-                break;
-            case 15 :
-                typeOfProduct = TypeOfProduct.Tools;
-                break;
-            case 16 :
                 typeOfProduct = TypeOfProduct.SportsEquipment;
                 break;
-            case 17 :
+            case 10 :
                 typeOfProduct = TypeOfProduct.KitchenUtensils;
+                break;
+            case 11 :
+                typeOfProduct = TypeOfProduct.Jewelry;
+                break;
+            case 12 :
+                typeOfProduct = TypeOfProduct.PerfumesAndCosmetics;
+                break;
+            case 13 :
+                typeOfProduct = TypeOfProduct.Vehicle;
+                break;
+            case 14 :
+                typeOfProduct = TypeOfProduct.Plants;
+                break;
+            case 15 :
+                typeOfProduct = TypeOfProduct.Shoes;
+                break;
+            case 16 :
+                typeOfProduct = TypeOfProduct.Tools;
+                break;
+            case 17 :
+                typeOfProduct = TypeOfProduct.Other;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + input);

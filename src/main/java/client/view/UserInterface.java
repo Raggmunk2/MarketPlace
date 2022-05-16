@@ -155,7 +155,7 @@ public class UserInterface {
 
     public String getColor(){
         System.out.println("*------------ Colour ------------*");
-        System.out.println("Please write the colour you want");
+        System.out.println("Please write the colour you want.");
         scanner.nextLine();
         return scanner.nextLine();
     }

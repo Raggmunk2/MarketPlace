@@ -34,6 +34,7 @@ public class LoggedInController {
                     addProductToCart();
                     break;
                 case 2:
+                    //createOrder();
                     if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
                     else {
                         userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
@@ -42,9 +43,9 @@ public class LoggedInController {
                         if(checkoutCart){
                             ResponseMessage response = requestHandler.createOrdersFromCart(cart.getAllProductsInCart(), user);
                             if(response.getSuccess()){
-                                System.out.println("Your order has been submitted");
+                                userInterface.printMessage("Your order has been submitted");
                             }else{
-                                System.out.println("Something went wrong");
+                                userInterface.printMessage("Something went wrong");
                             }
                             cart.resetCart();
                         }
@@ -96,10 +97,16 @@ public class LoggedInController {
         Product newProduct = null;
         ArrayList<Product> products = getAllProducts();
         if (products != null) {
-            do {
-                newProduct = (Product) userInterface.letUserChooseFromList(products);
-            } while (newProduct == null);
-            cart.addToCart(newProduct);
+            boolean wantToAddProduct = userInterface.getBoolean("Would you like to add product to your cart? (true/false)");
+            if(wantToAddProduct){
+                do {
+                    newProduct = (Product) userInterface.letUserChooseFromList(products);
+                } while (newProduct == null);
+                cart.addToCart(newProduct);
+            }
+        }
+        else {
+            userInterface.printMessage("There are no products.");
         }
     }
 
@@ -116,7 +123,7 @@ public class LoggedInController {
         ResponseMessage response = requestHandler.getAllProducts();
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
-            userInterface.showResult("YOUR RESULT)", response.getProducts());
+            userInterface.showResult("YOUR RESULT", response.getProducts());
         }
     }
 
@@ -142,11 +149,20 @@ public class LoggedInController {
 
 
     private void createOrder() {
-        ResponseMessage response = requestHandler.createOrdersFromCart(this.cart.getAllProductsInCart(), this.user);
-        if (response.getSuccess()) {
-            userInterface.printMessage("Order is created");
-        } else {
-            userInterface.printMessage("Order could not be created");
+        if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
+        else {
+            userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
+            boolean checkoutCart = userInterface.getBoolean("Do you want to checkout your cart? (true/false)");
+
+            if(checkoutCart){
+                ResponseMessage response = requestHandler.createOrdersFromCart(cart.getAllProductsInCart(), user);
+                if(response.getSuccess()){
+                    userInterface.printMessage("Your order has been submitted");
+                }else{
+                    userInterface.printMessage("Something went wrong");
+                }
+                cart.resetCart();
+            }
         }
     }
 
