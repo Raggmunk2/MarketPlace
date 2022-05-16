@@ -15,19 +15,18 @@ import java.net.URL;
  * Class to start different number of clients
  */
 
-public class Invocation extends Thread{
+public class SoaClient extends Thread{
     public static void main(String[] args) {
         int nbrOfClients = 10;
         for (int i = 0; i < nbrOfClients; i++) {
-            Invocation invocation = new Invocation();
-            invocation.start();
+            SoaClient soaClient = new SoaClient();
+            soaClient.start();
         }
     }
 
     @Override
     public void run(){
         try{
-            //URL url = new URL("http://localhost:9998/marketPlace/orderHistory/");
             URL url = new URL("http://localhost:9998/marketPlace/orderSearch/?username=Eric");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");

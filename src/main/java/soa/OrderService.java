@@ -29,29 +29,15 @@ public class OrderService {
     private ConnectionToDatabaseRepository connection;
 
 
-    public OrderService() throws SQLException {
+    public OrderService() {
         connection = new ConnectionToDatabaseRepository();
     }
 
     /**
-     * Gets the order history and throught a connection to the DB
+     * Gets the order history and through a connection to the DB
+     * @param username the user to search the order for
      * @return Json object in a String format
-     * @throws SQLException
      */
-    @GET
-    @Path("/orderHistory")
-    @Produces({MediaType.APPLICATION_JSON})
-
-    public String getOrderHistory() {
-        ArrayList products = connection.getOrderHistory();
-
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-
-        String jsonObject = gson.toJson(products);
-        return jsonObject;
-
-    }
     @GET
     @Path("/orderSearch")
     @Produces({MediaType.APPLICATION_JSON})

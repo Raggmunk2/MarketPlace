@@ -14,4 +14,4 @@ Make sure that you have the correct SDK. Please see the picture!
 
 To start SOA:
 1. Run the OrderService-class
-2. Run the Invocation-class
+2. Run the SoaClient-class

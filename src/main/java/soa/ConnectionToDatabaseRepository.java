@@ -14,6 +14,9 @@ public class ConnectionToDatabaseRepository {
     private OrderRepository orderRepository;
     private UserRepository ur;
 
+    /**
+     * Constructor to connect to the database
+     */
     public ConnectionToDatabaseRepository() {
         productRepository = new ProductRepository();
         ur = new UserRepository();
@@ -21,14 +24,11 @@ public class ConnectionToDatabaseRepository {
 
     }
 
-    public ArrayList getAllProducts(){
-        return productRepository.getAllProducts();
-    }
-
-    public ArrayList getOrderHistory() {
-        User user = new User("Linn", "hejhej", "Linn","Borgström", null,"hej@hej.com");
-       return orderRepository.getOrderHistory(ur.getUser("Linn"));//TODO change user to get the in logged user
-    }
+    /**
+     * Makes a request to the orderRepository to get the orders
+     * @param username username to search the orders for
+     * @return
+     */
 
     public ArrayList getOrderHistoryByName(String username) {
         System.out.println("from ctDBr: " +username);
