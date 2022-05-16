@@ -60,4 +60,9 @@ public class RequestHandler {
        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CONFIRM_PRODUCT, product, acceptOrDecline);
         return serverConnection.sendRequest(requestMessage);
     }
+
+    public ResponseMessage sendTypeOfSubToServer(int input, String userName) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE, input, userName);
+        return  serverConnection.sendRequest(requestMessage);
+    }
 }

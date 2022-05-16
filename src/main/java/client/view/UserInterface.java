@@ -113,7 +113,7 @@ public class UserInterface {
         for (String type : TypeOfProduct.getAllTypesWithId()) {
             System.out.println(type);
         }
-        ;
+
         return EnumHandler.getType(scanner.nextInt());
     }
 
@@ -132,8 +132,9 @@ public class UserInterface {
         for (String condition : Condition.getAllConditionsWithId()) {
             System.out.println(condition);
         }
-        ;
+
         return EnumHandler.getCondition(scanner.nextInt());
+
     }
 
     public void printMessage(String message) {
@@ -171,5 +172,17 @@ public class UserInterface {
     public boolean getBoolean(String text){
         System.out.println(text);
         return scanner.nextBoolean();
+    }
+
+    public int showAllTypeOfProducts(ArrayList<String> type){
+        for (String s: type
+             ) {
+            System.out.println(s);
+        }
+
+        System.out.println("Please write a number that you want to subscribe to: ");
+        int selectType = scanner.nextInt();
+        return selectType;
+
     }
 }

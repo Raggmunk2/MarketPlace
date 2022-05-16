@@ -2,6 +2,7 @@ package buisnessLogicLayer;
 
 import dataAccessLayer.repositories.OrderRepository;
 import dataAccessLayer.repositories.ProductRepository;
+import dataAccessLayer.repositories.SubscriptionRepository;
 import dataAccessLayer.repositories.UserRepository;
 import shared.*;
 
@@ -16,6 +17,7 @@ public class ResponseHandler {
         ProductRepository productRepository = null;
         UserRepository userRepository = null;
         OrderRepository orderRepository = null;
+        SubscriptionRepository subscriptionRepository = null;
         boolean success;
 
         if (request != null) {
@@ -67,6 +69,13 @@ public class ResponseHandler {
                     return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, ok);
                 case CREATE_ORDER:
                     orderRepository = new OrderRepository(new UserRepository());
+                    boolean removeOrderOK = orderRepository.removeOrder(request.getOrder());
+                   return new ResponseMessage(TypeOfMessage.ORDER_RESPONSE, removeOrderOK);
+                case SUBSCRIBE_TO_TYPE:
+                    subscriptionRepository = new SubscriptionRepository();
+                    subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
+                    return new ResponseMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE);
+
                     ArrayList<Product> productsInCart = request.getProductsInCart();
                     boolean orderCreated = false;
                     for (Product p : productsInCart){

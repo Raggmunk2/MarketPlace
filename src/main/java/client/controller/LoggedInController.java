@@ -64,10 +64,21 @@ public class LoggedInController {
                 case 10:
                     handleProductInbox();
                     break;
+
+                case 11:
+                    subscribeToAType();
+                    break;
             }
         } while (input != 12);
         userInterface.printMessage("Okay, bye!");
         logoutUser();
+    }
+
+    private void subscribeToAType() {
+        ArrayList<String> type = TypeOfProduct.getAllTypesWithId();
+        int input = userInterface.showAllTypeOfProducts(type);
+        ResponseMessage responseMessage = requestHandler.sendTypeOfSubToServer(input, user.getUserName());
+        userInterface.printMessage("Successfully added");
     }
 
 
