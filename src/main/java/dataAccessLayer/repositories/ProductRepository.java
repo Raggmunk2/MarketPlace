@@ -221,4 +221,23 @@ public class ProductRepository {
         }
         return true;
     }
+
+
+    public boolean getNotification(String userName) {
+        try{
+            String query = "Select Product.productId, Product.name, Product.Seller, Product.typeOfProduct, Product.price, Product.YearOfMaking, Product.colour, Product.condition, Product.status\n" +
+                    "from Product \n" +
+                    "left join ProductTypes on Product.typeOfProduct = ProductTypes.productTypeId\n" +
+                    "left join UserProductType on ProductTypes.productTypeId = UserProductType.typeOfProductId\n" +
+                    "where UserProductType.username = '"+ userName +"' AND Product.dateAdded < GETDATE() AND Product.[status] = 'Available';";
+            if(statement.executeQuery(query) == null){
+                return false;
+            }
+
+        } catch (SQLException throwables) {
+            System.out.println("wrong");
+            throwables.printStackTrace();
+        }
+        return true;
+    }
 }

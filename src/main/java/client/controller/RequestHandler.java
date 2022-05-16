@@ -2,6 +2,7 @@ package client.controller;
 
 import shared.*;
 
+import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -70,11 +71,12 @@ public class RequestHandler {
 
     public ResponseMessage sendTypeOfSubToServer(int input, String userName) {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE, input, userName);
-        return  serverConnection.sendRequest(requestMessage);
+        return serverConnection.sendRequest(requestMessage);
     }
 
     public ResponseMessage getNotificationOfSubscription(String username) {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, username);
+        System.out.println(requestMessage);
         return serverConnection.sendRequest(requestMessage);
     }
 }

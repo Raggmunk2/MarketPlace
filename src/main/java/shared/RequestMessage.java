@@ -71,6 +71,11 @@ public class RequestMessage implements Serializable{
         this.user = user;
      }
 
+     public RequestMessage(TypeOfMessage notification, String userName){
+        this.typeOfMessage = notification;
+        this.userName = userName;
+     }
+
     public Product getProduct() {
         return product;
     }
@@ -103,4 +108,7 @@ public class RequestMessage implements Serializable{
     public ArrayList<Product> getProductsInCart() {
         return productsInCart;
     }
+
+
+
 }

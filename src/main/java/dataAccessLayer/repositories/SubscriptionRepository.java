@@ -80,8 +80,4 @@ public class SubscriptionRepository {
         return users;
     }
 
-
-    public void getNotification(String userName) {
-
-    }
 }

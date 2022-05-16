@@ -183,13 +183,12 @@ public class LoggedInController {
 
     private void handleProductInbox() {
         ResponseMessage responseSubscription = requestHandler.getNotificationOfSubscription(this.user.getUserName());
+        System.out.println(responseSubscription.getSuccess());
         if(responseSubscription.getSuccess() == false){
             userInterface.printMessage("You have no new messages");
         }else{
             userInterface.printMessage("You have new products to see that you are subscribing for");
         }
-
-
 
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
         if(response.getProducts().size() == 0){
@@ -203,5 +202,6 @@ public class LoggedInController {
             userInterface.printMessage("Confirmed offer: " + responseMessage.getSuccess());
             productInbox.resetProductInbox();
         }
+
     }
 }
