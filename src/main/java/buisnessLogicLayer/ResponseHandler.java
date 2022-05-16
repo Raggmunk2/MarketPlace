@@ -86,7 +86,7 @@ public class ResponseHandler {
 
                 case NOTIFICATION:
                     productRepository = new ProductRepository();
-                    success = productRepository.getNotification(request.getUserName());
+                    success = productRepository.getNotification(request.getUser());
                     return new ResponseMessage(TypeOfMessage.NOTIFICATION,success);
             }
         }
