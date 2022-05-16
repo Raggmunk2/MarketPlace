@@ -83,6 +83,11 @@ public class ResponseHandler {
                     subscriptionRepository = new SubscriptionRepository();
                     subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
                     return new ResponseMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE);
+
+                case NOTIFICATION:
+                    subscriptionRepository = new SubscriptionRepository();
+                    subscriptionRepository.getNotification(request.getUserName());
+                    return new ResponseMessage(TypeOfMessage.NOTIFICATION);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
