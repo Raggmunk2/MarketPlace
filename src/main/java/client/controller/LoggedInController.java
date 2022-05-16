@@ -36,7 +36,7 @@ public class LoggedInController {
                     if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
                     else {
                         userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
-                        boolean checkoutCart = userInterface.getBoolean("Do you want to checkout your cart?");
+                        boolean checkoutCart = userInterface.getBoolean("Do you want to checkout your cart? (true/false)");
 
                         if(checkoutCart){
                             ResponseMessage response = requestHandler.createOrdersFromCart(cart.getAllProductsInCart(), user);
