@@ -177,25 +177,32 @@ public class LoggedInController {
     }
 
     private int getProductInboxSize(){
+        int typeNotificationSize = 0;
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        return response.getProducts().size();
+        ResponseMessage responseSubscriptionType = requestHandler.getNotificationOfSubscription(this.user.getUserName());
+        if(responseSubscriptionType.getSuccess() != null){
+            typeNotificationSize = 1;
+        }
+        typeNotificationSize += response.getProducts().size();
+        return typeNotificationSize;
+
+
     }
 
     private void handleProductInbox() {
+        ResponseMessage responseProductToConfirm = requestHandler.getAllProductsToConfirm(this.user);
         ResponseMessage responseSubscription = requestHandler.getNotificationOfSubscription(this.user.getUserName());
         System.out.println(responseSubscription.getSuccess());
-        if(responseSubscription.getSuccess() == false){
+        if(responseSubscription.getSuccess() == false && responseProductToConfirm.getProducts().size() == 0){
             userInterface.printMessage("You have no new messages");
-        }else{
-            userInterface.printMessage("You have new products to see that you are subscribing for");
+        }
+        else if(responseSubscription.getSuccess() == true){
+            userInterface.printMessage("You have new products to see that you are subscribing for\n"
+            + "Please go to the main menu!");
         }
 
-        ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        if(response.getProducts().size() == 0){
-            userInterface.printMessage("You have no new messages");
-        }
-        else {
-            productInbox.update(response.getProducts());
+        else if(responseProductToConfirm.getProducts().size() > 0){
+            productInbox.update(responseProductToConfirm.getProducts());
             Product product = (Product) userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
             Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
             ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);

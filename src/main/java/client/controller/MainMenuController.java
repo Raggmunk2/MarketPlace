@@ -6,6 +6,8 @@ import shared.TypeOfMessage;
 import shared.User;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class MainMenuController {
 
@@ -27,6 +29,7 @@ public class MainMenuController {
                 case 1:
                     do {
                         user = loginUser();
+                        user.setLastLogIn(String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
                     } while (user == null);
                     new LoggedInController(user, this.userInterface, this.requestHandler);
                     break;
@@ -61,7 +64,8 @@ public class MainMenuController {
         String email = userInterface.getEmail();
         String newUsername = userInterface.getUsername();
         String newPassword = userInterface.getPassword();
-        User user = new User(newUsername, newPassword, firstName, lastName, DoB, email);
+        User user = new User(newUsername, newPassword, firstName, lastName, DoB, email, String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
+        System.out.println("from register: " + Timestamp.valueOf(LocalDateTime.now()));
         ResponseMessage registerResponse = requestHandler.getRegisterResponse(user);
         Boolean success = registerResponse.getSuccess();
         if (!success) {

@@ -23,7 +23,7 @@ public class ResponseHandler {
         if (request != null) {
             switch (request.getTypeOfMessage()) {
                 case LOGIN:
-                    userRepository = new UserRepository(); //Skickar tillbaka ett user objekt som skapats i accessControlRepository.checkLogin
+                    userRepository = new UserRepository();
                     User user = userRepository.checkLogin(request.getUserName(), request.getPassword());
                     if (user.getUserName() == "No user exists") {
                         return new ResponseMessage(TypeOfMessage.ERROR);
@@ -86,8 +86,8 @@ public class ResponseHandler {
 
                 case NOTIFICATION:
                     productRepository = new ProductRepository();
-                    productRepository.getNotification(request.getUserName());
-                    return new ResponseMessage(TypeOfMessage.NOTIFICATION);
+                    success = productRepository.getNotification(request.getUserName());
+                    return new ResponseMessage(TypeOfMessage.NOTIFICATION,success);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
