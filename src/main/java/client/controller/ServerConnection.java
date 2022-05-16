@@ -25,13 +25,9 @@ public class ServerConnection extends Thread{
         ResponseMessage response = null;
         try {
             socket = new Socket(host, port);
-
-            //Skickar request till servern
             output = new ObjectOutputStream(socket.getOutputStream());
             output.writeObject(request);
             output.flush();
-
-            //Får response från server (Detta är det som metoden returnar)
             input = new ObjectInputStream(socket.getInputStream());
             response = (ResponseMessage) input.readObject();
 

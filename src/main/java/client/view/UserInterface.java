@@ -145,8 +145,8 @@ public class UserInterface {
         return EnumHandler.getType(scanner.nextInt());
     }
 
-    public int[] getPriceRange() {
-        int[] range = new int[2];
+    public double[] getPriceRange() {
+        double[] range = new double[2];
         System.out.println("Type min prize");
         range[0] = scanner.nextInt();
         System.out.println("Type max prize");
@@ -171,8 +171,9 @@ public class UserInterface {
         for (String condition : Condition.getAllConditionsWithId()) {
             System.out.println(condition);
         }
-        ;
+
         return EnumHandler.getCondition(scanner.nextInt());
+
     }
 
     public void printMessage(String message) {
@@ -202,7 +203,6 @@ public class UserInterface {
             if (selectedId == itemId) {
                 return object;
             }
-
         }
         System.out.println("Invalid product id");
         return null;
@@ -211,5 +211,17 @@ public class UserInterface {
     public boolean getBoolean(String text){
         System.out.println(text);
         return scanner.nextBoolean();
+    }
+
+    public int showAllTypeOfProducts(ArrayList<String> type){
+        for (String s: type
+             ) {
+            System.out.println(s);
+        }
+
+        System.out.println("Please write a number that you want to subscribe to: ");
+        int selectType = scanner.nextInt();
+        return selectType;
+
     }
 }

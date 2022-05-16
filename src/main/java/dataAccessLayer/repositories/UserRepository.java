@@ -1,7 +1,6 @@
 package dataAccessLayer.repositories;
 
 import dataAccessLayer.ConnectionToDB;
-import dataAccessLayer.repositories.OrderRepository;
 import shared.User;
 
 import java.sql.*;
@@ -83,7 +82,7 @@ public class UserRepository {
             callableStatement.setString(1, user.getFirstName());
             callableStatement.setString(2, user.getLastName());
             callableStatement.setObject(3, user.getDateOfBirth());
-            callableStatement.setString(4, user.geteMail());
+            callableStatement.setString(4, user.getMail());
             callableStatement.setString(5, user.getUserName());
             callableStatement.setString(6, user.getPassword());
             callableStatement.execute();
