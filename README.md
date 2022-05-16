@@ -15,3 +15,9 @@ Make sure that you have the correct SDK. Please see the picture!
 To start SOA:
 1. Run the OrderService-class
 2. Run the SoaClient-class
+3. Look in the console for the result or open Postman and typ in this URL:
+   http://localhost:9998/marketPlace/orderSearch/?username=Eric
+   Enter Linn as the value of username and see the orders change to a new user.
+   If you don't have Postman you can change the name manually in SoaClient-class on line 30
+   to http://localhost:9998/marketPlace/orderSearch/?username=Linn and run the SOA-instructions
+   1 and 2 again.
