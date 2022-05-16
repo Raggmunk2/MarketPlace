@@ -55,7 +55,7 @@ public class ProductRepository {
 
     /**
      * @Author : Linn Borgström
-     * Makes a quarie to th DB to get a product by a price range
+     * Makes a querie to th DB to get a product by a price range
      * @return an array of products
      * @throws SQLException
      */

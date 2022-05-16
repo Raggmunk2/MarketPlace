@@ -69,6 +69,10 @@ public class Product implements Serializable {
         return colour;
     }
 
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
     public Condition getCondition() {
         return condition;
     }
