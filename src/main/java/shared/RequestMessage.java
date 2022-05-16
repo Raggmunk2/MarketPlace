@@ -15,6 +15,7 @@ public class RequestMessage implements Serializable{
     private Condition condition;
     private Order order;
     private boolean acceptOrDecline;
+    private  int input;
     private Product product;
     private ArrayList<Product> productsInCart;
 
@@ -46,6 +47,12 @@ public class RequestMessage implements Serializable{
 
     public RequestMessage(TypeOfMessage typeOfMessage) {
         this.typeOfMessage = typeOfMessage;
+    }
+
+    public RequestMessage(TypeOfMessage typeOfMessage, int input, String userName){
+        this.typeOfMessage = typeOfMessage;
+        this.input = input;
+        this.userName = userName;
     }
 
     public RequestMessage(TypeOfMessage typeOfMessage, Product product, boolean acceptOrDecline) {
@@ -83,6 +90,9 @@ public class RequestMessage implements Serializable{
     }
     public Order getOrder() {
         return order;
+    }
+    public int getInput(){
+        return input;
     }
 
     public boolean getAcceptOrDecline(){

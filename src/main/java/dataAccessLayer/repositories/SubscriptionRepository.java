@@ -13,14 +13,17 @@ public class SubscriptionRepository {
     /**
      * @Author : Frida Jacobsson
      */
-    public SubscriptionRepository() throws SQLException {
-        connection = new ConnectionToDB().getConnection();
-        statement = connection.createStatement();
+    public SubscriptionRepository() {
+        try {
+            connection = new ConnectionToDB().getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean addNewSubscription(int typeOfProduct, String username) {
         try {
-
             CallableStatement callableStatement = connection.prepareCall("{CALL MarketPlace.dbo.sp_AddSubscription(?,?)}");
             callableStatement.setInt(1, typeOfProduct);
             callableStatement.setString(2, username);
@@ -62,4 +65,24 @@ public class SubscriptionRepository {
         }
         return users;
     }
+
+    public ArrayList<String> getAllUsersWithSubscription(int typeOfProductId) {
+        ArrayList<String> users = new ArrayList<>();
+        try {
+
+            String query = "SELECT * FROM [UserProductType] WHERE typeOfProductId = " + typeOfProductId + ";";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                String username = resultSet.getString(1);
+                users.add(username);
+            }
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException);
+            return null;
+        }
+        return users;
+    }
+
+
+
 }
