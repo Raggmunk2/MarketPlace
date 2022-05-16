@@ -72,4 +72,9 @@ public class RequestHandler {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE, input, userName);
         return  serverConnection.sendRequest(requestMessage);
     }
+
+    public ResponseMessage getNotificationOfSubscription(String username) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, username);
+        return serverConnection.sendRequest(requestMessage);
+    }
 }
