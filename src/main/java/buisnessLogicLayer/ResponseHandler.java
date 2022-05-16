@@ -21,14 +21,13 @@ public class ResponseHandler {
         boolean success;
 
         if (request != null) {
-            switch(request.getTypeOfMessage()){
+            switch (request.getTypeOfMessage()) {
                 case LOGIN:
                     userRepository = new UserRepository(); //Skickar tillbaka ett user objekt som skapats i accessControlRepository.checkLogin
                     User user = userRepository.checkLogin(request.getUserName(), request.getPassword());
-                    if(user.getUserName() == "No user exists"){
+                    if (user.getUserName() == "No user exists") {
                         return new ResponseMessage(TypeOfMessage.ERROR);
-                    }
-                    else {
+                    } else {
                         return new ResponseMessage(TypeOfMessage.LOGIN, user);//Response som skickas tillbaka till klienten
                     }
                 case REGISTER:
@@ -59,30 +58,26 @@ public class ResponseHandler {
                     productRepository = new ProductRepository();
                     orderRepository = new OrderRepository(new UserRepository());
                     boolean ok;
-                    if(request.getAcceptOrDecline()){
+                    if (request.getAcceptOrDecline()) {
                         ok = productRepository.changeProductStatus(request.getProduct().getId(), Status.Sold);
-                    }
-                    else{
+                    } else {
                         productRepository.changeProductStatus(request.getProduct().getId(), Status.Available);
                         ok = orderRepository.removeOrderByProductId(request.getProduct().getId());
                     }
                     return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, ok);
                 case CREATE_ORDER:
                     orderRepository = new OrderRepository(new UserRepository());
-                    boolean removeOrderOK = orderRepository.removeOrder(request.getOrder());
-                   return new ResponseMessage(TypeOfMessage.ORDER_RESPONSE, removeOrderOK);
+                    ArrayList<Product> productsInCart = request.getProductsInCart();
+                    boolean orderCreated = false;
+                    for (Product p : productsInCart) {
+                        Order order = new Order(request.getUser(), Timestamp.valueOf(LocalDateTime.now()), p.getId());
+                        orderCreated = orderRepository.addProductToOrder(order);
+                    }
+                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, orderCreated);
                 case SUBSCRIBE_TO_TYPE:
                     subscriptionRepository = new SubscriptionRepository();
                     subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
                     return new ResponseMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE);
-
-                    ArrayList<Product> productsInCart = request.getProductsInCart();
-                    boolean orderCreated = false;
-                    for (Product p : productsInCart){
-                        Order order = new Order(request.getUser(),Timestamp.valueOf(LocalDateTime.now()), p.getId());
-                        orderCreated = orderRepository.addProductToOrder(order);
-                    }
-                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, orderCreated);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);

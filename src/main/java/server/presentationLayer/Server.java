@@ -72,7 +72,7 @@ public class Server implements Runnable {
                 ResponseMessage response = responseHandler.handleRequest(request);
                 oos.writeObject(response);
                 oos.flush();
-            } catch (IOException | ClassNotFoundException | SQLException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             } finally {
                 try {
