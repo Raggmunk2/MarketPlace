@@ -168,11 +168,11 @@ public class ProductRepository {
             CallableStatement callableStatement = connect.prepareCall("{CALL MarketPlace.dbo.sp_addNewProduct(?, ?, ?, ?, ?, ?, ?, ?)}");
             callableStatement.setString(1, product.getName());
             callableStatement.setString(2, product.getSeller());
-            callableStatement.setInt(3, product.getTypeOfProductName().ordinal());
+            callableStatement.setInt(3, product.getTypeAsInt(product.getTypeOfProductName()));
             callableStatement.setDouble(4, product.getPrice());
             callableStatement.setInt(5, product.getYearOfMaking());
             callableStatement.setString(6, product.getColour());
-            callableStatement.setInt(7, product.getCondition().ordinal());
+            callableStatement.setInt(7, product.getConditionAsInt(product.getCondition()));
             callableStatement.setString(8, product.getStatus().toString());
             callableStatement.execute();
 

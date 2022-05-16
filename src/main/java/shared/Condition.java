@@ -34,4 +34,27 @@ public enum Condition {
     }
 
 
+    public static int getConditionAsInt(Condition condition) {
+        int productCondition;
+        switch (condition){
+            case New :
+                productCondition = 1;
+                break;
+            case VeryGood :
+                productCondition = 2;
+                break;
+            case Good :
+                productCondition = 3;
+                break;
+            case NotWorkingProperly :
+                productCondition = 4;
+                break;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + condition);
+        }
+        return productCondition;
+    }
+
+
 }
