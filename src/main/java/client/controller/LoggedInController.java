@@ -27,8 +27,8 @@ public class LoggedInController {
     private void loggedInMenuHandler() {
         int input;
         do {
-
-            input = userInterface.showLoggedInMenu();
+            int productInboxSize = getProductInboxSize();
+            input = userInterface.showLoggedInMenu(productInboxSize);
             switch (input) {
                 case 1:
                     addProductToCart();
@@ -174,6 +174,11 @@ public class LoggedInController {
         else {
             userInterface.showResult("------------YOUR RESULTS------------", response.getProducts());
         }
+    }
+
+    private int getProductInboxSize(){
+        ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
+        return response.getProducts().size();
     }
 
     private void handleProductInbox() {
