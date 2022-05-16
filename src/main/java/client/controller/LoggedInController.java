@@ -75,6 +75,7 @@ public class LoggedInController {
         ArrayList<String> type = TypeOfProduct.getAllTypesWithId();
         int input = userInterface.showAllTypeOfProducts(type);
         ResponseMessage responseMessage = requestHandler.sendTypeOfSubToServer(input, user.getUserName());
+        userInterface.printMessage("Successfully added");
     }
 
 

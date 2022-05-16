@@ -76,8 +76,6 @@ public class ResponseHandler {
                 case SUBSCRIBE_TO_TYPE:
                     subscriptionRepository = new SubscriptionRepository();
                     subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
-                    System.out.println("detta är input" +request.getInput() + request.getUserName());
-                    System.out.println("detta har lagts till" + subscriptionRepository.getAllUsersWithSubscription(2).toString());
                     return new ResponseMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE);
 
             }
