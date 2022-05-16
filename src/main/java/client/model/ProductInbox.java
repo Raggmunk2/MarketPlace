@@ -25,4 +25,8 @@ public class ProductInbox {
     public void resetProductInbox() {
         productsToConfirm.clear();
     }
+
+    public int size(){
+        return productsToConfirm.size();
+    }
 }
