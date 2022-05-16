@@ -117,8 +117,8 @@ public class UserInterface {
         return EnumHandler.getType(scanner.nextInt());
     }
 
-    public int[] getPriceRange() {
-        int[] range = new int[2];
+    public double[] getPriceRange() {
+        double[] range = new double[2];
         System.out.println("Type min prize");
         range[0] = scanner.nextInt();
         System.out.println("Type max prize");

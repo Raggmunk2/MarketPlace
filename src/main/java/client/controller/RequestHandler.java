@@ -30,7 +30,7 @@ public class RequestHandler {
         return serverConnection.sendRequest(request);
     }
 
-    public ResponseMessage getSearchByPriceResponse(int[] priceRange) {
+    public ResponseMessage getSearchByPriceResponse(double[] priceRange) {
         RequestMessage request = new RequestMessage(TypeOfMessage.SEARCH_BY_PRICE, priceRange);
         return serverConnection.sendRequest(request);
     }

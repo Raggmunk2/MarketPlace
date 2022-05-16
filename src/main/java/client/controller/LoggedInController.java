@@ -116,7 +116,7 @@ public class LoggedInController {
     }
 
     private void searchByPriceRange() {
-        int[] range = userInterface.getPriceRange();
+        double[] range = userInterface.getPriceRange();
         ResponseMessage response = requestHandler.getSearchByPriceResponse(range);
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
