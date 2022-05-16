@@ -9,7 +9,7 @@ public class EnumHandler {
 
     /**
      * @Author : Linn Borgström
-     * To get the correct dondition
+     * To get the correct condition
      * @param condition of the product
      * @return the condition in a enum
      */
@@ -182,6 +182,7 @@ public class EnumHandler {
         }
         return typeOfProduct;
     }
+
 
     /**
      * @Author Linn Borgström

@@ -3,14 +3,9 @@ import shared.Product;
 
 import java.util.ArrayList;
 
-/**
- * @Author: Linn Borgström
- * Class that holds the messages for notification
- */
 public class Inbox {
 
     private ArrayList<Product> productToConfirm = new ArrayList<>();
-    //private ArrayList<TypeOfProduct> availableTypes = new ArrayList<>();
 
     public void addToInboxProductsToConfirm(ArrayList<Product> products) {
         for (Product p:products ) {

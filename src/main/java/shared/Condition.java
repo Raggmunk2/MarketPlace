@@ -25,7 +25,7 @@ public enum Condition {
         int id = 1;
         for (Condition con:Condition.values()) {
             if(!con.equals(allConditions)){
-                allConditions.add(id+". "+con.conditionName + "\n");
+                allConditions.add(id+". "+con.conditionName);
                 id++;
             }
 

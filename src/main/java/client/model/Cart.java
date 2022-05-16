@@ -16,10 +16,6 @@ public class Cart {
         productList.add(product);
     }
 
-    public void removeFromCart(Product product){
-        productList.remove(product);
-    }
-
     public void resetCart(){
         productList.clear();
     }

@@ -2,7 +2,6 @@ package shared;
 
 import java.io.Serializable;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class User implements Serializable {
 
@@ -42,7 +41,7 @@ public class User implements Serializable {
         return lastName;
     }
 
-    public String geteMail() {
+    public String getMail() {
         return email;
     }
 }

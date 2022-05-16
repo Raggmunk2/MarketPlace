@@ -2,6 +2,7 @@ package client.view;
 
 import shared.*;
 
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class UserInterface {
         System.out.println("2: View Cart");                     //ja men ej submitt, endast i RAM-minnet
         System.out.println("3: Order history.");                //Finns i SOA
         System.out.println("4: Create a new order.");           //ska tas bort(kommer hända genom kundkorgen)
-        System.out.println("5: Sell a product.");               //Inte implementerat
+        System.out.println("5: Sell a product.");
         System.out.println("6: See all products.");
         System.out.println("7: Search for products by type.");
         System.out.println("8: Search for products by price");
@@ -88,37 +89,63 @@ public class UserInterface {
         return scanner.nextInt();
     }
 
-    private void showSellProductMenu() {
+    public String chooseProductName() {
         System.out.println("*------------ Sell a product ------------*");
         System.out.println("Please write the name or title of the product");
-        String productname = scanner.nextLine();
-        System.out.println("Please write the price of the product int this format: 00.00");
-        double price = scanner.nextFloat();
-        System.out.println("Please write the number of the condition you like to mark your product by");
-        EnumHandler.getAllConditions();
-        int conditonId = scanner.nextInt();
-        System.out.println("Please write the number of the type you like to mark your product by");
-        EnumHandler.getAllTypes();
-        int typeId = scanner.nextInt();
-        System.out.println("Please write the year of making of the product in this format: YYYY ");
-        int yearOfMaking = scanner.nextInt();
-        System.out.println("Please write the colour of you product");
-        String colour = scanner.nextLine();
-        //accessControl.addProductToDB(productname,price,conditonId,typeId,yearOfMaking,colour);  //vet ej om den ska vara genom accessControll
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        return name;
     }
+
+    public int chooseYearOfMaking(){
+        System.out.println("*------------ Year Of Making ------------*");
+        boolean fail;
+        int price = 0;
+        do{
+            System.out.println("Please write the year of making of the product in this format: YYYY");
+            String priceString = scanner.nextLine();
+            try{
+                price = Integer.parseInt(priceString);
+                fail = false;
+            }catch (Exception e){
+                fail = true;
+            }
+        }while (fail);
+
+        return price;
+    }
+
+    public double getProductPrice(){
+        System.out.println("*------------ Price ------------*");
+        boolean fail;
+        double price = 0;
+        do{
+            System.out.println("Please write the price of the product int this format: 00.00");
+            String priceString = scanner.nextLine();
+            try{
+                price = Double.parseDouble(priceString);
+                fail = false;
+            }catch (Exception e){
+                fail = true;
+            }
+        }while (fail);
+
+        return price;
+    }
+
 
     public TypeOfProduct getProductType() {
         System.out.println("*------------ Types ------------*");
-        System.out.println("Please write number of the type you like to search for");
+        System.out.println("Please write the number of the type you would like.");
         for (String type : TypeOfProduct.getAllTypesWithId()) {
             System.out.println(type);
         }
-        ;
+
         return EnumHandler.getType(scanner.nextInt());
     }
 
-    public int[] getPriceRange() {
-        int[] range = new int[2];
+    public double[] getPriceRange() {
+        double[] range = new double[2];
         System.out.println("Type min prize");
         range[0] = scanner.nextInt();
         System.out.println("Type max prize");
@@ -126,14 +153,22 @@ public class UserInterface {
         return range;
     }
 
+    public String getColor(){
+        System.out.println("*------------ Colour ------------*");
+        System.out.println("Please write the colour you want");
+        scanner.nextLine();
+        return scanner.nextLine();
+    }
+
     public Condition getCondition() {
         System.out.println("*------------ Condition ------------*");
-        System.out.println("Please write the number of the condition you like to search for");
+        System.out.println("Please write the number of the condition you would like.");
         for (String condition : Condition.getAllConditionsWithId()) {
             System.out.println(condition);
         }
-        ;
+
         return EnumHandler.getCondition(scanner.nextInt());
+
     }
 
     public void printMessage(String message) {
@@ -163,7 +198,6 @@ public class UserInterface {
             if (selectedId == itemId) {
                 return object;
             }
-
         }
         System.out.println("Invalid product id");
         return null;
@@ -172,5 +206,17 @@ public class UserInterface {
     public boolean getBoolean(String text){
         System.out.println(text);
         return scanner.nextBoolean();
+    }
+
+    public int showAllTypeOfProducts(ArrayList<String> type){
+        for (String s: type
+             ) {
+            System.out.println(s);
+        }
+
+        System.out.println("Please write a number that you want to subscribe to: ");
+        int selectType = scanner.nextInt();
+        return selectType;
+
     }
 }

@@ -30,7 +30,7 @@ public class RequestHandler {
         return serverConnection.sendRequest(request);
     }
 
-    public ResponseMessage getSearchByPriceResponse(int[] priceRange) {
+    public ResponseMessage getSearchByPriceResponse(double[] priceRange) {
         RequestMessage request = new RequestMessage(TypeOfMessage.SEARCH_BY_PRICE, priceRange);
         return serverConnection.sendRequest(request);
     }
@@ -40,33 +40,36 @@ public class RequestHandler {
         return serverConnection.sendRequest(request);
     }
 
-    public ResponseMessage getAllOrdersResponse(User user) {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDERS, user);
+    public ResponseMessage createOrdersFromCart(ArrayList<Product> productsInCart, User user) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CREATE_ORDER, productsInCart, user);
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage createOrdersFromCart(ArrayList<Product> productsInCart, User user) {
+    public ResponseMessage createProductToSell(Product product) {
         RequestMessage requestMessage = null;
-        for (Product p : productsInCart) {
-            Order newOrder = new Order (user, Timestamp.valueOf(LocalDateTime.now()), p.getId());
-            requestMessage = new RequestMessage(TypeOfMessage.CREATE_ORDER, newOrder);
-            ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
-        }
-        return new ResponseMessage(TypeOfMessage.CREATE_ORDER, true);
+        requestMessage = new RequestMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, product);
+        return serverConnection.sendRequest(requestMessage);
     }
+
 
     public ResponseMessage getAllProducts() {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS);
+        ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
+        return responseMessage;
+    }
+
+    public ResponseMessage getAllProductsToConfirm(User user) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, user);
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage getOrdersToConfirm() {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NEW_MESSAGES);
+    public ResponseMessage confirmProduct(Product product, Boolean acceptOrDecline) {
+       RequestMessage requestMessage = new RequestMessage(TypeOfMessage.CONFIRM_PRODUCT, product, acceptOrDecline);
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage confirmOrder(HashMap<Order, Boolean> result) {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.ORDER_RESPONSE, result);
-        return serverConnection.sendRequest(requestMessage);
+    public ResponseMessage sendTypeOfSubToServer(int input, String userName) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE, input, userName);
+        return  serverConnection.sendRequest(requestMessage);
     }
 }
