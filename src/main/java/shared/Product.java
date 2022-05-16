@@ -45,16 +45,9 @@ public class Product implements Serializable {
         return typeOfProductName;
     }
 
-    public void setTypeOfProductName(TypeOfProduct typeOfProductName) {
-        this.typeOfProductName = typeOfProductName;
-    }
 
     public double getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public int getYearOfMaking() {
@@ -69,10 +62,6 @@ public class Product implements Serializable {
         return colour;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
     public Condition getCondition() {
         return condition;
     }
@@ -85,16 +74,8 @@ public class Product implements Serializable {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

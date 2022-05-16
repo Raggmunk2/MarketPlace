@@ -20,11 +20,11 @@ public class MainMenuController {
 
     private void mainMenuHandler() {
         int input;
+        User user = null;
         do {
             input = userInterface.showMainMenu();
             switch (input) {
                 case 1:
-                    User user = null;
                     do {
                         user = loginUser();
                     } while (user == null);
@@ -33,7 +33,7 @@ public class MainMenuController {
                 case 2:
                     user = register();
                     if (user != null) {
-                        System.out.println("Welcome " + user.getUserName() + " what would you like to do now?");
+                        userInterface.printMessage("Welcome \" + user.getUserName() + \" what would you like to do now?\"");
                         new LoggedInController(user, this.userInterface, this.requestHandler);
                     }
             }

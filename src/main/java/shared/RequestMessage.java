@@ -2,8 +2,6 @@ package shared;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RequestMessage implements Serializable{
     private double[] priceRange;
@@ -19,7 +17,6 @@ public class RequestMessage implements Serializable{
     private Product product;
     private ArrayList<Product> productsInCart;
 
-    //LOGGA IN KONSTRUKTOR
     public RequestMessage(TypeOfMessage typeOfMessage, String userName, String password){
         this.typeOfMessage = typeOfMessage;
         this.userName = userName;
@@ -88,9 +85,7 @@ public class RequestMessage implements Serializable{
     public Condition getCondition() {
         return condition;
     }
-    public Order getOrder() {
-        return order;
-    }
+
     public int getInput(){
         return input;
     }

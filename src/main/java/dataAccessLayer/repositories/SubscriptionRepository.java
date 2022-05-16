@@ -10,9 +10,6 @@ public class SubscriptionRepository {
     private Connection connection;
     private Statement statement;
 
-    /**
-     * @Author : Frida Jacobsson
-     */
     public SubscriptionRepository() {
         try {
             connection = new ConnectionToDB().getConnection();
