@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpServer;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,21 +29,20 @@ public class OrderService {
     private ConnectionToDatabaseRepository connection;
 
 
-    public OrderService() throws SQLException {
+    public OrderService() {
         connection = new ConnectionToDatabaseRepository();
     }
 
     /**
-     * Gets the order history and throught a connection to the DB
+     * Gets the order history and through a connection to the DB
+     * @param username the user to search the order for
      * @return Json object in a String format
-     * @throws SQLException
      */
     @GET
-    @Path("/orderHistory")
+    @Path("/orderSearch")
     @Produces({MediaType.APPLICATION_JSON})
-
-    public String getOrderHistory() {
-        ArrayList products = connection.getOrderHistory();
+    public String getOrderHistoryBySearch(@QueryParam("username") String username) {
+        ArrayList products = connection.getOrderHistoryByName(username);
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -51,7 +51,6 @@ public class OrderService {
         return jsonObject;
 
     }
-
     
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServerFactory.create("http://localhost:9998/");
