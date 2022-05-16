@@ -1,12 +1,11 @@
 package client.controller;
 
 import client.model.Cart;
-import client.model.Inbox;
+import client.model.ProductInbox;
 import client.view.UserInterface;
 import shared.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LoggedInController {
 
@@ -14,21 +13,20 @@ public class LoggedInController {
     private UserInterface userInterface;
     private client.controller.RequestHandler requestHandler;
     private Cart cart;
-    private client.model.Inbox inbox;
+    private ProductInbox productInbox;
 
     public LoggedInController(User user, UserInterface userInterface, RequestHandler requestHandler) {
         this.user = user;
         this.userInterface = userInterface;
         this.requestHandler = requestHandler;
         cart = new Cart();
-        inbox = new Inbox();
+        productInbox = new ProductInbox();
         loggedInMenuHandler();
     }
 
     private void loggedInMenuHandler() {
         int input;
         do {
-
             input = userInterface.showLoggedInMenu();
             switch (input) {
                 case 1:
@@ -38,17 +36,21 @@ public class LoggedInController {
                     if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
                     else {
                         userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
+                        boolean checkoutCart = userInterface.getBoolean("Do you want to checkout your cart? (true/false)");
+
+                        if(checkoutCart){
+                            ResponseMessage response = requestHandler.createOrdersFromCart(cart.getAllProductsInCart(), user);
+                            if(response.getSuccess()){
+                                System.out.println("Your order has been submitted");
+                            }else{
+                                System.out.println("Something went wrong");
+                            }
+                            cart.resetCart();
+                        }
                     }
                     break;
-                case 3:
-                    //getAllOrders();
-                    System.out.println("This is implemented in SOA");
-                    break;
-                case 4:
-                    createOrder();
-                    break;
                 case 6:
-                    getAllProducts();
+                    printAllProducts();
                     break;
                 case 7:
                     searchByProductType();
@@ -60,7 +62,7 @@ public class LoggedInController {
                     searchByCondition();
                     break;
                 case 10:
-                    handleInbox();
+                    handleProductInbox();
                     break;
             }
         } while (input != 12);
@@ -72,7 +74,7 @@ public class LoggedInController {
     private void logoutUser() {
         this.user = null;
         this.cart = null;
-        this.inbox = null;
+        this.productInbox = null;
         System.exit(1);
     }
 
@@ -91,24 +93,17 @@ public class LoggedInController {
         ResponseMessage response = requestHandler.getAllProducts();
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
-            return response.getProducts();
+           return response.getProducts();
         }
         return null;
     }
 
-    private void getAllOrders() {
-        ResponseMessage response = requestHandler.getAllOrdersResponse(user);
-        userInterface.showResult("------------YOUR ORDERS------------", response.getOrders());
-    }
-
-    private void createOrder() {
-        ResponseMessage response = requestHandler.createOrdersFromCart(this.cart.getAllProductsInCart(), this.user);
-        if (response.getSuccess()) {
-            userInterface.printMessage("Order is created");
-        } else {
-            userInterface.printMessage("Order could not be created");
+    private void printAllProducts(){
+        ResponseMessage response = requestHandler.getAllProducts();
+        if (response.getProducts().size() == 0) userInterface.printMessage("No result");
+        else {
+           userInterface.showResult("YOUR RESULT)", response.getProducts());
         }
-        cart.resetCart();
     }
 
     private void searchByCondition() {
@@ -137,24 +132,18 @@ public class LoggedInController {
         }
     }
 
-    private void handleInbox() {
-        updateInbox();
-        HashMap<Order, Boolean> result = confirmOrder();
-        ResponseMessage response = requestHandler.confirmOrder(result);
-        userInterface.printMessage("Confirmed offer: " +response.getSuccess());
-    }
-
-    private void updateInbox() {
-        ResponseMessage response = requestHandler.getOrdersToConfirm();
-        inbox.updateOrdersToConfirm(response.getOrders());
-    }
-
-    private HashMap<Order, Boolean> confirmOrder(){
-        ArrayList<Order> orders = inbox.getOrdersToConfirm();
-        Order order = (Order) userInterface.letUserChooseFromList(orders);
-        boolean responseToOffer = userInterface.getBoolean("Accept or decline? (True/False)");
-        HashMap<Order, Boolean> result = new HashMap<>();
-        result.put(order, responseToOffer);
-        return result;
+    private void handleProductInbox() {
+        ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
+        if(response.getProducts().size() == 0){
+            userInterface.printMessage("You have no new messages");
+        }
+        else {
+            productInbox.update(response.getProducts());
+            Product product = (Product) userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
+            Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
+            ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);
+            userInterface.printMessage("Confirmed offer: " + responseMessage.getSuccess());
+            productInbox.resetProductInbox();
+        }
     }
 }

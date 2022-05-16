@@ -106,4 +106,17 @@ public class OrderRepository {
         }
         return orderList;
     }
+
+    public boolean removeOrderByProductId(int productId) {
+
+        try {
+            String removeOrder = "DELETE FROM [dbo].[Order] WHERE productId = " + productId + ";";
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(removeOrder);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
