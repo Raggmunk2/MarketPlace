@@ -81,12 +81,17 @@ public class UserRepository {
         return user;
     }
 
-    private void updateLastLoggedIn(String username) throws SQLException {
-        String query = "UPDATE [User]\n" +
-                "SET lastLogIn = GETDATE()\n" +
-                "WHERE username = '" + username +"';";
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(query);
+    public void updateLastLoggedIn(String username){
+        try {
+            String query = "UPDATE [User]\n" +
+                    "SET lastLogIn = GETDATE()\n" +
+                    "WHERE username = '" + username +"';";
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+
     }
 
     private String getLastLoggedIn(String username) throws SQLException {

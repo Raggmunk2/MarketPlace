@@ -81,6 +81,11 @@ public class RequestHandler {
         return serverConnection.sendRequest(requestMessage);
     }
 
+    public ResponseMessage saveLastLogIn(String userName) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SAVE_LAST_LOG_IN,userName);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
     //public ResponseMessage getLastLoggedIn(String username){
 
     //}

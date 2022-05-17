@@ -14,5 +14,6 @@ public enum TypeOfMessage {
     SUBSCRIBE_TO_TYPE,
     NOTIFICATION,
     PRODUCTS_TO_CONFIRM,
+    SAVE_LAST_LOG_IN,
     CONFIRM_PRODUCT;
 }
