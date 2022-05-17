@@ -58,8 +58,7 @@ public class ResponseHandler {
                     productRepository = new ProductRepository();
                     success = productRepository.addProductToDatabase(request.getProduct());
                     return new ResponseMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, success);
-
-                    case CONFIRM_PRODUCT:
+                case CONFIRM_PRODUCT:
                     productRepository = new ProductRepository();
                     orderRepository = new OrderRepository(new UserRepository());
                     boolean ok;

@@ -32,10 +32,10 @@ public class RequestMessage implements Serializable{
         else if(object instanceof TypeOfProduct){
             this.typeOfProduct = (TypeOfProduct)object;
         }
-       else if(object instanceof double[]){
+        else if(object instanceof double[]){
             this.priceRange = (double[]) object;
         }
-        if(object instanceof Condition){
+        else if(object instanceof Condition){
             this.condition = (Condition)object;
         }
         else if(object instanceof Order){

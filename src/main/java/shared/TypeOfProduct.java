@@ -46,4 +46,65 @@ public enum TypeOfProduct {
         }
         return typeList;
     }
+
+
+    public static int getTypeAsInt(TypeOfProduct input) {
+        int typeOfProduct;
+        switch (input){
+            case Hobby:
+                typeOfProduct = 1;
+                break;
+            case Furniture :
+                typeOfProduct = 2;
+                break;
+            case Computers :
+                typeOfProduct = 3;
+                break;
+            case MobilePhones :
+                typeOfProduct = 4;
+                break;
+            case EntertainmentEquipment :
+                typeOfProduct = 5;
+                break;
+            case Cameras :
+                typeOfProduct = 6;
+                break;
+            case HouseholdMachines :
+                typeOfProduct = 7;
+                break;
+            case Clothing :
+                typeOfProduct = 8;
+                break;
+            case SportsEquipment :
+                typeOfProduct = 9;
+                break;
+            case KitchenUtensils :
+                typeOfProduct = 10;
+                break;
+            case Jewelry :
+                typeOfProduct = 11;
+                break;
+            case PerfumesAndCosmetics :
+                typeOfProduct = 12;
+                break;
+            case Vehicle :
+                typeOfProduct = 13;
+                break;
+            case Plants :
+                typeOfProduct = 14;
+                break;
+            case Shoes :
+                typeOfProduct = 15;
+                break;
+            case Tools :
+                typeOfProduct = 16;
+                break;
+            case Other :
+                typeOfProduct = 17;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + input);
+        }
+        return typeOfProduct;
+    }
 }

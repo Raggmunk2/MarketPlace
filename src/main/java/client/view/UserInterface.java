@@ -71,20 +71,18 @@ public class UserInterface {
 
     /*-------------------------When logged in------------------------*/
 
-    public int showLoggedInMenu() {
+    public int showLoggedInMenu(int productInbox) {
         System.out.println("*-------------------- Welcome what do you want to do now? --------------------*");
-        System.out.println("1: Add product to cart");           //denna slås ihop med 6-9
-        System.out.println("2: View Cart");                     //ja men ej submitt, endast i RAM-minnet
-        System.out.println("3: Order history.");                //Finns i SOA
-        System.out.println("4: Create a new order.");           //ska tas bort(kommer hända genom kundkorgen)
-        System.out.println("5: Sell a product.");
-        System.out.println("6: See all products.");
-        System.out.println("7: Search for products by type.");
-        System.out.println("8: Search for products by price");
-        System.out.println("9: Search products by condition");
-        System.out.println("10: Inbox");                        //Inte implementerat
-        System.out.println("11: Subscribe to a type");          //Inte implementerat
-        System.out.println("12: Log out.");
+        System.out.println("1: View all products");
+        System.out.println("2: View Cart and checkout");
+        System.out.println("3: Sell a product.");
+        System.out.println("4: See all products.");
+        System.out.println("5: Search for products by type.");
+        System.out.println("6: Search for products by price");
+        System.out.println("7: Search products by condition");
+        System.out.println("8: Product inbox: " + productInbox + " new messages.");                        //Inte implementerat
+        System.out.println("9: Subscribe to a type");
+        System.out.println("10: Log out.");
         System.out.println("*------------------------------ Please insert choose a number -----------------------------*");
         return scanner.nextInt();
     }
@@ -155,7 +153,7 @@ public class UserInterface {
 
     public String getColor(){
         System.out.println("*------------ Colour ------------*");
-        System.out.println("Please write the colour you want");
+        System.out.println("Please write the colour you want.");
         scanner.nextLine();
         return scanner.nextLine();
     }
@@ -187,6 +185,7 @@ public class UserInterface {
         for (Object object : list) {
             System.out.println(object.toString());
         }
+        System.out.println("-------- TYPE ID TO CHOOSE ITEM--------------");
         int selectedId = scanner.nextInt();
         int itemId = 0;
         for (Object object : list) {
