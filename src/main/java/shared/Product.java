@@ -66,6 +66,14 @@ public class Product implements Serializable {
         return condition;
     }
 
+    public int getConditionAsInt(Condition condition){
+        return Condition.getConditionAsInt(condition);
+    }
+
+    public int getTypeAsInt(TypeOfProduct typeOfProduct){
+        return TypeOfProduct.getTypeAsInt(typeOfProduct);
+    }
+
     public void setCondition(Condition condition) {
         condition = condition;
     }
