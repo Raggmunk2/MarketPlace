@@ -77,6 +77,12 @@ public class LoggedInController {
         logoutUser();
     }
 
+
+    private void getLastLoggedIn(String username){
+
+
+    }
+
     private void subscribeToAType() {
         ArrayList<String> type = TypeOfProduct.getAllTypesWithId();
         int input = userInterface.showAllTypeOfProducts(type);
@@ -140,7 +146,6 @@ public class LoggedInController {
     }
 
 
-
     private void createOrder() {
         ResponseMessage response = requestHandler.createOrdersFromCart(this.cart.getAllProductsInCart(), this.user);
         if (response.getSuccess()) {
@@ -180,13 +185,11 @@ public class LoggedInController {
         int typeNotificationSize = 0;
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
         ResponseMessage responseSubscriptionType = requestHandler.getNotificationOfSubscription(this.user);
-        if(responseSubscriptionType.getSuccess() != null){
+        if(responseSubscriptionType.getSuccess()){
             typeNotificationSize = 1;
         }
         typeNotificationSize += response.getProducts().size();
         return typeNotificationSize;
-
-
     }
 
     private void handleProductInbox() {

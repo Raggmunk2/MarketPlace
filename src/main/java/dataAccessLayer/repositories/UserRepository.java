@@ -89,6 +89,21 @@ public class UserRepository {
         statement.executeUpdate(query);
     }
 
+    private String getLastLoggedIn(String username) throws SQLException {
+        String query = "SELECT [lastLogIn]\n" +
+                "FROM [User]" +
+                "WHERE username = '" + username +"';";
+        Statement statement = connection.createStatement();
+        ResultSet results = statement.executeQuery(query);
+        String lastLoggedIn = null;
+
+        while (results.next()) {
+            lastLoggedIn = results.getString(1);
+        }
+
+        return lastLoggedIn;
+    }
+
     public boolean registerNewUser(User user) {
         try {
             CallableStatement callableStatement = connection.prepareCall("{CALL MarketPlace.dbo.sp_userCreateAccount(?,?,?,?,?,?)}");

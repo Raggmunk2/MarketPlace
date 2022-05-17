@@ -237,6 +237,7 @@ public class ProductRepository {
         } catch (SQLException throwables) {
             System.out.println("wrong");
             throwables.printStackTrace();
+            return false;
         }
         return true;
     }

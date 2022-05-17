@@ -77,6 +77,12 @@ public class RequestHandler {
     public ResponseMessage getNotificationOfSubscription(User user) {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, user);
         System.out.println("request.getusername: " + requestMessage.getUserName());
+        ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
+        System.out.println("response success:" + responseMessage.getSuccess());
         return serverConnection.sendRequest(requestMessage);
     }
+
+    //public ResponseMessage getLastLoggedIn(String username){
+
+    //}
 }
