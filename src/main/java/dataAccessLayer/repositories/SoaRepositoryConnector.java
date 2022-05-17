@@ -1,4 +1,4 @@
-package soa;
+package dataAccessLayer.repositories;
 
 
 import dataAccessLayer.repositories.OrderRepository;
@@ -9,7 +9,7 @@ import shared.User;
 import java.util.ArrayList;
 
 
-public class ConnectionToDatabaseRepository {
+public class SoaRepositoryConnector {
     private ProductRepository productRepository;
     private OrderRepository orderRepository;
     private UserRepository ur;
@@ -17,7 +17,7 @@ public class ConnectionToDatabaseRepository {
     /**
      * Constructor to connect to the database
      */
-    public ConnectionToDatabaseRepository() {
+    public SoaRepositoryConnector() {
         productRepository = new ProductRepository();
         ur = new UserRepository();
         orderRepository = new OrderRepository(ur);

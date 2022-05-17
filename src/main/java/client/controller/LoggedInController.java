@@ -105,7 +105,8 @@ public class LoggedInController {
         this.user = null;
         this.cart = null;
         this.productInbox = null;
-        System.exit(1);
+        userInterface.showMainMenu();
+        //System.exit(1);
     }
 
 

@@ -4,19 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
+import dataAccessLayer.repositories.SoaRepositoryConnector;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -26,11 +21,11 @@ import java.util.ArrayList;
 
 @Path("/marketPlace")
 public class OrderService {
-    private ConnectionToDatabaseRepository connection;
+    private SoaRepositoryConnector connection;
 
 
     public OrderService() {
-        connection = new ConnectionToDatabaseRepository();
+        connection = new SoaRepositoryConnector();
     }
 
     /**
@@ -51,7 +46,7 @@ public class OrderService {
         return jsonObject;
 
     }
-    
+
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServerFactory.create("http://localhost:9998/");
         server.start();
