@@ -5,6 +5,8 @@ import client.model.ProductInbox;
 import client.view.UserInterface;
 import shared.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class LoggedInController {
@@ -27,7 +29,7 @@ public class LoggedInController {
     private void loggedInMenuHandler() {
         int input;
         do {
-            getWhenLoggedIn(user.getUserName());
+            checkForNewSubs(user.getUserName());
             int productInboxSize = getProductInboxSize();
             input = userInterface.showLoggedInMenu(productInboxSize);
             switch (input) {
@@ -65,9 +67,22 @@ public class LoggedInController {
     }
 
 
-    private void getWhenLoggedIn(String username){
+    private void checkForNewSubs(String username){
         ResponseMessage lastLoggedIn = requestHandler.getWhenLoggedIn(username);
-        userInterface.printMessage("Last Logged IN:" + lastLoggedIn.getText());
+        userInterface.printMessage("Last Logged IN: " + lastLoggedIn.getText());
+        System.out.println("Time now: "+Timestamp.valueOf(LocalDateTime.now()));
+
+        System.out.println("------------forloop split---------------");
+
+        String whenLoggedIn = lastLoggedIn.getText();
+        String[] temp = whenLoggedIn.split("[-:. ]");
+
+        int[] allaSiffrorWhenLoggedIn = new int[10];
+
+            for (int i = 0; i < temp.length; i++) {
+                System.out.println(temp[i]);
+                allaSiffrorWhenLoggedIn[i] = Integer.parseInt(temp[i]);
+            }
     }
 
     private void subscribeToAType() {
