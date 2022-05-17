@@ -69,20 +69,27 @@ public class LoggedInController {
 
     private void checkForNewSubs(String username){
         ResponseMessage lastLoggedIn = requestHandler.getWhenLoggedIn(username);
-        userInterface.printMessage("Last Logged IN: " + lastLoggedIn.getText());
+
         System.out.println("Time now: "+Timestamp.valueOf(LocalDateTime.now()));
+        System.out.println("Time when logged in: " + lastLoggedIn.getText());
+
+        String whenIsNow = String.valueOf(Timestamp.valueOf(LocalDateTime.now()));
+        String whenLoggedIn = lastLoggedIn.getText();
 
         System.out.println("------------forloop split---------------");
+        String[] tempLog = whenLoggedIn.split("[-:. ]");
+        String[] tempNow = whenIsNow.split("[-:. ]");
 
-        String whenLoggedIn = lastLoggedIn.getText();
-        String[] temp = whenLoggedIn.split("[-:. ]");
+        int[] whenLastLoggedInInt = new int[10];
+        int[] whenIsNowInt = new int[10];
 
-        int[] allaSiffrorWhenLoggedIn = new int[10];
+        for (int i = 0; i < 6; i++) {
+            System.out.println("LOG: " + tempLog[i]);
+            System.out.println("NOW: " + tempNow[i]);
+            whenLastLoggedInInt[i] = Integer.parseInt(tempLog[i]);
+            whenIsNowInt[i] = Integer.parseInt(tempNow[i]);
+        }
 
-            for (int i = 0; i < temp.length; i++) {
-                System.out.println(temp[i]);
-                allaSiffrorWhenLoggedIn[i] = Integer.parseInt(temp[i]);
-            }
     }
 
     private void subscribeToAType() {
