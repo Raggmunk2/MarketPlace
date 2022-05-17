@@ -58,7 +58,7 @@ public class LoggedInController {
                     subscribeToAType();
                     break;
             }
-        } while (input != 12);
+        } while (input != 10);
         userInterface.printMessage("Okay, bye!");
         logoutUser();
     }
