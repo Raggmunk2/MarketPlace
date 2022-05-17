@@ -69,7 +69,7 @@ public class UserRepository {
                 //Skapar en user med data från databasen
                 user = new User(dataBaseUsername, dataBasePassword, firstname, lastname, DoB, email, lastLogIn);
                 updateLastLoggedIn(user.getUserName());
-                System.out.println("lastLogin: " + lastLogIn);
+                System.out.println("UserRepository - lastLogin: " + lastLogIn);
             } else {
                 //Skapar en user även om lösenordet inte matchar, detta för att det som skickas tillbaka till klienten inte ska vara null
                 //användarnamnet är dock "No user exists" som kollas sedan på klient-sidan för att veta om användaren inte finns i DB.

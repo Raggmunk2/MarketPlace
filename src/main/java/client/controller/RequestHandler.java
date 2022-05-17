@@ -74,9 +74,9 @@ public class RequestHandler {
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage getNotificationOfSubscription(String username) {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, username);
-        System.out.println(requestMessage);
+    public ResponseMessage getNotificationOfSubscription(User user) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, user);
+        System.out.println("request.getusername: " + requestMessage.getUserName());
         return serverConnection.sendRequest(requestMessage);
     }
 }

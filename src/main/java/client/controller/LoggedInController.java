@@ -179,7 +179,7 @@ public class LoggedInController {
     private int getProductInboxSize(){
         int typeNotificationSize = 0;
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        ResponseMessage responseSubscriptionType = requestHandler.getNotificationOfSubscription(this.user.getUserName());
+        ResponseMessage responseSubscriptionType = requestHandler.getNotificationOfSubscription(this.user);
         if(responseSubscriptionType.getSuccess() != null){
             typeNotificationSize = 1;
         }
@@ -191,7 +191,7 @@ public class LoggedInController {
 
     private void handleProductInbox() {
         ResponseMessage responseProductToConfirm = requestHandler.getAllProductsToConfirm(this.user);
-        ResponseMessage responseSubscription = requestHandler.getNotificationOfSubscription(this.user.getUserName());
+        ResponseMessage responseSubscription = requestHandler.getNotificationOfSubscription(this.user);
         System.out.println(responseSubscription.getSuccess());
         if(responseSubscription.getSuccess() == false && responseProductToConfirm.getProducts().size() == 0){
             userInterface.printMessage("You have no new messages");
