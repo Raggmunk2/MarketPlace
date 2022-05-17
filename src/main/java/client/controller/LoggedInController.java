@@ -241,17 +241,20 @@ public class LoggedInController {
             userInterface.printMessage("You have no new messages");
         }
         if(responseSubscription.getSuccess() == true){
-            userInterface.printMessage("You have new products to see that you are subscribing for\n"
-            + "Please go to the main menu!");
+            userInterface.printMessage("You have new products to see that you are subscribing for! \n"
+            + "----> Please go to the main menu to see them!");
             requestHandler.saveLastLogIn(user.getUserName());
         }
 
         if(responseProductToConfirm.getProducts().size() > 0){
             productInbox.update(responseProductToConfirm.getProducts());
+            userInterface.printMessage("\nYou have products to sell!");
             Product product = (Product) userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
             Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
             ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);
-            userInterface.printMessage("Confirmed offer: " + responseMessage.getSuccess());
+            if(responseMessage.getSuccess()){
+                System.out.println("You succeeded with your task.");
+            }
             productInbox.resetProductInbox();
         }
 
