@@ -79,4 +79,8 @@ public class RequestHandler {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.GET_WHEN_LOGGED_IN, username);
         return serverConnection.sendRequest(requestMessage);
     }
+    public ResponseMessage saveLastLogIn(String userName) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SAVE_LAST_LOG_IN,userName);
+        return serverConnection.sendRequest(requestMessage);
+    }
 }

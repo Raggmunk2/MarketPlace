@@ -15,5 +15,6 @@ public enum TypeOfMessage {
     NOTIFICATION,
     GET_WHEN_LOGGED_IN,
     PRODUCTS_TO_CONFIRM,
+    SAVE_LAST_LOG_IN,
     CONFIRM_PRODUCT;
 }

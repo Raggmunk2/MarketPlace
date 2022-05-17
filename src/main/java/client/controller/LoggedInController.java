@@ -79,6 +79,7 @@ public class LoggedInController {
 
 
     private void logoutUser() {
+        ResponseMessage responseMessage = requestHandler.saveLastLogIn(user.getUserName());
         this.user = null;
         this.cart = null;
         this.productInbox = null;

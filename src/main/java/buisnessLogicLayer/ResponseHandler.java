@@ -94,6 +94,9 @@ public class ResponseHandler {
                     userRepository = new UserRepository();
                     String whenLoggedIn = userRepository.getLastLoggedIn(request.getUserName());
                     return new ResponseMessage(TypeOfMessage.GET_WHEN_LOGGED_IN, whenLoggedIn);
+
+                case SAVE_LAST_LOG_IN:
+                    userRepository.updateLastLoggedIn(request.getUserName());
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
