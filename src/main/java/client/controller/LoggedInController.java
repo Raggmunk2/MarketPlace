@@ -29,7 +29,10 @@ public class LoggedInController {
     private void loggedInMenuHandler() {
         int input;
         do {
-            checkForNewSubs(user.getUserName());
+            //Fråga DB, finns nya subs, baserat på Lastloggedin i JavaObject
+            //uppdaterar vi inbox
+
+            //checkForNewSubs(user.getUserName());
             int productInboxSize = getProductInboxSize();
             input = userInterface.showLoggedInMenu(productInboxSize);
             switch (input) {
@@ -69,6 +72,7 @@ public class LoggedInController {
 
     private void checkForNewSubs(String username){
         ResponseMessage lastLoggedIn = requestHandler.getWhenLoggedIn(username);
+
 
         System.out.println("Time now: "+Timestamp.valueOf(LocalDateTime.now()));
         System.out.println("Time when logged in: " + lastLoggedIn.getText());
@@ -218,6 +222,7 @@ public class LoggedInController {
         }
     }
 
+
     private int getProductInboxSize(){
         int typeNotificationSize = 0;
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
@@ -236,12 +241,13 @@ public class LoggedInController {
         if(responseSubscription.getSuccess() == false && responseProductToConfirm.getProducts().size() == 0){
             userInterface.printMessage("You have no new messages");
         }
-        else if(responseSubscription.getSuccess() == true){
+        if(responseSubscription.getSuccess() == true){
             userInterface.printMessage("You have new products to see that you are subscribing for\n"
             + "Please go to the main menu!");
+            requestHandler.saveLastLogIn(user.getUserName());
         }
 
-        else if(responseProductToConfirm.getProducts().size() > 0){
+        if(responseProductToConfirm.getProducts().size() > 0){
             productInbox.update(responseProductToConfirm.getProducts());
             Product product = (Product) userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
             Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");

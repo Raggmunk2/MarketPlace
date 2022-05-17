@@ -86,9 +86,6 @@ public class ResponseHandler {
                 case NOTIFICATION:
                     productRepository = new ProductRepository();
                     success = productRepository.getNotification(request.getUser());
-                    System.out.println("ResponeHandler - "+success);
-                    System.out.println("ResponeHandler - lastLogin: " + request.getUser().getLastLogIn());
-                    System.out.println("ResponeHandler - username: " + request.getUserName());
                     return new ResponseMessage(TypeOfMessage.NOTIFICATION,success);
                 case GET_WHEN_LOGGED_IN:
                     userRepository = new UserRepository();
@@ -96,7 +93,10 @@ public class ResponseHandler {
                     return new ResponseMessage(TypeOfMessage.GET_WHEN_LOGGED_IN, whenLoggedIn);
 
                 case SAVE_LAST_LOG_IN:
-                    userRepository.updateLastLoggedIn(request.getUserName());
+                    userRepository = new UserRepository();
+                    success = userRepository.updateLastLoggedIn(request.getUserName());
+                    return new ResponseMessage(TypeOfMessage.SAVE_LAST_LOG_IN, success);
+
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
