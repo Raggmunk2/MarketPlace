@@ -71,8 +71,8 @@ public class RequestMessage implements Serializable{
         this.user = user;
      }
 
-     public RequestMessage(TypeOfMessage notification, String userName){
-        this.typeOfMessage = notification;
+     public RequestMessage(TypeOfMessage typeOfMessage, String userName){
+        this.typeOfMessage = typeOfMessage;
         this.userName = userName;
      }
 

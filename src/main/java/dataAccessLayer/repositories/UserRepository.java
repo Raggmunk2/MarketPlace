@@ -89,18 +89,22 @@ public class UserRepository {
         statement.executeUpdate(query);
     }
 
-    private String getLastLoggedIn(String username) throws SQLException {
-        String query = "SELECT [lastLogIn]\n" +
-                "FROM [User]" +
-                "WHERE username = '" + username +"';";
-        Statement statement = connection.createStatement();
-        ResultSet results = statement.executeQuery(query);
+    public String getLastLoggedIn(String username){
         String lastLoggedIn = null;
+        try{
+            String query = "SELECT [lastLogIn]\n" +
+                    "FROM [User]" +
+                    "WHERE username = '" + username +"';";
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(query);
 
-        while (results.next()) {
-            lastLoggedIn = results.getString(1);
+            while (results.next()) {
+                lastLoggedIn = results.getString(1);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
         }
-
         return lastLoggedIn;
     }
 

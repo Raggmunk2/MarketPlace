@@ -2,11 +2,7 @@ package client.controller;
 
 import shared.*;
 
-import java.sql.SQLOutput;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RequestHandler {
 
@@ -75,13 +71,12 @@ public class RequestHandler {
 
     public ResponseMessage getNotificationOfSubscription(User user) {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, user);
-        System.out.println("request.getusername: " + requestMessage.getUserName());
         ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
-        System.out.println("response success:" + responseMessage.getSuccess());
         return serverConnection.sendRequest(requestMessage);
     }
 
-    //public ResponseMessage getLastLoggedIn(String username){
-
-    //}
+    public ResponseMessage getWhenLoggedIn(String username){
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.GET_WHEN_LOGGED_IN, username);
+        return serverConnection.sendRequest(requestMessage);
+    }
 }

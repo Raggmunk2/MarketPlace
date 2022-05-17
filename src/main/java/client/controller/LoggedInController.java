@@ -27,6 +27,7 @@ public class LoggedInController {
     private void loggedInMenuHandler() {
         int input;
         do {
+            getWhenLoggedIn(user.getUserName());
             int productInboxSize = getProductInboxSize();
             input = userInterface.showLoggedInMenu(productInboxSize);
             switch (input) {
@@ -64,9 +65,9 @@ public class LoggedInController {
     }
 
 
-    private void getLastLoggedIn(String username){
-
-
+    private void getWhenLoggedIn(String username){
+        ResponseMessage lastLoggedIn = requestHandler.getWhenLoggedIn(username);
+        userInterface.printMessage("Last Logged IN:" + lastLoggedIn.getText());
     }
 
     private void subscribeToAType() {

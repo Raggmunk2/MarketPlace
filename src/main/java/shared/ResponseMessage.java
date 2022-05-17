@@ -10,6 +10,7 @@ public class ResponseMessage implements Serializable {
     private ArrayList<Product> products;
     private Boolean success;
     private ArrayList<Order> orders;
+    String text;
 
     public ResponseMessage(TypeOfMessage type) {
         this.typeOfMessage = type;
@@ -26,6 +27,8 @@ public class ResponseMessage implements Serializable {
             this.products = (ArrayList<Product>) object;
         } else if (object instanceof Boolean) {
             this.success = (Boolean) object;
+        } else if (object instanceof String) {
+            this.text = (String) object;
         }
     }
 
@@ -43,6 +46,10 @@ public class ResponseMessage implements Serializable {
 
     public Boolean getSuccess() {
         return success;
+    }
+
+    public String getText(){
+        return text;
     }
 
 }

@@ -90,6 +90,10 @@ public class ResponseHandler {
                     System.out.println("ResponeHandler - lastLogin: " + request.getUser().getLastLogIn());
                     System.out.println("ResponeHandler - username: " + request.getUserName());
                     return new ResponseMessage(TypeOfMessage.NOTIFICATION,success);
+                case GET_WHEN_LOGGED_IN:
+                    userRepository = new UserRepository();
+                    String whenLoggedIn = userRepository.getLastLoggedIn(request.getUserName());
+                    return new ResponseMessage(TypeOfMessage.GET_WHEN_LOGGED_IN, whenLoggedIn);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
