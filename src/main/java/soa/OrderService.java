@@ -26,6 +26,7 @@ public class OrderService {
 
     public OrderService() {
         connection = new SoaRepositoryConnector();
+
     }
 
     /**
@@ -57,4 +58,5 @@ public class OrderService {
         server.stop(0);
         System.out.println("Server stopped");
     }
+    
 }
