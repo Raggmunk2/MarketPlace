@@ -17,7 +17,7 @@ import java.net.URL;
 
 public class SoaClient extends Thread{
     public static void main(String[] args) {
-        int nbrOfClients = 10;
+        int nbrOfClients = 1;
         for (int i = 0; i < nbrOfClients; i++) {
             SoaClient soaClient = new SoaClient();
             soaClient.start();
