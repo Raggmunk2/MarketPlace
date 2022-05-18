@@ -23,20 +23,26 @@ public class ResponseHandler {
         if (request != null) {
             switch (request.getTypeOfMessage()) {
                 case LOGIN:
-                    userRepository = new UserRepository(); //Skickar tillbaka ett user objekt som skapats i accessControlRepository.checkLogin
-                    User user = userRepository.checkLogin(request.getUserName(), request.getPassword());
+                    User user = loginUser(request.getUserName(), request.getPassword());
                     if (user.getUserName() == "No user exists") {
                         return new ResponseMessage(TypeOfMessage.ERROR);
                     } else {
                         return new ResponseMessage(TypeOfMessage.LOGIN, user);//Response som skickas tillbaka till klienten
                     }
                 case REGISTER:
-                    userRepository = new UserRepository();
-                    success = userRepository.registerNewUser(request.getUser());
+                    success = register(request.getUser());
                     return new ResponseMessage(TypeOfMessage.REGISTER, success);
+                case CREATE_ORDER:
+                    success = createOrder(request.getProductsInCart(), request.getUser());
+                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, success);
+                case CREATE_PRODUCT_FOR_SELLING:
+                    success = sellProduct(request.getProduct());
+                    return new ResponseMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, success);
+                case GET_ALL_PRODUCTS:
+                    ArrayList<Product> allProducts = getAllProducts();
+                    return new ResponseMessage(TypeOfMessage.GET_ALL_PRODUCTS, allProducts);
                 case SEARCH_BY_TYPE:
-                    productRepository = new ProductRepository();
-                    ArrayList<Product> products = productRepository.getProductsByTypeOfProduct(request.getTypeOfProduct());
+                    ArrayList<Product> products = searchByType(request.getTypeOfProduct());
                     return new ResponseMessage(TypeOfMessage.SEARCH_BY_TYPE, products);
                 case SEARCH_BY_PRICE:
                     productRepository = new ProductRepository();
@@ -46,18 +52,11 @@ public class ResponseHandler {
                     productRepository = new ProductRepository();
                     ArrayList<Product> products3 = productRepository.getProductsByCondition(request.getCondition());
                     return new ResponseMessage(TypeOfMessage.SEARCH_BY_CONDITION, products3);
-                case PRODUCTS:
-                    productRepository = new ProductRepository();
-                    ArrayList<Product> allProducts = productRepository.getAllProducts();
-                    return new ResponseMessage(TypeOfMessage.PRODUCTS, allProducts);
+
                 case PRODUCTS_TO_CONFIRM:
                     productRepository = new ProductRepository();
                     ArrayList<Product> productsToConfirm = productRepository.getAllUnavailableProducts(request.getUser());
                     return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, productsToConfirm);
-                case CREATE_PRODUCT_FOR_SELLING:
-                    productRepository = new ProductRepository();
-                    success = productRepository.addProductToDatabase(request.getProduct());
-                    return new ResponseMessage(TypeOfMessage.CREATE_PRODUCT_FOR_SELLING, success);
                 case CONFIRM_PRODUCT:
                     productRepository = new ProductRepository();
                     orderRepository = new OrderRepository(new UserRepository());
@@ -69,15 +68,7 @@ public class ResponseHandler {
                         ok = orderRepository.removeOrderByProductId(request.getProduct().getId());
                     }
                     return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, ok);
-                case CREATE_ORDER:
-                    orderRepository = new OrderRepository(new UserRepository());
-                    ArrayList<Product> productsInCart = request.getProductsInCart();
-                    boolean orderCreated = false;
-                    for (Product p : productsInCart) {
-                        Order order = new Order(request.getUser(), Timestamp.valueOf(LocalDateTime.now()), p.getId());
-                        orderCreated = orderRepository.addProductToOrder(order);
-                    }
-                    return new ResponseMessage(TypeOfMessage.CREATE_ORDER, orderCreated);
+
                 case SUBSCRIBE_TO_TYPE:
                     subscriptionRepository = new SubscriptionRepository();
                     subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
@@ -85,5 +76,40 @@ public class ResponseHandler {
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
+    }
+
+    private ArrayList<Product> searchByType(TypeOfProduct typeOfProduct) {
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.getProductsByTypeOfProduct(typeOfProduct);
+    }
+
+    private ArrayList<Product> getAllProducts() {
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.getAllProducts();
+    }
+
+    private boolean sellProduct(Product product) {
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.addProductToDatabase(product);
+    }
+
+    private boolean createOrder(ArrayList<Product> productsInCart, User user) {
+        OrderRepository orderRepository = new OrderRepository(new UserRepository());
+        boolean orderCreated = false;
+        for (Product p : productsInCart) {
+            Order order = new Order(user, Timestamp.valueOf(LocalDateTime.now()), p.getId());
+            orderCreated = orderRepository.addProductToOrder(order);
+        }
+        return orderCreated;
+    }
+
+    private User loginUser(String username, String password) {
+        UserRepository userRepository = new UserRepository(); //Skickar tillbaka ett user objekt som skapats i accessControlRepository.checkLogin
+        return userRepository.checkLogin(username, password);
+    }
+
+    private boolean register(User user) {
+        UserRepository userRepository = new UserRepository();
+        return userRepository.registerNewUser(user);
     }
 }

@@ -2,10 +2,7 @@ package client.controller;
 
 import shared.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RequestHandler {
 
@@ -52,7 +49,7 @@ public class RequestHandler {
 
 
     public ResponseMessage getAllProducts() {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS);
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.GET_ALL_PRODUCTS);
         ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
         return responseMessage;
     }

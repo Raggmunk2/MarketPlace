@@ -17,7 +17,7 @@ public class ResponseMessage implements Serializable {
 
     public ResponseMessage(TypeOfMessage typeOfMessage, Object object) {
         this.typeOfMessage = typeOfMessage;
-        if (typeOfMessage == TypeOfMessage.PRODUCTS) {
+        if (typeOfMessage == TypeOfMessage.GET_ALL_PRODUCTS) {
             this.products = (ArrayList<Product>) object;
         }
         if (object instanceof User) {
