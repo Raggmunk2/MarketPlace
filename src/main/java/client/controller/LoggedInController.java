@@ -29,10 +29,6 @@ public class LoggedInController {
     private void loggedInMenuHandler() {
         int input;
         do {
-            //Fråga DB, finns nya subs, baserat på Lastloggedin i JavaObject
-            //uppdaterar vi inbox
-
-            //checkForNewSubs(user.getUserName());
             int productInboxSize = getProductInboxSize();
             input = userInterface.showLoggedInMenu(productInboxSize);
             switch (input) {
