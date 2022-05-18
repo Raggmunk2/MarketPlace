@@ -41,6 +41,7 @@ public class MainMenuController {
         System.exit(0);
     }
 
+    
     private User loginUser() {
         String username = userInterface.getUsername();
         String password = userInterface.getPassword();
