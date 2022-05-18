@@ -224,23 +224,42 @@ public class ProductRepository {
 
 
     public boolean getNotification(User user) {
+        ArrayList<Product> productArrayList = new ArrayList<>();
+        boolean containsSomething = false;
         try{
             String query = "Select Product.productId, Product.name, Product.Seller, Product.typeOfProduct, Product.price, Product.YearOfMaking, Product.colour, Product.condition, Product.status\n" +
                     "from Product \n" +
                     "left join ProductTypes on Product.typeOfProduct = ProductTypes.productTypeId\n" +
                     "left join UserProductType on ProductTypes.productTypeId = UserProductType.typeOfProductId\n" +
-                    "where UserProductType.username = '"+ user.getUserName() +"' AND Product.[status] = 'Available' AND Product.dateAdded BETWEEN '" + user.getLastLogIn() + "' AND GETDATE();";
+                    "join [User] on UserProductType.username = [User].username\n" +
+                    "where UserProductType.username = '" + user.getUserName() + "' AND Product.dateAdded BETWEEN [User].lastLogIn AND GETDATE();";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
-            if(!rs.next()){
-                return false;
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String seller = rs.getString(3);
+                int productType = rs.getInt(4);
+                double price = rs.getDouble(5);
+                int yearOfMaking = rs.getInt(6);
+                String colour = rs.getString(7);
+                int productCondition = rs.getInt(8);
+                Status status = Status.valueOf(rs.getString(9));
+                Product product = new Product(id, name, seller, EnumHandler.getType(productType), price, yearOfMaking, colour, EnumHandler.getCondition(productCondition), status);
+                productArrayList.add(product);
+
+            }
+            if(productArrayList.size() > 0){
+                containsSomething = true;
+            }else{
+                containsSomething = false;
             }
 
         } catch (SQLException throwables) {
             System.out.println("wrong");
             throwables.printStackTrace();
-            return false;
+            containsSomething = false;
         }
-        return true;
+        return containsSomething;
     }
 }
