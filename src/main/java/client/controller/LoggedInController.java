@@ -105,7 +105,7 @@ public class LoggedInController {
 
 
     private void logoutUser() {
-        ResponseMessage responseMessage = requestHandler.saveLastLogIn(user.getUserName());
+        //requestHandler.saveLastLogIn(user.getUserName());
         this.user = null;
         this.cart = null;
         this.productInbox = null;
@@ -223,27 +223,27 @@ public class LoggedInController {
 
 
     private int getProductInboxSize(){
-        int typeNotificationSize = 0;
-        ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        ResponseMessage responseSubscriptionType = requestHandler.getNotificationOfSubscription(this.user);
-        if(responseSubscriptionType.getSuccess()){
-            typeNotificationSize = 1;
+        int totalNotificSize = 0;
+        ResponseMessage amountOfProducts = requestHandler.getAllProductsToConfirm(this.user);
+        ResponseMessage newSubs = requestHandler.checkIfNewProductSub(this.user);
+        System.out.println("Finns det nya produkter? Svar: " + newSubs.getSuccess());
+        if(newSubs.getSuccess()){
+            totalNotificSize = 1;
         }
-        typeNotificationSize += response.getProducts().size();
-        return typeNotificationSize;
+        totalNotificSize += amountOfProducts.getProducts().size();
+        System.out.println("Totalt antal notiser: " + totalNotificSize);
+        return totalNotificSize;
     }
 
     private void handleProductInbox() {
         ResponseMessage responseProductToConfirm = requestHandler.getAllProductsToConfirm(this.user);
-        ResponseMessage responseSubscription = requestHandler.getNotificationOfSubscription(this.user);
-        System.out.println(responseSubscription.getSuccess());
-        if(responseSubscription.getSuccess() == false && responseProductToConfirm.getProducts().size() == 0){
+        ResponseMessage newSubNotis = requestHandler.checkIfNewProductSub(this.user);
+        if(!newSubNotis.getSuccess() && responseProductToConfirm.getProducts().size() == 0){
             userInterface.printMessage("You have no new messages");
         }
-        if(responseSubscription.getSuccess() == true){
+        if(newSubNotis.getSuccess()){
             userInterface.printMessage("You have new products to see that you are subscribing for! \n"
             + "----> Please go to the main menu to see them!");
-            requestHandler.saveLastLogIn(user.getUserName());
         }
 
         if(responseProductToConfirm.getProducts().size() > 0){
@@ -257,6 +257,8 @@ public class LoggedInController {
             }
             productInbox.resetProductInbox();
         }
+        requestHandler.saveLastLogIn(user.getUserName());
+        user.setLastLogIn(String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
 
     }
 }

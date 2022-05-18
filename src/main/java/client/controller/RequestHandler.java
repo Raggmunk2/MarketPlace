@@ -69,7 +69,7 @@ public class RequestHandler {
         return serverConnection.sendRequest(requestMessage);
     }
 
-    public ResponseMessage getNotificationOfSubscription(User user) {
+    public ResponseMessage checkIfNewProductSub(User user) {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, user);
         ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
         return serverConnection.sendRequest(requestMessage);

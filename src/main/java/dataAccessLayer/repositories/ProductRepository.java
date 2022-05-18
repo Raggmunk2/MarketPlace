@@ -230,7 +230,9 @@ public class ProductRepository {
                     "left join ProductTypes on Product.typeOfProduct = ProductTypes.productTypeId\n" +
                     "left join UserProductType on ProductTypes.productTypeId = UserProductType.typeOfProductId\n" +
                     "where UserProductType.username = '"+ user.getUserName() +"' AND Product.[status] = 'Available' AND Product.dateAdded BETWEEN '" + user.getLastLogIn() + "' AND GETDATE();";
-            if(statement.executeQuery(query) == null){
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            if(!rs.next()){
                 return false;
             }
 

@@ -29,7 +29,6 @@ public class MainMenuController {
                 case 1:
                     do {
                         user = loginUser();
-                        //user.setLastLogIn(String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
                     } while (user == null);
                     new LoggedInController(user, this.userInterface, this.requestHandler);
                     break;
