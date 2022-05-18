@@ -14,11 +14,8 @@ public class ResponseHandler {
 
     public ResponseMessage handleRequest(RequestMessage request) {
         ResponseMessage response = null;
-        ProductRepository productRepository = null;
-        UserRepository userRepository = null;
-        OrderRepository orderRepository = null;
-        SubscriptionRepository subscriptionRepository = null;
         boolean success;
+        ArrayList<Product> products;
 
         if (request != null) {
             switch (request.getTypeOfMessage()) {
@@ -42,40 +39,59 @@ public class ResponseHandler {
                     ArrayList<Product> allProducts = getAllProducts();
                     return new ResponseMessage(TypeOfMessage.GET_ALL_PRODUCTS, allProducts);
                 case SEARCH_BY_TYPE:
-                    ArrayList<Product> products = searchByType(request.getTypeOfProduct());
+                    products = searchByType(request.getTypeOfProduct());
                     return new ResponseMessage(TypeOfMessage.SEARCH_BY_TYPE, products);
                 case SEARCH_BY_PRICE:
-                    productRepository = new ProductRepository();
-                    ArrayList<Product> products2 = productRepository.getProductsByPriceRange(request.getPriceRange());
-                    return new ResponseMessage(TypeOfMessage.SEARCH_BY_PRICE, products2);
+                    products = searchByPrice(request.getPriceRange());
+                    return new ResponseMessage(TypeOfMessage.SEARCH_BY_PRICE, products);
                 case SEARCH_BY_CONDITION:
-                    productRepository = new ProductRepository();
-                    ArrayList<Product> products3 = productRepository.getProductsByCondition(request.getCondition());
-                    return new ResponseMessage(TypeOfMessage.SEARCH_BY_CONDITION, products3);
-
-                case PRODUCTS_TO_CONFIRM:
-                    productRepository = new ProductRepository();
-                    ArrayList<Product> productsToConfirm = productRepository.getAllUnavailableProducts(request.getUser());
-                    return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, productsToConfirm);
+                    products = searchByCondition(request.getCondition());
+                    return new ResponseMessage(TypeOfMessage.SEARCH_BY_CONDITION, products);
+                case GET_PRODUCTS_TO_CONFIRM:
+                   products = getProductsToConfirm(request.getUser());
+                    return new ResponseMessage(TypeOfMessage.GET_PRODUCTS_TO_CONFIRM, products);
                 case CONFIRM_PRODUCT:
-                    productRepository = new ProductRepository();
-                    orderRepository = new OrderRepository(new UserRepository());
-                    boolean ok;
-                    if (request.getAcceptOrDecline()) {
-                        ok = productRepository.changeProductStatus(request.getProduct().getId(), Status.Sold);
-                    } else {
-                        productRepository.changeProductStatus(request.getProduct().getId(), Status.Available);
-                        ok = orderRepository.removeOrderByProductId(request.getProduct().getId());
-                    }
-                    return new ResponseMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, ok);
-
+                    success = confirmProduct(request.getAcceptOrDecline(), request.getProduct().getId());
+                    return new ResponseMessage(TypeOfMessage.GET_PRODUCTS_TO_CONFIRM, success);
                 case SUBSCRIBE_TO_TYPE:
-                    subscriptionRepository = new SubscriptionRepository();
-                    subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
+                    subscribeToType(request.getInput(), request.getUserName());
                     return new ResponseMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE);
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);
+    }
+
+    private boolean confirmProduct(boolean acceptedOrDeclined, int productId) {
+        ProductRepository productRepository = new ProductRepository();
+        OrderRepository orderRepository = new OrderRepository(new UserRepository());
+        boolean success;
+        if (acceptedOrDeclined) {
+            success = productRepository.changeProductStatus(productId, Status.Sold);
+        } else {
+            productRepository.changeProductStatus(productId, Status.Available);
+            success = orderRepository.removeOrderByProductId(productId);
+        }
+        return success;
+    }
+
+    private void subscribeToType(int typeOfProduct, String username) {
+        SubscriptionRepository subscriptionRepository = new SubscriptionRepository();
+        subscriptionRepository.addNewSubscription(typeOfProduct, username);
+    }
+
+    private ArrayList<Product> getProductsToConfirm(User user) {
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.getAllUnavailableProducts(user);
+    }
+
+    private ArrayList<Product> searchByCondition(Condition condition) {
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.getProductsByCondition(condition);
+    }
+
+    private ArrayList<Product> searchByPrice(double[] priceRange) {
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.getProductsByPriceRange(priceRange);
     }
 
     private ArrayList<Product> searchByType(TypeOfProduct typeOfProduct) {
@@ -104,7 +120,7 @@ public class ResponseHandler {
     }
 
     private User loginUser(String username, String password) {
-        UserRepository userRepository = new UserRepository(); //Skickar tillbaka ett user objekt som skapats i accessControlRepository.checkLogin
+        UserRepository userRepository = new UserRepository();
         return userRepository.checkLogin(username, password);
     }
 

@@ -55,7 +55,7 @@ public class RequestHandler {
     }
 
     public ResponseMessage getAllProductsToConfirm(User user) {
-        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.PRODUCTS_TO_CONFIRM, user);
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.GET_PRODUCTS_TO_CONFIRM, user);
         return serverConnection.sendRequest(requestMessage);
     }
 
