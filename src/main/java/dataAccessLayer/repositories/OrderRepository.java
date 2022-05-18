@@ -19,7 +19,6 @@ public class OrderRepository {
         }
     }
     public ArrayList<Order> getOrderHistory(User thisBuyer)  {
-        System.out.println("this is the buyer: " + thisBuyer);
         ArrayList<Order> orderList = new ArrayList<>();
         try {
            String selectOrderHistory = "Select buyer, [name],Seller, typeOfProduct,price," +
@@ -50,7 +49,7 @@ public class OrderRepository {
 
     /**
      * User can add a product to Order. It then becomes unavailable
-     * @return true if connection to database was successfull
+     * @return true if connection to database was successful
      */
     public boolean addProductToOrder(Order newOrder){
             try {
@@ -67,7 +66,7 @@ public class OrderRepository {
         return true;
     }
 
-    public boolean removeOrder(Order order) {
+    /*public boolean removeOrder(Order order) {
         try {
             Statement statement = connection.createStatement();
             String query = "DELETE FROM [Order] WHERE orderId = " + order.getOrderId() +"';";
@@ -105,7 +104,7 @@ public class OrderRepository {
             e.printStackTrace();
         }
         return orderList;
-    }
+    }*/
 
     public boolean removeOrderByProductId(int productId) {
 

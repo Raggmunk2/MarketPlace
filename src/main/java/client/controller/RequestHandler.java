@@ -2,10 +2,7 @@ package client.controller;
 
 import shared.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RequestHandler {
 
@@ -69,6 +66,21 @@ public class RequestHandler {
 
     public ResponseMessage sendTypeOfSubToServer(int input, String userName) {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE, input, userName);
-        return  serverConnection.sendRequest(requestMessage);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
+    public ResponseMessage checkIfNewProductSub(User user) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.NOTIFICATION, user);
+        ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);
+        return serverConnection.sendRequest(requestMessage);
+    }
+
+    public ResponseMessage getWhenLoggedIn(String username){
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.GET_WHEN_LOGGED_IN, username);
+        return serverConnection.sendRequest(requestMessage);
+    }
+    public ResponseMessage saveLastLogIn(String userName) {
+        RequestMessage requestMessage = new RequestMessage(TypeOfMessage.SAVE_LAST_LOG_IN,userName);
+        return serverConnection.sendRequest(requestMessage);
     }
 }

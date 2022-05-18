@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
     private String name;
-    private String seller; //TODO ska vara User?
+    private String seller;
     private TypeOfProduct typeOfProductName;
     private double price;
     private int yearOfMaking;

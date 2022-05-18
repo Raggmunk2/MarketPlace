@@ -6,14 +6,14 @@ import shared.TypeOfProduct;
 import java.util.ArrayList;
 
 public class EnumHandler {
-
+/*
     /**
      * @Author : Linn Borgström
      * To get the correct condition
      * @param condition of the product
      * @return the condition in a enum
      */
-    public static Condition getCondition(String condition) {
+    /*public static Condition getCondition(String condition) {
         Condition productCondition;
         switch (condition){
             case "New" :
@@ -33,7 +33,7 @@ public class EnumHandler {
                 throw new IllegalStateException("Unexpected value: " + condition);
         }
         return productCondition;
-    }
+    }*/
 
     public static Condition getCondition(int condition) {
         Condition productCondition;
@@ -56,14 +56,14 @@ public class EnumHandler {
         }
         return productCondition;
     }
-
+/*
     /**
      * @Author: Linn Borgström
      * to get the correct type
      * @param type the type in a string
      * @return the type in an enum
      */
-    public static TypeOfProduct getType(String type) {
+  /*  public static TypeOfProduct getType(String type) {
         TypeOfProduct typeOfProduct;
         switch (type){
             case "Hobby" :
@@ -121,7 +121,7 @@ public class EnumHandler {
                 throw new IllegalStateException("Unexpected value: " + type);
         }
         return typeOfProduct;
-    }
+    }*/
 
     public static TypeOfProduct getType(int input) {
         TypeOfProduct typeOfProduct;

@@ -55,7 +55,7 @@ public class ProductRepository {
 
     /**
      * @Author : Linn Borgström
-     * Makes a querie to th DB to get a product by a price range
+     * Makes a query to th DB to get a product by a price range
      * @return an array of products
      * @throws SQLException
      */
@@ -85,7 +85,7 @@ public class ProductRepository {
 
     /**
      * @Author : Linn Borgström
-     * Makes a quarie to th DB to get a product by it's condition
+     * Makes a query to th DB to get a product by it's condition
      * @param condition what condition the product is in (an enum)
      * @return an arrayList with the products
      * @throws SQLException
@@ -123,7 +123,7 @@ public class ProductRepository {
 
     /**
      * @Author : Linn Borgström
-     * Makes a quarie to the DB to get a product by it's condition
+     * Makes a query to the DB to get a product by it's condition
      * @param typeOfProduct the type of product in an enum
      * @return an arraylist of the products
      * @throws SQLException
@@ -160,7 +160,7 @@ public class ProductRepository {
     /**
      * A user can add a new product to the DB
      * @param product the product to add
-     * @return true if connection to database was successfull
+     * @return true if connection to database was successful
      */
     public boolean addProductToDatabase(Product product) {
         try {
@@ -220,5 +220,46 @@ public class ProductRepository {
             return false;
         }
         return true;
+    }
+
+
+    public boolean getNotification(User user) {
+        ArrayList<Product> productArrayList = new ArrayList<>();
+        boolean containsSomething = false;
+        try{
+            String query = "Select Product.productId, Product.name, Product.Seller, Product.typeOfProduct, Product.price, Product.YearOfMaking, Product.colour, Product.condition, Product.status\n" +
+                    "from Product \n" +
+                    "left join ProductTypes on Product.typeOfProduct = ProductTypes.productTypeId\n" +
+                    "left join UserProductType on ProductTypes.productTypeId = UserProductType.typeOfProductId\n" +
+                    "join [User] on UserProductType.username = [User].username\n" +
+                    "where UserProductType.username = '" + user.getUserName() + "' AND Product.dateAdded BETWEEN [User].lastLogIn AND GETDATE();";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String seller = rs.getString(3);
+                int productType = rs.getInt(4);
+                double price = rs.getDouble(5);
+                int yearOfMaking = rs.getInt(6);
+                String colour = rs.getString(7);
+                int productCondition = rs.getInt(8);
+                Status status = Status.valueOf(rs.getString(9));
+                Product product = new Product(id, name, seller, EnumHandler.getType(productType), price, yearOfMaking, colour, EnumHandler.getCondition(productCondition), status);
+                productArrayList.add(product);
+
+            }
+            if(productArrayList.size() > 0){
+                containsSomething = true;
+            }else{
+                containsSomething = false;
+            }
+
+        } catch (SQLException throwables) {
+            System.out.println("wrong");
+            throwables.printStackTrace();
+            containsSomething = false;
+        }
+        return containsSomething;
     }
 }

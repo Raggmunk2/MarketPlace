@@ -144,10 +144,10 @@ public class UserInterface {
 
     public double[] getPriceRange() {
         double[] range = new double[2];
-        System.out.println("Type min prize");
-        range[0] = scanner.nextInt();
-        System.out.println("Type max prize");
-        range[1] = scanner.nextInt();
+        System.out.println("Type min prize. E.g. 00.00");
+        range[0] = scanner.nextDouble();
+        System.out.println("Type max prize. E.g. 00.001");
+        range[1] = scanner.nextDouble();
         return range;
     }
 

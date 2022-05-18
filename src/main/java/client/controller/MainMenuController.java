@@ -6,6 +6,8 @@ import shared.TypeOfMessage;
 import shared.User;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class MainMenuController {
 
@@ -33,7 +35,7 @@ public class MainMenuController {
                 case 2:
                     user = register();
                     if (user != null) {
-                        userInterface.printMessage("Welcome " + user.getUserName() + ", what would you like to do now?");
+                        userInterface.printMessage("Welcome " + user.getUserName() + " what would you like to do now?");
                         new LoggedInController(user, this.userInterface, this.requestHandler);
                     }
             }
@@ -62,7 +64,7 @@ public class MainMenuController {
         String email = userInterface.getEmail();
         String newUsername = userInterface.getUsername();
         String newPassword = userInterface.getPassword();
-        User user = new User(newUsername, newPassword, firstName, lastName, DoB, email);
+        User user = new User(newUsername, newPassword, firstName, lastName, DoB, email, String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
         ResponseMessage registerResponse = requestHandler.getRegisterResponse(user);
         Boolean success = registerResponse.getSuccess();
         if (!success) {

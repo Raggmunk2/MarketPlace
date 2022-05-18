@@ -22,12 +22,12 @@ public class Order implements Serializable {
         this.productId = productId;
     }
 
-    public Order(int orderId, User buyer, Timestamp createdAt, int productId) {
+    /*public Order(int orderId, User buyer, Timestamp createdAt, int productId) {
         this.orderId = orderId;
         this.buyer = buyer;
         this.CreatedAt = createdAt;
         this.productId = productId;
-    }
+    }*/
 
     public Order(User buyer, String productName, User seller, TypeOfProduct typeOfProduct, double price, Condition condition) {
         this.buyer=buyer;

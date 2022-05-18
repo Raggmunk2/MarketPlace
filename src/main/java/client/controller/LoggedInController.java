@@ -5,6 +5,8 @@ import client.model.ProductInbox;
 import client.view.UserInterface;
 import shared.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class LoggedInController {
@@ -63,15 +65,17 @@ public class LoggedInController {
         logoutUser();
     }
 
+
     private void subscribeToAType() {
         ArrayList<String> type = TypeOfProduct.getAllTypesWithId();
         int input = userInterface.showAllTypeOfProducts(type);
-        ResponseMessage responseMessage = requestHandler.sendTypeOfSubToServer(input, user.getUserName());
+        requestHandler.sendTypeOfSubToServer(input, user.getUserName());
         userInterface.printMessage("Successfully added");
     }
 
 
     private void logoutUser() {
+        //requestHandler.saveLastLogIn(user.getUserName()); bortkommenterad för att spara notiser om man ej kollar inbox men loggar ut
         this.user = null;
         this.cart = null;
         this.productInbox = null;
@@ -115,7 +119,6 @@ public class LoggedInController {
             userInterface.printMessage("Product could not be created for sale");
         }
     }
-
 
 
     private void createOrder() {
@@ -189,23 +192,42 @@ public class LoggedInController {
         }
     }
 
+
     private int getProductInboxSize(){
-        ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        return response.getProducts().size();
+        int totalNotificSize = 0;
+        ResponseMessage amountOfProducts = requestHandler.getAllProductsToConfirm(this.user);
+        ResponseMessage newSubs = requestHandler.checkIfNewProductSub(this.user);
+        if(newSubs.getSuccess()){
+            totalNotificSize = 1;
+        }
+        totalNotificSize += amountOfProducts.getProducts().size();
+        return totalNotificSize;
     }
 
     private void handleProductInbox() {
-        ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        if(response.getProducts().size() == 0){
+        ResponseMessage responseProductToConfirm = requestHandler.getAllProductsToConfirm(this.user);
+        ResponseMessage newSubNotis = requestHandler.checkIfNewProductSub(this.user);
+        if(!newSubNotis.getSuccess() && responseProductToConfirm.getProducts().size() == 0){
             userInterface.printMessage("You have no new messages");
         }
-        else {
-            productInbox.update(response.getProducts());
+        if(newSubNotis.getSuccess()){
+            userInterface.printMessage("You have new products to see that you are subscribing for! \n"
+            + "----> Please go to the main menu to see them!");
+        }
+
+        if(responseProductToConfirm.getProducts().size() > 0){
+            productInbox.update(responseProductToConfirm.getProducts());
+            userInterface.printMessage("\nYou have products to sell!");
             Product product = (Product) userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
             Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
             ResponseMessage responseMessage = requestHandler.confirmProduct(product, acceptOrDecline);
-            userInterface.printMessage("Confirmed offer: " + responseMessage.getSuccess());
+            if(responseMessage.getSuccess()){
+                System.out.println("You succeeded with your task.");
+            }
             productInbox.resetProductInbox();
         }
+        requestHandler.saveLastLogIn(user.getUserName());
+        user.setLastLogIn(String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
+
     }
 }

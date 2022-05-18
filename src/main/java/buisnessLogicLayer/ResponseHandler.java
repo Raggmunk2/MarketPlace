@@ -23,7 +23,7 @@ public class ResponseHandler {
         if (request != null) {
             switch (request.getTypeOfMessage()) {
                 case LOGIN:
-                    userRepository = new UserRepository(); //Skickar tillbaka ett user objekt som skapats i accessControlRepository.checkLogin
+                    userRepository = new UserRepository();
                     User user = userRepository.checkLogin(request.getUserName(), request.getPassword());
                     if (user.getUserName() == "No user exists") {
                         return new ResponseMessage(TypeOfMessage.ERROR);
@@ -82,6 +82,21 @@ public class ResponseHandler {
                     subscriptionRepository = new SubscriptionRepository();
                     subscriptionRepository.addNewSubscription(request.getInput(), request.getUserName());
                     return new ResponseMessage(TypeOfMessage.SUBSCRIBE_TO_TYPE);
+
+                case NOTIFICATION:
+                    productRepository = new ProductRepository();
+                    success = productRepository.getNotification(request.getUser());
+                    return new ResponseMessage(TypeOfMessage.NOTIFICATION,success);
+                case GET_WHEN_LOGGED_IN:
+                    userRepository = new UserRepository();
+                    String whenLoggedIn = userRepository.getLastLoggedIn(request.getUserName());
+                    return new ResponseMessage(TypeOfMessage.GET_WHEN_LOGGED_IN, whenLoggedIn);
+
+                case SAVE_LAST_LOG_IN:
+                    userRepository = new UserRepository();
+                    success = userRepository.updateLastLoggedIn(request.getUserName());
+                    return new ResponseMessage(TypeOfMessage.SAVE_LAST_LOG_IN, success);
+
             }
         }
         return new ResponseMessage(TypeOfMessage.ERROR);

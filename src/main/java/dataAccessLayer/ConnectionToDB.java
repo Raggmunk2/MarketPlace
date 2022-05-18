@@ -24,7 +24,6 @@ public class ConnectionToDB {
         }
         String dbURL = String.format("jdbc:sqlserver://%s:%s;databaseName=" + dbName + ";user=%s;password=%s", dbServerIp, dbServerPort, dbUser, dbPassword);
         this.connection = DriverManager.getConnection(dbURL);
-        //System.out.println(connection);
         return connection;
     }
 
