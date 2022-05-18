@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
-import dataAccessLayer.repositories.SoaConnectionHandler;
+import dataAccessLayer.repositories.SoaRepositoryConnector;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,11 +21,12 @@ import java.util.ArrayList;
 
 @Path("/marketPlace")
 public class OrderService {
-    private SoaConnectionHandler connection;
+    private SoaRepositoryConnector connection;
 
 
     public OrderService() {
-        connection = new SoaConnectionHandler();
+        connection = new SoaRepositoryConnector();
+
     }
 
     /**
@@ -46,7 +47,7 @@ public class OrderService {
         return jsonObject;
 
     }
-    
+
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServerFactory.create("http://localhost:9998/");
         server.start();
