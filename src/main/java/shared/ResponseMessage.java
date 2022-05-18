@@ -9,7 +9,6 @@ public class ResponseMessage implements Serializable {
     private User user;
     private ArrayList<Product> products;
     private Boolean success;
-    private ArrayList<Order> orders;
     String text;
 
     public ResponseMessage(TypeOfMessage type) {

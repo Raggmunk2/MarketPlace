@@ -35,7 +35,7 @@ public class SubscriptionRepository {
         return true;
     }
 
-    public boolean removeSubscription(int typeOfProductId, String username) {
+    /*public boolean removeSubscription(int typeOfProductId, String username) {
         try {
             String query = "DELETE FROM [UserProductType] WHERE typeOfProductId = " + typeOfProductId + " AND username = '" + username + "';";
             statement.executeUpdate(query);
@@ -78,6 +78,6 @@ public class SubscriptionRepository {
             return null;
         }
         return users;
-    }
+    }*/
 
 }

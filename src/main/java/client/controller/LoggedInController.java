@@ -197,12 +197,10 @@ public class LoggedInController {
         int totalNotificSize = 0;
         ResponseMessage amountOfProducts = requestHandler.getAllProductsToConfirm(this.user);
         ResponseMessage newSubs = requestHandler.checkIfNewProductSub(this.user);
-        System.out.println("Finns det nya produkter? Svar: " + newSubs.getSuccess());
         if(newSubs.getSuccess()){
             totalNotificSize = 1;
         }
         totalNotificSize += amountOfProducts.getProducts().size();
-        System.out.println("Totalt antal notiser: " + totalNotificSize);
         return totalNotificSize;
     }
 
