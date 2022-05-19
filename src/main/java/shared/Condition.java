@@ -19,7 +19,6 @@ public enum Condition {
         return conditionName;
     }
 
-
     public static ArrayList<String> getAllConditionsWithId(){
         ArrayList<String> allConditions = new ArrayList<>();
         int id = 1;
@@ -32,7 +31,6 @@ public enum Condition {
         }
         return allConditions;
     }
-
 
     public static int getConditionAsInt(Condition condition) {
         int productCondition;
@@ -55,6 +53,4 @@ public enum Condition {
         }
         return productCondition;
     }
-
-
 }

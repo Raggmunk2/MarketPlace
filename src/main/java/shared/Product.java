@@ -29,22 +29,13 @@ public class Product implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSeller() {
         return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
     }
 
     public TypeOfProduct getTypeOfProductName() {
         return typeOfProductName;
     }
-
 
     public double getPrice() {
         return price;
@@ -52,10 +43,6 @@ public class Product implements Serializable {
 
     public int getYearOfMaking() {
         return yearOfMaking;
-    }
-
-    public void setYearOfMaking(int yearOfMaking) {
-        this.yearOfMaking = yearOfMaking;
     }
 
     public String getColour() {

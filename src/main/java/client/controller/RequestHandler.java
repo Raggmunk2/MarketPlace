@@ -47,7 +47,6 @@ public class RequestHandler {
         return serverConnection.sendRequest(requestMessage);
     }
 
-
     public ResponseMessage getAllProducts() {
         RequestMessage requestMessage = new RequestMessage(TypeOfMessage.GET_ALL_PRODUCTS);
         ResponseMessage responseMessage = serverConnection.sendRequest(requestMessage);

@@ -1,9 +1,5 @@
 package dataAccessLayer.repositories;
 
-
-import dataAccessLayer.repositories.OrderRepository;
-import dataAccessLayer.repositories.ProductRepository;
-import dataAccessLayer.repositories.UserRepository;
 import shared.User;
 
 import java.util.ArrayList;
@@ -21,7 +17,6 @@ public class SoaConnectionHandler {
         productRepository = new ProductRepository();
         ur = new UserRepository();
         orderRepository = new OrderRepository(ur);
-
     }
 
     /**

@@ -41,26 +41,22 @@ public class SoaClient extends Thread{
             BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             StringBuilder sb = new StringBuilder();
             String output = "";
+
             while((output = br.readLine()) !=null){
                 sb.append(output);
-
             }
             br.close();
             httpURLConnection.disconnect();
             String orders = parse(sb.toString());
             System.out.println(orders);
-
-
         } catch (MalformedURLException | ProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
-     * @Author: Linn Borgström
      * A method to parse the text to a JsonObject
      * @param responseBody the text to parse
      */
@@ -79,6 +75,4 @@ public class SoaClient extends Thread{
         }
         return orders;
     }
-
-
 }

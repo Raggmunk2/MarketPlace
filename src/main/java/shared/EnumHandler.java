@@ -1,39 +1,6 @@
 package shared;
 
-import shared.Condition;
-import shared.TypeOfProduct;
-
-import java.util.ArrayList;
-
 public class EnumHandler {
-
-    /**
-     * @Author : Linn Borgström
-     * To get the correct condition
-     * @param condition of the product
-     * @return the condition in a enum
-     */
-    public static Condition getCondition(String condition) {
-        Condition productCondition;
-        switch (condition){
-            case "New" :
-                productCondition = Condition.New;
-                break;
-            case "Very Good" :
-                productCondition = Condition.VeryGood;
-                break;
-            case "Not Working Properly" :
-                productCondition = Condition.NotWorkingProperly;
-                break;
-            case "Good" :
-                productCondition = Condition.Good;
-                break;
-
-            default:
-                throw new IllegalStateException("Unexpected value: " + condition);
-        }
-        return productCondition;
-    }
 
     public static Condition getCondition(int condition) {
         Condition productCondition;
@@ -57,12 +24,6 @@ public class EnumHandler {
         return productCondition;
     }
 
-    /**
-     * @Author: Linn Borgström
-     * to get the correct type
-     * @param type the type in a string
-     * @return the type in an enum
-     */
     public static TypeOfProduct getType(String type) {
         TypeOfProduct typeOfProduct;
         switch (type){
@@ -183,20 +144,4 @@ public class EnumHandler {
         return typeOfProduct;
     }
 
-
-    /**
-     * @Author Linn Borgström
-     * @return an arraylist with the types and unique id
-     */
-    public static ArrayList getAllTypes() {
-        return TypeOfProduct.getAllTypesWithId();
-
-    }
-    /**
-     * @Author Linn Borgström
-     * @return an arraylist with the condition and unique id
-     */
-    public static ArrayList getAllConditions(){
-        return Condition.getAllConditionsWithId();
-    }
 }

@@ -14,11 +14,6 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * @Author: Annie Tran, Linn Borgström
- * Class to get a users order history
- */
-
 @Path("/marketPlace")
 public class OrderService {
     private SoaRepositoryConnector connection;
@@ -45,7 +40,6 @@ public class OrderService {
 
         String jsonObject = gson.toJson(products);
         return jsonObject;
-
     }
 
     public static void main(String[] args) throws IOException {
@@ -58,5 +52,4 @@ public class OrderService {
         server.stop(0);
         System.out.println("Server stopped");
     }
-    
 }

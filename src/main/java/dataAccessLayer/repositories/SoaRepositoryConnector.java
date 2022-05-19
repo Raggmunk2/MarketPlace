@@ -1,9 +1,5 @@
 package dataAccessLayer.repositories;
 
-
-import dataAccessLayer.repositories.OrderRepository;
-import dataAccessLayer.repositories.ProductRepository;
-import dataAccessLayer.repositories.UserRepository;
 import shared.User;
 
 import java.util.ArrayList;
@@ -21,7 +17,6 @@ public class SoaRepositoryConnector {
         productRepository = new ProductRepository();
         ur = new UserRepository();
         orderRepository = new OrderRepository(ur);
-
     }
 
     /**
@@ -29,7 +24,6 @@ public class SoaRepositoryConnector {
      * @param username username to search the orders for
      * @return
      */
-
     public ArrayList getOrderHistoryByName(String username) {
         System.out.println("from ctDBr: " +username);
         User user = ur.getUser(username);

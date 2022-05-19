@@ -37,7 +37,7 @@ public class MainMenuController {
                         new LoggedInController(user, this.userInterface, this.requestHandler);
                     }
             }
-        }while (input != 3);
+        } while (input != 3);
         System.exit(0);
     }
 

@@ -24,7 +24,7 @@ public class ResponseHandler {
                     if (user.getUserName() == "No user exists") {
                         return new ResponseMessage(TypeOfMessage.ERROR);
                     } else {
-                        return new ResponseMessage(TypeOfMessage.LOGIN, user);//Response som skickas tillbaka till klienten
+                        return new ResponseMessage(TypeOfMessage.LOGIN, user);
                     }
                 case REGISTER:
                     success = register(request.getUser());

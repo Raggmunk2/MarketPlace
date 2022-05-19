@@ -70,7 +70,6 @@ public class LoggedInController {
         userInterface.printMessage("Successfully added");
     }
 
-
     private void logoutUser() {
         this.user = null;
         this.cart = null;
@@ -79,12 +78,11 @@ public class LoggedInController {
         //System.exit(1);
     }
 
-
-    private ArrayList<Product> getAllProducts(){
+    private ArrayList<Product> getAllProducts() {
         ResponseMessage response = requestHandler.getAllProducts();
         if (response.getProducts().size() == 0) userInterface.printMessage("No result");
         else {
-           return response.getProducts();
+            return response.getProducts();
         }
         return null;
     }
@@ -97,7 +95,6 @@ public class LoggedInController {
         }
     }
 
-
     private void createProductToSell() {
         String productName = userInterface.chooseProductName();
         double price = userInterface.getProductPrice();
@@ -109,14 +106,12 @@ public class LoggedInController {
                 yearOfMaking, colour, condition, Status.Available);
 
         ResponseMessage response = requestHandler.createProductToSell(product);
-        if(response.getSuccess()){
+        if (response.getSuccess()) {
             userInterface.printMessage("Your product was successfully added for sale!");
-        }else{
+        } else {
             userInterface.printMessage("Product could not be created for sale");
         }
     }
-
-
 
     private void createOrder() {
         if (cart.size() == 0) userInterface.printMessage("Your cart is empty at the moment");
@@ -124,11 +119,11 @@ public class LoggedInController {
             userInterface.showResult("------------YOUR CART------------", cart.getAllProductsInCart());
             boolean checkoutCart = userInterface.getBoolean("Do you want to checkout your cart? (true/false)");
 
-            if(checkoutCart){
+            if (checkoutCart) {
                 ResponseMessage response = requestHandler.createOrdersFromCart(cart.getAllProductsInCart(), user);
-                if(response.getSuccess()){
+                if (response.getSuccess()) {
                     userInterface.printMessage("Your order has been submitted");
-                }else{
+                } else {
                     userInterface.printMessage("Something went wrong");
                 }
                 cart.resetCart();
@@ -141,16 +136,15 @@ public class LoggedInController {
         userInterface.showResult("------------ALL PRODUCTS------------", products);
         if (products != null) {
             askUserToAddProductToCart(products);
-        }
-        else {
+        } else {
             userInterface.printMessage("There are no products.");
         }
     }
 
-    private void askUserToAddProductToCart(ArrayList<?> products){
+    private void askUserToAddProductToCart(ArrayList<?> products) {
         Product newProduct = null;
         boolean wantToAddProduct = userInterface.getBoolean("Would you like to add product to your cart? (true/false)");
-        if(wantToAddProduct){
+        if (wantToAddProduct) {
             do {
                 newProduct = (Product) userInterface.letUserChooseFromList(products);
             } while (newProduct == null);
@@ -189,17 +183,16 @@ public class LoggedInController {
         }
     }
 
-    private int getProductInboxSize(){
+    private int getProductInboxSize() {
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
         return response.getProducts().size();
     }
 
     private void handleProductInbox() {
         ResponseMessage response = requestHandler.getAllProductsToConfirm(this.user);
-        if(response.getProducts().size() == 0){
+        if (response.getProducts().size() == 0) {
             userInterface.printMessage("You have no new messages");
-        }
-        else {
+        } else {
             productInbox.update(response.getProducts());
             Product product = (Product) userInterface.letUserChooseFromList(productInbox.getProductsToConfirm());
             Boolean acceptOrDecline = userInterface.getBoolean("Accept or decline? (True/False)");
