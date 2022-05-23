@@ -20,7 +20,6 @@ public class ProductRepository {
     }
 
     /**
-     * @Author : Linn Borgström
      * to get all product from the DB
      * @return an arraylist with the products
      * @throws SQLException
@@ -54,7 +53,6 @@ public class ProductRepository {
     }
 
     /**
-     * @Author : Linn Borgström
      * Makes a query to th DB to get a product by a price range
      * @return an array of products
      * @throws SQLException
@@ -84,7 +82,6 @@ public class ProductRepository {
     }
 
     /**
-     * @Author : Linn Borgström
      * Makes a query to th DB to get a product by it's condition
      * @param condition what condition the product is in (an enum)
      * @return an arrayList with the products
@@ -122,7 +119,6 @@ public class ProductRepository {
     }
 
     /**
-     * @Author : Linn Borgström
      * Makes a query to the DB to get a product by it's condition
      * @param typeOfProduct the type of product in an enum
      * @return an arraylist of the products

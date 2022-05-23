@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class EnumHandler {
 /*
     /**
-     * @Author : Linn Borgström
      * To get the correct condition
      * @param condition of the product
      * @return the condition in a enum
@@ -58,7 +57,6 @@ public class EnumHandler {
     }
 /*
     /**
-     * @Author: Linn Borgström
      * to get the correct type
      * @param type the type in a string
      * @return the type in an enum
@@ -185,7 +183,6 @@ public class EnumHandler {
 
 
     /**
-     * @Author Linn Borgström
      * @return an arraylist with the types and unique id
      */
     public static ArrayList getAllTypes() {
@@ -193,7 +190,6 @@ public class EnumHandler {
 
     }
     /**
-     * @Author Linn Borgström
      * @return an arraylist with the condition and unique id
      */
     public static ArrayList getAllConditions(){

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * @Author: Annie Tran, Linn Borgström
  * Class to get a users order history
  */
 

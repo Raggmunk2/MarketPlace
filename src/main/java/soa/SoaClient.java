@@ -60,7 +60,6 @@ public class SoaClient extends Thread{
     }
 
     /**
-     * @Author: Linn Borgström
      * A method to parse the text to a JsonObject
      * @param responseBody the text to parse
      */
