@@ -68,7 +68,7 @@ public class UserRepository {
             if (dataBasePassword.equals(password)) {
                 //Skapar en user med data från databasen
                 user = new User(dataBaseUsername, dataBasePassword, firstname, lastname, DoB, email, lastLogIn);
-                updateLastLoggedIn(user.getUserName());
+                //updateLastLoggedIn(user.getUserName());
                 System.out.println("UserRepository - lastLogin: " + lastLogIn);
             } else {
                 //Skapar en user även om lösenordet inte matchar, detta för att det som skickas tillbaka till klienten inte ska vara null
